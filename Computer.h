@@ -8,7 +8,7 @@ using namespace std;
 class Computer
 {
 public:
-	Computer();
+	Computer();//Конструктор за замовчуванням
     Computer(
     	string cpu,
         string gpu,
@@ -18,9 +18,9 @@ public:
         bool hasFloppyDisk,
         int sizeOfRom,
         int inventoryNumber,
-        int auditoriumNumber);
-    Computer(const Computer &other);
-	~Computer();
+        int auditoriumNumber);//Конструктор з параметрами
+    Computer(const Computer &other);//Копіювальний конструктор
+	~Computer();//Деструктор
 
 private:
 	string m_cpu;
