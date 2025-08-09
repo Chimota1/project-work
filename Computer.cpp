@@ -82,6 +82,7 @@ Computer::Computer(const Computer &&other):
 {
 };
 
+//Деструктор
 Computer::~Computer() 
 {
 	cout << "Destructor of abstract class is called";
