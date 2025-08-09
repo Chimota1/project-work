@@ -9,6 +9,16 @@ class Computer
 {
 public:
 	Computer();
+    Computer(
+    	string cpu,
+        string gpu,
+        string monitor,
+        string keyboard,
+        bool hasCdRom,
+        bool hasFloppyDisk,
+        int sizeOfRom,
+        int inventoryNumber,
+        int auditoriumNumber);
 	~Computer();
 
 private:
