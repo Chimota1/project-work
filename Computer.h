@@ -18,5 +18,6 @@ private:
 	string keyboard;
 	int sizeOfRom;
     int inventoryNumber;
+    int auditoriumNumber;
 };
 #endif // COMPUTER_H
