@@ -18,11 +18,21 @@ public:
         bool hasFloppyDisk,
         int sizeOfRom,
         int inventoryNumber,
-        int auditoriumNumber);//Конструктор з параметрами
-    void GetComputer();//Get-метод
-    Computer(const Computer &other);//Копіювальний конструктор
-    Computer(const Computer &&other);//Конструктор переміщення
-	~Computer();//Деструктор
+        int auditoriumNumber); //Конструктор з параметрами
+    void SetComputer(
+        string cpu,
+        string gpu,
+        string monitor,
+        string keyboard,
+        bool hasCdRom,
+        bool hasFloppyDisk,
+        int sizeOfRom,
+        int inventoryNumber,
+        int auditoriumNumber); //Set-метод
+    void GetComputer(); //Get-метод
+    Computer(const Computer &other); //Копіювальний конструктор
+    Computer(const Computer &&other); //Конструктор переміщення
+	~Computer(); //Деструктор
 
 private:
 	string m_cpu;
