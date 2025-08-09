@@ -15,5 +15,6 @@ private:
 	string cpu;
 	string gpu;
 	string monitor;
+	int sizeOfRom;
 };
 #endif // COMPUTER_H
