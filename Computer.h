@@ -19,6 +19,7 @@ public:
         int sizeOfRom,
         int inventoryNumber,
         int auditoriumNumber);
+    Computer(const Computer &other);
 	~Computer();
 
 private:
