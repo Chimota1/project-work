@@ -93,7 +93,7 @@ Computer::Computer(const Computer &other):
 };
 
 //Конструктор переміщення
-Computer::Computer(const Computer &&other):
+Computer::Computer(Computer &&other) noexcept:
 	m_cpu{other.m_cpu},
 	m_gpu{other.m_gpu},
 	m_monitor{other.m_monitor},
