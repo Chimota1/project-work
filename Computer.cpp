@@ -54,6 +54,19 @@ Computer::Computer(const Computer &other):
 {
 };
 
+//Конструктор переміщення
+Computer::Computer(const Computer &&other):
+	m_cpu{other.m_cpu},
+	m_gpu{other.m_gpu},
+	m_monitor{other.m_monitor},
+	m_keyboard{other.m_keyboard},
+	m_hasCdRom{other.m_hasCdRom},
+	m_hasFloppyDisk{other.m_hasFloppyDisk},
+	m_sizeOfRom{other.m_sizeOfRom},
+	m_inventoryNumber{other.m_inventoryNumber},
+	m_auditoriumNumber{other.m_auditoriumNumber}
+{
+};
 
 Computer::~Computer() 
 {

@@ -20,6 +20,7 @@ public:
         int inventoryNumber,
         int auditoriumNumber);//Конструктор з параметрами
     Computer(const Computer &other);//Копіювальний конструктор
+    Computer(const Computer &&other);//Конструктор переміщення
 	~Computer();//Деструктор
 
 private:
