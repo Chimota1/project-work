@@ -19,6 +19,7 @@ public:
         int sizeOfRom,
         int inventoryNumber,
         int auditoriumNumber);//Конструктор з параметрами
+    void GetComputer();//Get-метод
     Computer(const Computer &other);//Копіювальний конструктор
     Computer(const Computer &&other);//Конструктор переміщення
 	~Computer();//Деструктор
