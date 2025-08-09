@@ -9,7 +9,6 @@ class Computer
 {
 public:
 	Computer();
-
 	~Computer();
 
 private:
