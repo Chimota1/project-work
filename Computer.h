@@ -13,6 +13,6 @@ public:
 
 private:
 	string cpu;
-
+	string gpu;
 };
 #endif // COMPUTER_H
