@@ -15,7 +15,8 @@ private:
 	string cpu;
 	string gpu;
 	string monitor;
-    string keyboard;
+	string keyboard;
 	int sizeOfRom;
+    int inventoryNumber;
 };
 #endif // COMPUTER_H
