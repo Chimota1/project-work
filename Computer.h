@@ -14,5 +14,6 @@ public:
 private:
 	string cpu;
 	string gpu;
+	string monitor;
 };
 #endif // COMPUTER_H
