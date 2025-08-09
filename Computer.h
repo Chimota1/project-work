@@ -18,6 +18,7 @@ private:
 	string monitor;
 	string keyboard;
     bool hasCdRom;
+    bool hasFloppyDisk;
 	int sizeOfRom;
     int inventoryNumber;
     int auditoriumNumber;
