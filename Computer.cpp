@@ -64,18 +64,18 @@ void Computer::SetComputer(
 };
 
 //Get-метод
-void Computer::GetComputer()
+string Computer::GetComputer()
 {
-  cout
-  << "Cpu: " << m_cpu
-  << " Gpu: " << m_gpu
-  << " Monitor: " << m_monitor
-  << " Keyboard: " << m_keyboard
-  << " Has CD-ROM? " << m_hasCdRom
-  << " Has Floppy disk? " << m_hasFloppyDisk
-  << " ROM capacity: " << m_sizeOfRom
-  << " Inventory number: " << m_inventoryNumber
-  << " Auditor number: " << m_auditoriumNumber;
+  return
+   "Cpu: " + m_cpu
+  + " Gpu: " + m_gpu
+  + " Monitor: " + m_monitor
+  + " Keyboard: " + m_keyboard
+  + " Has CD-ROM? " + (m_hasCdRom ? "Yes" : "No")
+  + " Has Floppy disk? " + (m_hasFloppyDisk ? "Yes" : "No")
+  + " ROM capacity: " + to_string(m_sizeOfRom)
+  + " Inventory number: " + to_string(m_inventoryNumber)
+  + " Auditor number: " + to_string(m_auditoriumNumber);
 };
 
 //Копіювальний конструктор

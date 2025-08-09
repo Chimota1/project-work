@@ -29,7 +29,7 @@ public:
         int sizeOfRom,
         int inventoryNumber,
         int auditoriumNumber); //Set-метод
-    void GetComputer(); //Get-метод
+    string GetComputer(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(const Computer &&other); //Конструктор переміщення
 	~Computer(); //Деструктор
