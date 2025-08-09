@@ -7,5 +7,5 @@ Computer::Computer() {};
 
 Computer::~Computer() 
 {
-	cout << "Destructor of abstract class is called"
+	cout << "Destructor of abstract class is called";
 };
