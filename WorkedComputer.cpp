@@ -4,3 +4,5 @@
 using namespace std;
 
 WorkedComputer::WorkedComputer() {};
+
+WorkedComputer::~WorkedComputer() {};
