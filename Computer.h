@@ -35,8 +35,6 @@ public:
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual void ServiceCost()= 0; // Метод демонстрування вартості осблуговування
 	virtual void ShowCount() = 0; // Метод демонстрування кількості
-    virtual void ShowOwner() = 0;// Метод який показує власника
-	virtual void ShowYear() = 0;// Метод який показує якого року комп'ютер
 	virtual ~Computer(); //Деструктор
 
 private:
