@@ -1,5 +1,6 @@
 #include "Computer.h"
-#include "iostream"
+#include <iostream>
+#include <exception>
 
 using namespace std;
 
@@ -105,6 +106,35 @@ Computer::Computer(Computer &&other) noexcept:
 	m_auditoriumNumber{other.m_auditoriumNumber}
 {
 };
+
+// Метод демонстрування вартості осблуговування
+int Computer::ServiceCost()
+{
+  	return 0;
+};
+
+// Метод який змінює номер аудиторії де знаходиться ПК
+void Computer::MoveAuditorium(int number)
+{
+  cout << "Write new number auditorium" << endl;
+  cin >> number;
+  m_auditoriumNumber = number;
+};
+
+void Computer::HasCdRomUpdate(bool hasCdRom)
+{
+  cout << "Update (1 if have, 0 if have not)" << endl;
+  cin >> hasCdRom;
+  m_hasCdRom = hasCdRom;
+};
+
+void Computer::HasFloppyDisk(bool hasFloppyDisk)
+{
+  cout << "Update (1 if have, 0 if have not)" << endl;
+  cin >> hasFloppyDisk;
+  m_hasFloppyDisk = hasFloppyDisk;
+};
+
 
 //Деструктор
 Computer::~Computer() 
