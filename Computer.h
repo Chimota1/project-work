@@ -34,7 +34,6 @@ public:
     Computer(Computer &&other) noexcept; //Конструктор переміщення
 	virtual void ShowStatus(); // Метод демонстрування стану
 	virtual void ServiceCost(); // Метод демонстрування вартості осблуговування
-	virtual void ShowCount(); // Метод демонстрування кількості
 	virtual ~Computer(); //Деструктор
 
 private:

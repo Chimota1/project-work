@@ -118,12 +118,6 @@ void Computer::ServiceCost()
   	cout << "Unknown cost" << endl;
 };
 
-// Метод демонстрування кількості
-void Computer::ShowCount()
-{
-  	cout << "0 Computer" << endl;
-};
-
 //Деструктор
 Computer::~Computer() 
 {
