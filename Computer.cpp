@@ -1,5 +1,6 @@
 #include "Computer.h"
-#include "iostream"
+#include <iostream>
+#include <exception>
 
 using namespace std;
 
@@ -124,6 +125,23 @@ void Computer::MoveAuditorium(int number)
   cout << "Write new number auditorium" << endl;
   cin >> number;
   m_auditoriumNumber = number;
+};
+
+void Computer::hasCdRomUpdate(bool hasCdRom)
+{
+  cout << "Update (1 if have, 0 if have not)" << endl;
+  cin >> hasCdRom;
+  try
+  {
+    if(hasCdRom == 1 || hasCdRom == 0)
+    {
+      	hasCdRom = m_hasCdRom;
+    };
+  }
+  catch(bool WrongNumber)
+	{
+    	cerr << "wrong number input"<<endl;
+    }
 };
 
 //Деструктор

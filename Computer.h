@@ -35,6 +35,7 @@ public:
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
+	void hasCdRomUpdate(bool hasCdRom); // метод який оновлює значення чи є Cd-ROM
 	virtual ~Computer(); //Деструктор
 
 private:
