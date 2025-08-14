@@ -32,7 +32,11 @@ public:
     string GetComputer(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
+	virtual void ShowStatus(); // Метод демонстрування стану
+	virtual void ServiceCost(); // Метод демонстрування вартості осблуговування
+	virtual void ShowCount(); // Метод демонстрування кількості
 	virtual ~Computer(); //Деструктор
+
 private:
 	string m_cpu;
 	string m_gpu;
