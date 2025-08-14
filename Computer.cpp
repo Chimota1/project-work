@@ -127,7 +127,7 @@ void Computer::MoveAuditorium(int number)
   m_auditoriumNumber = number;
 };
 
-void Computer::hasCdRomUpdate(bool hasCdRom)
+void Computer::HasCdRomUpdate(bool hasCdRom)
 {
   cout << "Update (1 if have, 0 if have not)" << endl;
   cin >> hasCdRom;
@@ -135,14 +135,32 @@ void Computer::hasCdRomUpdate(bool hasCdRom)
   {
     if(hasCdRom == 1 || hasCdRom == 0)
     {
-      	hasCdRom = m_hasCdRom;
+      	m_hasCdRom = hasCdRom;
     };
   }
-  catch(bool WrongNumber)
+  catch(bool WrongNumberToCd)
 	{
     	cerr << "wrong number input"<<endl;
     }
 };
+
+void Computer::HasFloppyDisk(bool hasFloppyDisk)
+{
+  cout << "Update (1 if have, 0 if have not)" << endl;
+  cin >> hasFloppyDisk;
+  try
+  {
+    if(hasFloppyDisk == 1 || hasFloppyDisk == 0)
+    {
+      	m_hasFloppyDisk = hasFloppyDisk;
+    };
+  }
+  catch(bool WrongNumberToFloppy)
+	{
+    	cerr << "wrong number input"<<endl;
+    }
+};
+
 
 //Деструктор
 Computer::~Computer() 
