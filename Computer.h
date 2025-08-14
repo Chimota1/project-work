@@ -32,8 +32,9 @@ public:
     string GetComputer(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
-	virtual void ShowStatus(); // Метод демонстрування стану
-	virtual void ServiceCost(); // Метод демонстрування вартості осблуговування
+	virtual void ShowStatus() = 0; // Метод демонстрування стану
+	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
+    void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
 	virtual ~Computer(); //Деструктор
 
 private:

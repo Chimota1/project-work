@@ -113,9 +113,17 @@ void Computer::ShowStatus()
 };
 
 // Метод демонстрування вартості осблуговування
-void Computer::ServiceCost()
+int Computer::ServiceCost()
 {
-  	cout << "Unknown cost" << endl;
+  	return 0;
+};
+
+// Метод який змінює номер аудиторії де знаходиться ПК
+void Computer::MoveAuditorium(int number)
+{
+  cout << "Write new number auditorium" << endl;
+  cin >> number;
+  m_auditoriumNumber = number;
 };
 
 //Деструктор
