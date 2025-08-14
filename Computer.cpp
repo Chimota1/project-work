@@ -106,6 +106,11 @@ Computer::Computer(Computer &&other) noexcept:
 {
 };
 
+void Computer::ShowStatus()
+{
+	cout << "Unknown status" << endl;
+};
+
 //Деструктор
 Computer::~Computer() 
 {
