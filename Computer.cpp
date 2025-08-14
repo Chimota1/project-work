@@ -106,24 +106,6 @@ Computer::Computer(Computer &&other) noexcept:
 {
 };
 
-// Метод демонстрування стану
-void Computer::ShowStatus()
-{
-	cout << "Unknown status" << endl;
-};
-
-// Метод демонстрування вартості осблуговування
-void Computer::ServiceCost()
-{
-  	cout << "Unknown cost" << endl;
-};
-
-// Метод демонстрування кількості
-void Computer::ShowCount()
-{
-  	cout << "0 Computer" << endl;
-};
-
 //Деструктор
 Computer::~Computer() 
 {
