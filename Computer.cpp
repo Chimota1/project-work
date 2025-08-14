@@ -107,12 +107,6 @@ Computer::Computer(Computer &&other) noexcept:
 {
 };
 
-// Метод демонстрування стану
-void Computer::ShowStatus()
-{
-	cout << "Unknown status" << endl;
-};
-
 // Метод демонстрування вартості осблуговування
 int Computer::ServiceCost()
 {
@@ -131,34 +125,14 @@ void Computer::HasCdRomUpdate(bool hasCdRom)
 {
   cout << "Update (1 if have, 0 if have not)" << endl;
   cin >> hasCdRom;
-  try
-  {
-    if(hasCdRom == 1 || hasCdRom == 0)
-    {
-      	m_hasCdRom = hasCdRom;
-    };
-  }
-  catch(bool WrongNumberToCd)
-	{
-    	cerr << "wrong number input"<<endl;
-    }
+  m_hasCdRom = hasCdRom;
 };
 
 void Computer::HasFloppyDisk(bool hasFloppyDisk)
 {
   cout << "Update (1 if have, 0 if have not)" << endl;
   cin >> hasFloppyDisk;
-  try
-  {
-    if(hasFloppyDisk == 1 || hasFloppyDisk == 0)
-    {
-      	m_hasFloppyDisk = hasFloppyDisk;
-    };
-  }
-  catch(bool WrongNumberToFloppy)
-	{
-    	cerr << "wrong number input"<<endl;
-    }
+  m_hasFloppyDisk = hasFloppyDisk;
 };
 
 
