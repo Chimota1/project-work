@@ -8,7 +8,7 @@ class RepairComputer
 {
 public:
 	RepairComputer();
-	~RepairComputer();
+	virtual ~RepairComputer();
 };
 
 #endif //REPAIRCOMPUTER_H
