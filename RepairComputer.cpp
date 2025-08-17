@@ -5,7 +5,11 @@
 
 using namespace std;
 
-RepairComputer::RepairComputer() : Computer() {};
+RepairComputer::RepairComputer() :
+    m_dateOfRepair{"Unknown Date"},
+    m_describeOfProblem{""},
+    m_cause{"Unknown"}
+    ,Computer() {};
 
 RepairComputer::RepairComputer(
     string dateOfRepair,
