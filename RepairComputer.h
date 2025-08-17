@@ -13,8 +13,9 @@ public:
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
-	string dateOfRepair;
-	string describeOfProblem;
+	string m_dateOfRepair;
+	string m_describeOfProblem;
+	string m_cause;
 };
 
 #endif //REPAIRCOMPUTER_H
