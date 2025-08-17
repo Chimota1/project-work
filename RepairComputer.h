@@ -16,6 +16,7 @@ public:
 		string cause
 	);
 	RepairComputer(const RepairComputer &other);
+	RepairComputer(RepairComputer &&other) noexcept;
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
