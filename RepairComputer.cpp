@@ -4,7 +4,12 @@
 
 using namespace std;
 
-RepairComputer::RepairComputer() {};
+RepairComputer::RepairComputer() : Computer() {};
+
+void RepairComputer::ShowStatus()
+{
+  cout << "Computer is broken" << endl;
+};
 
 RepairComputer::~RepairComputer()
 {

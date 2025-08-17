@@ -4,10 +4,11 @@
 #include "Computer.h"
 using namespace std;
 
-class RepairComputer
+class RepairComputer : public Computer
 {
 public:
 	RepairComputer();
+    virtual void ShowStatus() override;
 	virtual ~RepairComputer();
 };
 
