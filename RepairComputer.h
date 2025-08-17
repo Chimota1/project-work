@@ -8,8 +8,10 @@ class RepairComputer : public Computer
 {
 public:
 	RepairComputer();
-    virtual void ShowStatus() override;
-	virtual ~RepairComputer();
+	void ShowStatus() override;
+
+private:
+	string dateOfRepair;
 };
 
 #endif //REPAIRCOMPUTER_H

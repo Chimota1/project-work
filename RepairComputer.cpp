@@ -8,7 +8,7 @@ RepairComputer::RepairComputer() : Computer() {};
 
 void RepairComputer::ShowStatus()
 {
-  cout << "Computer is broken" << endl;
+    cout << "Computer is broken" << endl;
 };
 
 RepairComputer::~RepairComputer()
