@@ -38,6 +38,13 @@ RepairComputer::RepairComputer(
 {
 };
 
+void RepairComputer::SetDate(string date)
+{
+  cout << "Set date of problem" << endl;
+  cin >> date;
+  m_dateOfRepair = date;
+};
+
 string RepairComputer::GetDate()
 {
     return m_dateOfRepair;
