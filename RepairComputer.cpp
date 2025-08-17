@@ -38,6 +38,11 @@ RepairComputer::RepairComputer(
 {
 };
 
+string RepairComputer::GetDate()
+{
+    return m_dateOfRepair;
+};
+
 void RepairComputer::ShowStatus()
 {
     cout << "Computer is broken" << endl;

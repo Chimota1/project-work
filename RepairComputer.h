@@ -17,6 +17,9 @@ public:
 	);
 	RepairComputer(const RepairComputer &other);
 	RepairComputer(RepairComputer &&other) noexcept;
+	string GetDate ();
+	string GetDescribe ();
+	string GetCause ();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
