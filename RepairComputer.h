@@ -10,6 +10,11 @@ class RepairComputer : public Computer
 {
 public:
 	RepairComputer();
+	RepairComputer(
+		string dateOfRepair,
+		string describeOfProblem,
+		string cause
+	);
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
