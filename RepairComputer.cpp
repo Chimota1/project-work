@@ -48,6 +48,10 @@ string RepairComputer::GetDescribe()
     return m_describeOfProblem;
 };
 
+string RepairComputer::GetCause()
+{
+  return m_cause;
+};
 
 void RepairComputer::ShowStatus()
 {
