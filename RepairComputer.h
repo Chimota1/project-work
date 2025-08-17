@@ -18,6 +18,7 @@ public:
 	RepairComputer(const RepairComputer &other);
 	RepairComputer(RepairComputer &&other) noexcept;
 	void SetDate(string date);
+	void SetDescribe(string describe);
 	string GetDate ();
 	string GetDescribe ();
 	string GetCause ();

@@ -45,6 +45,13 @@ void RepairComputer::SetDate(string date)
   m_dateOfRepair = date;
 };
 
+void RepairComputer::SetDescribe(string describe)
+{
+    cout << "Set describe of problem" << endl;
+    cin >> describe;
+    m_describeOfProblem = describe;
+};
+
 string RepairComputer::GetDate()
 {
     return m_dateOfRepair;
