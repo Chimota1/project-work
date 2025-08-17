@@ -51,6 +51,13 @@ void RepairComputer::SetDescribe(string describe)
     cin >> describe;
     m_describeOfProblem = describe;
 };
+void RepairComputer::SetCause(string cause)
+{
+    cout << "Set cause of problem" << endl;
+    cin >> cause;
+    m_cause = cause;
+};
+
 
 string RepairComputer::GetDate()
 {
