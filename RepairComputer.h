@@ -29,6 +29,7 @@ public:
 	void UpdateRepairStatus();
 	int RepairCost(int cost);
 	bool NeedsSpareParts();
+	void ShowInfoAboutRepair();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
