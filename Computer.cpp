@@ -107,12 +107,6 @@ Computer::Computer(Computer &&other) noexcept:
 {
 };
 
-// Метод демонстрування вартості осблуговування
-int Computer::ServiceCost()
-{
-  	return 0;
-};
-
 // Метод який змінює номер аудиторії де знаходиться ПК
 void Computer::MoveAuditorium(int number)
 {
