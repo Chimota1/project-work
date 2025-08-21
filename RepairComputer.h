@@ -13,7 +13,8 @@ public:
 	RepairComputer(
 		string dateOfRepair,
 		string describeOfProblem,
-		string cause
+		string cause,
+		string repairStatus
 	);
 	RepairComputer(const RepairComputer &other);
 	RepairComputer(RepairComputer &&other) noexcept;
@@ -24,12 +25,14 @@ public:
 	string GetDescribe ();
 	string GetCause ();
 	void ShowFullInfo();
+	void UpdateRepairStatus();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:
 	string m_dateOfRepair;
 	string m_describeOfProblem;
 	string m_cause;
+	string m_repairStatus;
 };
 
 #endif //REPAIRCOMPUTER_H
