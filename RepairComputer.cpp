@@ -127,7 +127,7 @@ int RepairComputer::RepairCost(int cost)
 bool RepairComputer::NeedsSpareParts()
 {
 	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
-    bool input;
+    int input;
     cin >> input;
     if (input != 0 && input != 1){
 		cout << "wrong key";
