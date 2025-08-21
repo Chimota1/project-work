@@ -12,6 +12,7 @@ RepairComputer::RepairComputer() :
     m_cause{"Unknown"},
     m_repairStatus{"Unknown"},
     m_repairCost{0},
+    m_serviceCostRepair{0},
     Computer()
     {
     };
@@ -23,6 +24,7 @@ RepairComputer::RepairComputer(const RepairComputer &other)
      m_cause = other.m_cause;
      m_repairStatus = other.m_repairStatus;
      m_repairCost = other.m_repairCost;
+     m_serviceCostRepair = other.m_serviceCostRepair;
 };
 
 RepairComputer::RepairComputer(RepairComputer &&other) noexcept
@@ -32,6 +34,7 @@ RepairComputer::RepairComputer(RepairComputer &&other) noexcept
      m_cause = other.m_cause;
      m_repairStatus = other.m_repairStatus;
      m_repairCost = other.m_repairCost;
+     m_serviceCostRepair = other.m_serviceCostRepair;
 };
 
 RepairComputer::RepairComputer(
@@ -39,13 +42,15 @@ RepairComputer::RepairComputer(
     string describeOfProblem,
     string cause,
     string repairStatus,
-    int repairCost
+    int repairCost,
+    int serviceCost
     ):
     m_dateOfRepair{dateOfRepair},
     m_describeOfProblem{describeOfProblem},
     m_cause{cause},
     m_repairStatus(repairStatus),
-    m_repairCost{repairCost}
+    m_repairCost{repairCost},
+    m_serviceCostRepair{serviceCost}
 {
 };
 
@@ -143,6 +148,15 @@ void RepairComputer::ShowInfoAboutRepair()
 void RepairComputer::ShowStatus()
 {
     cout << "Status: " << m_repairStatus << endl;
+};
+
+int RepairComputer::ServiceCost()
+{
+	int serviceCost;
+    cout << "Write Service cost" << endl;
+    cin >> serviceCost;
+    m_serviceCostRepair = serviceCost;
+    return m_serviceCostRepair;
 };
 
 RepairComputer::~RepairComputer()
