@@ -23,6 +23,7 @@ public:
 	string GetDate ();
 	string GetDescribe ();
 	string GetCause ();
+	void ShowFullInfo();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
 private:

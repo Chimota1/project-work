@@ -2,6 +2,7 @@
 #include "Computer.h"
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -71,7 +72,17 @@ string RepairComputer::GetDescribe()
 
 string RepairComputer::GetCause()
 {
-  return m_cause;
+    return m_cause;
+};
+
+void RepairComputer::ShowFullInfo()
+{
+ 	vector<Computer> thisComputer;
+    vector<Computer>::iterator i;
+    for(i = thisComputer.begin(); i != thisComputer.end();++i)
+      {
+      	cout << i->GetComputer() << endl;
+      }
 };
 
 void RepairComputer::ShowStatus()
