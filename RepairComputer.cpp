@@ -109,6 +109,14 @@ void RepairComputer::UpdateRepairStatus()
 	};
 };
 
+bool RepairComputer::NeedsSpareParts()
+{
+	cout << "Computer need new Parts? \"1 if yes\\ 2 if no\"" << endl;
+    bool needNewParts;
+    cin >> needNewParts;
+    return (needNewParts ? "yes" : "no");
+};
+
 void RepairComputer::ShowStatus()
 {
     cout << "Status: " << m_repairStatus << endl;
