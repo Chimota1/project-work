@@ -109,6 +109,14 @@ void RepairComputer::UpdateRepairStatus()
 	};
 };
 
+int RepairComputer::EstimateRepairCost()
+{
+	int costOfRepair;
+    cout << "add approximate cost" << endl;
+    cin >> costOfRepair;
+    return costOfRepair;
+};
+
 bool RepairComputer::NeedsSpareParts()
 {
 	cout << "Computer need new Parts? \"1 if yes\\ 2 if no\"" << endl;

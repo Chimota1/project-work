@@ -26,6 +26,7 @@ public:
 	string GetCause ();
 	void ShowFullInfo();
 	void UpdateRepairStatus();
+	int EstimateRepairCost();
 	bool NeedsSpareParts();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
