@@ -14,7 +14,8 @@ public:
 		string dateOfRepair,
 		string describeOfProblem,
 		string cause,
-		string repairStatus
+		string repairStatus,
+		int repairCost
 	);
 	RepairComputer(const RepairComputer &other);
 	RepairComputer(RepairComputer &&other) noexcept;
@@ -26,7 +27,7 @@ public:
 	string GetCause ();
 	void ShowFullInfo();
 	void UpdateRepairStatus();
-	int EstimateRepairCost();
+	int RepairCost(int cost);
 	bool NeedsSpareParts();
 	void ShowStatus() override;
 	virtual ~RepairComputer();
@@ -35,6 +36,8 @@ private:
 	string m_describeOfProblem;
 	string m_cause;
 	string m_repairStatus;
+	int m_repairCost;
+	bool m_needNewParts;
 };
 
 #endif //REPAIRCOMPUTER_H

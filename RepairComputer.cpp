@@ -11,6 +11,7 @@ RepairComputer::RepairComputer() :
     m_describeOfProblem{""},
     m_cause{"Unknown"},
     m_repairStatus{"Unknown"},
+    m_repairCost{0},
     Computer()
     {
     };
@@ -21,26 +22,30 @@ RepairComputer::RepairComputer(const RepairComputer &other)
      m_describeOfProblem = other.m_describeOfProblem;
      m_cause = other.m_cause;
      m_repairStatus = other.m_repairStatus;
+     m_repairCost = other.m_repairCost;
 };
 
 RepairComputer::RepairComputer(RepairComputer &&other) noexcept
 {
-    m_dateOfRepair = other.m_dateOfRepair;
-    m_describeOfProblem = other.m_describeOfProblem;
-    m_cause = other.m_cause;
-    m_repairStatus = other.m_repairStatus;
+     m_dateOfRepair = other.m_dateOfRepair;
+     m_describeOfProblem = other.m_describeOfProblem;
+     m_cause = other.m_cause;
+     m_repairStatus = other.m_repairStatus;
+     m_repairCost = other.m_repairCost;
 };
 
 RepairComputer::RepairComputer(
     string dateOfRepair,
     string describeOfProblem,
     string cause,
-    string repairStatus
+    string repairStatus,
+    int repairCost
     ):
     m_dateOfRepair{dateOfRepair},
     m_describeOfProblem{describeOfProblem},
     m_cause{cause},
-    m_repairStatus(repairStatus)
+    m_repairStatus(repairStatus),
+    m_repairCost{repairCost}
 {
 };
 
@@ -106,23 +111,28 @@ void RepairComputer::UpdateRepairStatus()
         case 3:
         m_repairStatus = "ready";
         break;
+        default:
+        cout << "wrong key";
 	};
 };
 
-int RepairComputer::EstimateRepairCost()
+int RepairComputer::RepairCost(int cost)
 {
-	int costOfRepair;
     cout << "add approximate cost" << endl;
-    cin >> costOfRepair;
-    return costOfRepair;
+    cin >> cost;
+    m_repairCost = cost;
+    return m_repairCost;
 };
 
 bool RepairComputer::NeedsSpareParts()
 {
-	cout << "Computer need new Parts? \"1 if yes\\ 2 if no\"" << endl;
-    bool needNewParts;
-    cin >> needNewParts;
-    return (needNewParts ? "yes" : "no");
+	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
+    bool input;
+    cin >> input;
+    if (input != 0 && input != 1){
+		cout << "wrong key";
+    };
+    return m_needNewParts = (input == 1);
 };
 
 void RepairComputer::ShowStatus()
