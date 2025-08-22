@@ -33,6 +33,15 @@ void WorkedComputer::UpdateStatus()
     };
 };
 
+int WorkedComputer::ServiceCost()
+{
+  	int serviceCost;
+    cout << "Write Service cost" << endl;
+    cin >> serviceCost;
+    m_serviceCostWorked = serviceCost;
+    return m_serviceCostWorked;
+};
+
 WorkedComputer::~WorkedComputer()
 {
     cout << "Destructor of Worked class" << endl;
