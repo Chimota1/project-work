@@ -9,6 +9,10 @@ class WorkedComputer : public Computer
 {
 public:
 	WorkedComputer();
+    WorkedComputer(
+    string statusOfWork,
+    int serviceCostWorked,
+    int daysWithoutRepair);
     virtual void ShowStatus() override;
     virtual int ServiceCost() override;
     void SetDays(int days);
