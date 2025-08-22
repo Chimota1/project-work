@@ -41,6 +41,11 @@ void WorkedComputer::SetDays(int days)
     m_daysWithoutRepair = days;
 };
 
+int WorkedComputer::GetDays()
+{
+	return m_daysWithoutRepair;
+};
+
 int WorkedComputer::ServiceCost()
 {
   	int serviceCost;

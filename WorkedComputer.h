@@ -12,6 +12,7 @@ public:
     virtual void ShowStatus() override;
     virtual int ServiceCost() override;
     void SetDays(int days);
+    int GetDays();
     void UpdateStatus();
 	virtual ~WorkedComputer();
 private:
