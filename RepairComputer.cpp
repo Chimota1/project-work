@@ -156,7 +156,7 @@ int RepairComputer::ServiceCost()
     cout << "Write Service cost" << endl;
     cin >> serviceCost;
     m_serviceCostRepair = serviceCost;
-    return m_serviceCostRepair;
+    return m_serviceCostRepair + m_repairCost;
 };
 
 RepairComputer::~RepairComputer()
