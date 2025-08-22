@@ -9,11 +9,13 @@ class WorkedComputer : public Computer
 {
 public:
 	WorkedComputer();
-    void ShowStatus() override;
+    virtual void ShowStatus() override;
+    virtual int ServiceCost() override;
     void UpdateStatus();
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;
+    int m_serviceCostWorked;
 };
 
 #endif //WORKERCOMPUTER_H

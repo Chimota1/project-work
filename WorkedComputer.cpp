@@ -4,7 +4,11 @@
 
 using namespace std;
 
-WorkedComputer::WorkedComputer(): m_statusOfWork{"Unknown"} {};
+WorkedComputer::WorkedComputer():
+	m_statusOfWork{"Unknown"},
+	m_serviceCostWorked{0}
+{
+};
 
 void WorkedComputer::ShowStatus()
 {
@@ -31,5 +35,5 @@ void WorkedComputer::UpdateStatus()
 
 WorkedComputer::~WorkedComputer()
 {
-  cout << "Destructor of Worked class" << endl;
+    cout << "Destructor of Worked class" << endl;
 };
