@@ -34,6 +34,13 @@ void WorkedComputer::UpdateStatus()
     };
 };
 
+void WorkedComputer::SetDays(int days)
+{
+	cout << "Write days without Repair"<< endl;
+    cin >> days;
+    m_daysWithoutRepair = days;
+};
+
 int WorkedComputer::ServiceCost()
 {
   	int serviceCost;
