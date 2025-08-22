@@ -11,7 +11,7 @@ public:
 	WorkedComputer();
     void ShowStatus() override;
     void UpdateStatus();
-	~WorkedComputer();
+	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;
 };

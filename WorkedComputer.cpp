@@ -28,3 +28,8 @@ void WorkedComputer::UpdateStatus()
            break;
     };
 };
+
+WorkedComputer::~WorkedComputer()
+{
+  cout << "Destructor of Worked class" << endl;
+};
