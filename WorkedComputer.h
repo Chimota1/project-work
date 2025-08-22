@@ -2,14 +2,17 @@
 #define WORKERCOMPUTER_H
 
 #include "Computer.h"
+#include "string"
 using namespace std;
 
-class WorkedComputer
+class WorkedComputer : public Computer
 {
 public:
 	WorkedComputer();
+    void ShowStatus() override;
 	~WorkedComputer();
 private:
+    string m_statusOfWork;
 };
 
 #endif //WORKERCOMPUTER_H
