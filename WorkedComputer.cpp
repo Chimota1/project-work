@@ -6,7 +6,8 @@ using namespace std;
 
 WorkedComputer::WorkedComputer():
 	m_statusOfWork{"Unknown"},
-	m_serviceCostWorked{0}
+	m_serviceCostWorked{0},
+    m_daysWithoutRepair{0}
 {
 };
 

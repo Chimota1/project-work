@@ -16,6 +16,7 @@ public:
 private:
     string m_statusOfWork;
     int m_serviceCostWorked;
+    int m_daysWithoutRepair;
 };
 
 #endif //WORKERCOMPUTER_H
