@@ -13,6 +13,7 @@ public:
     string statusOfWork,
     int serviceCostWorked,
     int daysWithoutRepair);
+    WorkedComputer(const WorkedComputer &other);
     virtual void ShowStatus() override;
     virtual int ServiceCost() override;
     void SetDays(int days);

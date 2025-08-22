@@ -22,6 +22,13 @@ WorkedComputer::WorkedComputer(
 {
 };
 
+WorkedComputer:: WorkedComputer(const WorkedComputer &other)
+{
+	m_statusOfWork = other.m_statusOfWork;
+    m_serviceCostWorked = other.m_serviceCostWorked;
+    m_daysWithoutRepair = other.m_daysWithoutRepair;
+};
+
 void WorkedComputer::ShowStatus()
 {
     cout <<"Status: " << m_statusOfWork << endl;
