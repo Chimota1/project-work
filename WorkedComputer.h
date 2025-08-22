@@ -10,6 +10,7 @@ class WorkedComputer : public Computer
 public:
 	WorkedComputer();
     void ShowStatus() override;
+    void UpdateStatus();
 	~WorkedComputer();
 private:
     string m_statusOfWork;
