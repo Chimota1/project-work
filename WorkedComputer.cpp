@@ -5,6 +5,7 @@
 using namespace std;
 
 WorkedComputer::WorkedComputer():
+    Computer(),
 	m_statusOfWork{"Unknown"},
 	m_serviceCostWorked{0},
     m_daysWithoutRepair{0}
@@ -16,6 +17,7 @@ WorkedComputer::WorkedComputer(
     int serviceCostWorked,
     int daysWithoutRepair
     ):
+    Computer(),
 	m_statusOfWork{statusOfWork},
 	m_serviceCostWorked{serviceCostWorked},
     m_daysWithoutRepair{daysWithoutRepair}
