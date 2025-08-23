@@ -8,19 +8,22 @@ WorkedComputer::WorkedComputer():
     Computer(),
 	m_statusOfWork{"Unknown"},
 	m_serviceCostWorked{0},
-    m_daysWithoutRepair{0}
+    m_daysWithoutRepair{0},
+    m_countUsers{0}
 {
 };
 
 WorkedComputer::WorkedComputer(
     string statusOfWork,
     int serviceCostWorked,
-    int daysWithoutRepair
+    int daysWithoutRepair,
+    int countUsers
     ):
     Computer(),
 	m_statusOfWork{statusOfWork},
 	m_serviceCostWorked{serviceCostWorked},
-    m_daysWithoutRepair{daysWithoutRepair}
+    m_daysWithoutRepair{daysWithoutRepair},
+    m_countUsers{countUsers}
 {
 };
 
@@ -29,6 +32,7 @@ WorkedComputer:: WorkedComputer(const WorkedComputer &other)
 	m_statusOfWork = other.m_statusOfWork;
     m_serviceCostWorked = other.m_serviceCostWorked;
     m_daysWithoutRepair = other.m_daysWithoutRepair;
+    m_countUsers = other.m_countUsers;
 };
 
 WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
@@ -36,6 +40,7 @@ WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 	m_statusOfWork = other.m_statusOfWork;
     m_serviceCostWorked = other.m_serviceCostWorked;
     m_daysWithoutRepair = other.m_daysWithoutRepair;
+    m_countUsers = other.m_countUsers;
 }
 
 void WorkedComputer::ShowStatus()
@@ -61,6 +66,13 @@ void WorkedComputer::UpdateStatus()
     };
 };
 
+void WorkedComputer::SetCountUsers(int users)
+{
+    cout << "Set count Users" << endl;
+    cin >> users;
+    m_countUsers = users;
+}
+
 void WorkedComputer::SetDays(int days)
 {
 	cout << "Write days without Repair"<< endl;
@@ -72,6 +84,12 @@ int WorkedComputer::GetDays()
 {
 	return m_daysWithoutRepair;
 };
+
+int WorkedComputer::GetCountUsers()
+{
+    return m_countUsers;
+}
+
 
 int WorkedComputer::ServiceCost()
 {

@@ -12,19 +12,23 @@ public:
     WorkedComputer(
     string statusOfWork,
     int serviceCostWorked,
-    int daysWithoutRepair);
+    int daysWithoutRepair,
+    int countUsers);
     WorkedComputer(const WorkedComputer &other);
 	WorkedComputer(WorkedComputer &&other) noexcept;
     virtual void ShowStatus() override;
     virtual int ServiceCost() override;
     void SetDays(int days);
+    void SetCountUsers(int users);
     int GetDays();
+	int GetCountUsers();
     void UpdateStatus();
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;
     int m_serviceCostWorked;
     int m_daysWithoutRepair;
+    int m_countUsers;
 };
 
 #endif //WORKERCOMPUTER_H
