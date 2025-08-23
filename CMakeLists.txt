@@ -1,6 +1,13 @@
-    cmake_minimum_required(VERSION 3.20)
-    project(main)
+cmake_minimum_required(VERSION 3.25)
+project(project-work)
 
-    set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 20)
 
-    add_executable(Algorythms_and_structure_data_oop main.cpp Cogitmputer.cpp Manager.cpp Interface.cpp RepairComputer.cpp WorkedComputer.cpp )
+add_executable(project-work
+        main.cpp
+        Computer.cpp
+        Manager.cpp
+        Interface.cpp
+        RepairComputer.cpp
+        WorkedComputer.cpp
+)
