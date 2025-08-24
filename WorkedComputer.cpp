@@ -29,18 +29,18 @@ WorkedComputer::WorkedComputer(
 
 WorkedComputer:: WorkedComputer(const WorkedComputer &other)
 {
-	m_statusOfWork = other.m_statusOfWork;
-    m_serviceCostWorked = other.m_serviceCostWorked;
-    m_daysWithoutRepair = other.m_daysWithoutRepair;
-    m_countUsers = other.m_countUsers;
+	this->m_statusOfWork = other.m_statusOfWork;
+    this->m_serviceCostWorked = other.m_serviceCostWorked;
+    this->m_daysWithoutRepair = other.m_daysWithoutRepair;
+    this->m_countUsers = other.m_countUsers;
 };
 
 WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 {
-	m_statusOfWork = other.m_statusOfWork;
-    m_serviceCostWorked = other.m_serviceCostWorked;
-    m_daysWithoutRepair = other.m_daysWithoutRepair;
-    m_countUsers = other.m_countUsers;
+	this->m_statusOfWork = other.m_statusOfWork;
+    this->m_serviceCostWorked = other.m_serviceCostWorked;
+    this->m_daysWithoutRepair = other.m_daysWithoutRepair;
+    this->m_countUsers = other.m_countUsers;
 }
 
 void WorkedComputer::ShowStatus()
