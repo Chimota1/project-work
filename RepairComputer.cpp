@@ -19,12 +19,12 @@ RepairComputer::RepairComputer() :
 
 RepairComputer::RepairComputer(const RepairComputer &other)
 {
-     m_dateOfRepair = other.m_dateOfRepair;
-     m_describeOfProblem = other.m_describeOfProblem;
-     m_cause = other.m_cause;
-     m_repairStatus = other.m_repairStatus;
-     m_repairCost = other.m_repairCost;
-     m_serviceCostRepair = other.m_serviceCostRepair;
+     this->m_dateOfRepair = other.m_dateOfRepair;
+     this->m_describeOfProblem = other.m_describeOfProblem;
+     this->m_cause = other.m_cause;
+     this->m_repairStatus = other.m_repairStatus;
+     this->m_repairCost = other.m_repairCost;
+     this->m_serviceCostRepair = other.m_serviceCostRepair;
 };
 
 RepairComputer::RepairComputer(RepairComputer &&other) noexcept
