@@ -24,6 +24,7 @@ public:
 	int GetCountUsers();
     void UpdateStatus();
 	void TurnOn();
+	void TurnOff();
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;

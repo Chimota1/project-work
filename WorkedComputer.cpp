@@ -105,6 +105,12 @@ void WorkedComputer::TurnOn()
     m_statusOfWork = "Working";
 }
 
+void WorkedComputer::TurnOff()
+{
+    m_statusOfWork = "Turned off";
+}
+
+
 WorkedComputer::~WorkedComputer()
 {
     cout << "Destructor of Worked class" << endl;
