@@ -25,6 +25,7 @@ public:
     void UpdateStatus();
 	void TurnOn();
 	void TurnOff();
+	bool IsWorking();
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;

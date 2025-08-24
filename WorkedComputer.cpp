@@ -110,6 +110,20 @@ void WorkedComputer::TurnOff()
     m_statusOfWork = "Turned off";
 }
 
+bool WorkedComputer::IsWorking()
+{
+    if (m_statusOfWork == "Working")
+    {
+        cout << "is working" << endl;
+        return true;
+    }
+    else
+    {
+        cout << "is turned off" << endl;
+        return false;
+    }
+}
+
 
 WorkedComputer::~WorkedComputer()
 {
