@@ -45,7 +45,7 @@ WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 
 void WorkedComputer::ShowStatus()
 {
-    cout <<"Status: " << m_statusOfWork << endl;
+    cout <<"Status of Worked PC: " << m_statusOfWork << endl;
 };
 
 void WorkedComputer::UpdateStatus()
