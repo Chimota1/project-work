@@ -100,6 +100,11 @@ int WorkedComputer::ServiceCost()
     return m_serviceCostWorked;
 };
 
+void WorkedComputer::TurnOn()
+{
+    m_statusOfWork = "Working";
+}
+
 WorkedComputer::~WorkedComputer()
 {
     cout << "Destructor of Worked class" << endl;

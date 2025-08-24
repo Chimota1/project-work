@@ -23,6 +23,7 @@ public:
     int GetDays();
 	int GetCountUsers();
     void UpdateStatus();
+	void TurnOn();
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;
