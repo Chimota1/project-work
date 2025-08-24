@@ -80,17 +80,17 @@ string Computer::GetComputer()
 };
 
 //Копіювальний конструктор
-Computer::Computer(const Computer &other):
-	m_cpu{other.m_cpu},
-    m_gpu{other.m_gpu},
-	m_monitor{other.m_monitor},
-	m_keyboard{other.m_keyboard},
-	m_hasCdRom{other.m_hasCdRom},
-	m_hasFloppyDisk{other.m_hasFloppyDisk},
-	m_sizeOfRom{other.m_sizeOfRom},
-	m_inventoryNumber{other.m_inventoryNumber},
-	m_auditoriumNumber{other.m_auditoriumNumber}
+Computer::Computer(const Computer &other)
 {
+	this->m_cpu = other.m_cpu;
+	this->m_gpu = other.m_gpu;
+	this->m_keyboard = other.m_keyboard;
+	this->m_monitor = other.m_monitor;
+	this->m_auditoriumNumber = other.m_auditoriumNumber;
+	this->m_inventoryNumber = other.m_auditoriumNumber;
+	this->m_hasCdRom = other.m_hasCdRom;
+	this->m_hasFloppyDisk = other.m_hasFloppyDisk;
+	this->m_sizeOfRom = other.m_sizeOfRom;
 };
 
 //Конструктор переміщення
