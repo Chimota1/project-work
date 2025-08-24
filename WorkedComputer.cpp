@@ -27,7 +27,7 @@ WorkedComputer::WorkedComputer(
 {
 };
 
-WorkedComputer:: WorkedComputer(const WorkedComputer &other)
+WorkedComputer::WorkedComputer(const WorkedComputer &other)
 {
 	this->m_statusOfWork = other.m_statusOfWork;
     this->m_serviceCostWorked = other.m_serviceCostWorked;
