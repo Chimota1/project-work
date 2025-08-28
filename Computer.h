@@ -30,16 +30,16 @@ public:
 	void SetSizeOfRom(int sizeOfRom);
 	void SetInventoryNumber(int inventoryNumber);
 	void SetAuditoriumNumber(int auditoriumNumber);
-	string GetGpu();
-	string GetCpu();
-	string GetMonitor();
-	string GetKeyboard();
-	bool GetHasCdRom();
-	bool GetHasFloppyDisk();
-	int GetSizeOfRom();
-	int GetInventoryNumber();
-	int GetAuditoriumNumber();
-	string GetComputerFull();
+	string GetGpu() const;
+	string GetCpu() const;
+	string GetMonitor() const;
+	string GetKeyboard() const;
+	bool GetHasCdRom() const;
+	bool GetHasFloppyDisk() const;
+	int GetSizeOfRom() const;
+	int GetInventoryNumber() const;
+	int GetAuditoriumNumber() const;
+	string GetComputerFull() const;
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК

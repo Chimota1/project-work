@@ -78,45 +78,54 @@ void Computer::SetAuditoriumNumber(int auditoriumNumber) {
 };
 
 
-string Computer::GetCpu() {
+string Computer::GetCpu() const
+{
 	return m_cpu;
 };
 
-string Computer::GetGpu() {
+string Computer::GetGpu() const
+{
 	return m_gpu;
 };
 
-string Computer::GetMonitor() {
+string Computer::GetMonitor() const
+{
 	return m_monitor;
 };
 
-string Computer::GetKeyboard() {
+string Computer::GetKeyboard() const
+{
 	return m_keyboard;
 };
 
-bool Computer::GetHasCdRom() {
+bool Computer::GetHasCdRom() const
+{
 	return m_hasCdRom;
 };
 
-bool Computer::GetHasFloppyDisk() {
+bool Computer::GetHasFloppyDisk() const
+{
 	return m_hasFloppyDisk;
 };
 
-int Computer::GetSizeOfRom() {
+int Computer::GetSizeOfRom() const
+{
 	return m_sizeOfRom;
 };
 
-int Computer::GetInventoryNumber() {
+int Computer::GetInventoryNumber() const
+{
 	return m_inventoryNumber;
 };
 
-int Computer::GetAuditoriumNumber() {
+int Computer::GetAuditoriumNumber() const
+{
 	return m_auditoriumNumber;
 }
 
 
 //Get-метод
-string Computer::GetComputerFull()
+string Computer::GetComputerFull() const
 {
   return
    "Cpu: " + m_cpu
