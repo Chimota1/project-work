@@ -74,17 +74,17 @@ void RepairComputer::SetCause(string cause)
     m_cause = cause;
 };
 
-string RepairComputer::GetDate()
+string RepairComputer::GetDate() const
 {
     return m_dateOfRepair;
 };
 
-string RepairComputer::GetDescribe()
+string RepairComputer::GetDescribe() const
 {
     return m_describeOfProblem;
 };
 
-string RepairComputer::GetCause()
+string RepairComputer::GetCause() const
 {
     return m_cause;
 };
@@ -133,8 +133,8 @@ int RepairComputer::RepairCost(int cost)
 
 bool RepairComputer::NeedsSpareParts()
 {
-	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
     int input;
+	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
     cin >> input;
     if (input != 0 && input != 1){
 		cout << "wrong key";
