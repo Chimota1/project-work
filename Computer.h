@@ -19,17 +19,7 @@ public:
         int sizeOfRom,
         int inventoryNumber,
         int auditoriumNumber); //Конструктор з параметрами
-    void SetComputer(
-        string cpu,
-        string gpu,
-        string monitor,
-        string keyboard,
-        bool hasCdRom,
-        bool hasFloppyDisk,
-        int sizeOfRom,
-        int inventoryNumber,
-        int auditoriumNumber); //Set-метод
-    string GetComputer(); //Get-метод
+    string GetComputerFull(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
 	virtual void ShowStatus() = 0; // Метод демонстрування стану

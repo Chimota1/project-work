@@ -41,31 +41,8 @@ Computer::Computer(
 {
 };
 
-//Set-метод
-void Computer::SetComputer(
-	string cpu,
-	string gpu,
-	string monitor,
-	string keyboard,
-	bool hasCdRom,
-	bool hasFloppyDisk,
-	int sizeOfRom,
-	int inventoryNumber,
-	int auditoriumNumber)
-{
-        m_cpu = cpu;
-        m_gpu = gpu;
-	    m_monitor = monitor;
-	    m_keyboard = keyboard;
-	    m_hasCdRom = hasCdRom;
-	    m_hasFloppyDisk = hasFloppyDisk;
-	    m_sizeOfRom = sizeOfRom;
-	    m_inventoryNumber = inventoryNumber;
-	    m_auditoriumNumber = auditoriumNumber;
-};
-
 //Get-метод
-string Computer::GetComputer()
+string Computer::GetComputerFull()
 {
   return
    "Cpu: " + m_cpu
