@@ -20,8 +20,8 @@ public:
     virtual int ServiceCost() override;
     void SetDays(int days);
     void SetCountUsers(int users);
-    int GetDays();
-	int GetCountUsers();
+    int GetDays() const;
+	int GetCountUsers() const;
     void UpdateStatus();
 	void TurnOn();
 	void TurnOff();

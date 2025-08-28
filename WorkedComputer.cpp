@@ -76,12 +76,12 @@ void WorkedComputer::SetDays(int days)
     m_daysWithoutRepair = days;
 };
 
-int WorkedComputer::GetDays()
+int WorkedComputer::GetDays() const
 {
 	return m_daysWithoutRepair;
 };
 
-int WorkedComputer::GetCountUsers()
+int WorkedComputer::GetCountUsers() const
 {
     return m_countUsers;
 }
