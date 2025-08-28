@@ -49,6 +49,9 @@ void Computer::SetGpu(string gpu) {
 	m_gpu = gpu;
 };
 
+void Computer::SetMonitor(string monitor) {
+	m_monitor = monitor;
+}
 
 string Computer::GetCpu() {
 	return m_cpu;
@@ -57,6 +60,11 @@ string Computer::GetCpu() {
 string Computer::GetGpu() {
 	return m_gpu;
 }
+
+string Computer::GetMonitor() {
+	return m_monitor;
+}
+
 
 //Get-метод
 string Computer::GetComputerFull()
