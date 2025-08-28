@@ -10,7 +10,7 @@ class Manager
 {
 public:
 	Manager();
-	~Manager();
+	virtual ~Manager();
 private:
 shared_ptr<vector<Computer>> thisComputer;
 };
