@@ -41,31 +41,91 @@ Computer::Computer(
 {
 };
 
-//Set-метод
-void Computer::SetComputer(
-	string cpu,
-	string gpu,
-	string monitor,
-	string keyboard,
-	bool hasCdRom,
-	bool hasFloppyDisk,
-	int sizeOfRom,
-	int inventoryNumber,
-	int auditoriumNumber)
-{
-        m_cpu = cpu;
-        m_gpu = gpu;
-	    m_monitor = monitor;
-	    m_keyboard = keyboard;
-	    m_hasCdRom = hasCdRom;
-	    m_hasFloppyDisk = hasFloppyDisk;
-	    m_sizeOfRom = sizeOfRom;
-	    m_inventoryNumber = inventoryNumber;
-	    m_auditoriumNumber = auditoriumNumber;
+void Computer::SetCpu(string cpu) {
+	m_cpu = cpu;
 };
 
+void Computer::SetGpu(string gpu) {
+	m_gpu = gpu;
+};
+
+void Computer::SetMonitor(string monitor) {
+	m_monitor = monitor;
+};
+
+void Computer::SetKeyboard(string keyboard) {
+	m_keyboard = keyboard;
+};
+
+void Computer::SetHasCdRom(bool hasCdRom) {
+	m_hasCdRom = hasCdRom;
+};
+
+void Computer::SetHasFloppyDisk(bool hasFloppyDisk) {
+	m_hasFloppyDisk = hasFloppyDisk;
+};
+
+void Computer::SetSizeOfRom(int sizeOfRom) {
+	m_sizeOfRom = sizeOfRom;
+};
+
+void Computer::SetInventoryNumber(int inventoryNumber) {
+	m_inventoryNumber = inventoryNumber;
+};
+
+void Computer::SetAuditoriumNumber(int auditoriumNumber) {
+	m_auditoriumNumber = auditoriumNumber;
+};
+
+
+string Computer::GetCpu() const
+{
+	return m_cpu;
+};
+
+string Computer::GetGpu() const
+{
+	return m_gpu;
+};
+
+string Computer::GetMonitor() const
+{
+	return m_monitor;
+};
+
+string Computer::GetKeyboard() const
+{
+	return m_keyboard;
+};
+
+bool Computer::GetHasCdRom() const
+{
+	return m_hasCdRom;
+};
+
+bool Computer::GetHasFloppyDisk() const
+{
+	return m_hasFloppyDisk;
+};
+
+int Computer::GetSizeOfRom() const
+{
+	return m_sizeOfRom;
+};
+
+int Computer::GetInventoryNumber() const
+{
+	return m_inventoryNumber;
+};
+
+int Computer::GetAuditoriumNumber() const
+{
+	return m_auditoriumNumber;
+}
+
+
 //Get-метод
-string Computer::GetComputer()
+string Computer::GetComputerFull() const
 {
   return
    "Cpu: " + m_cpu
