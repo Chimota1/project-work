@@ -19,7 +19,6 @@ public:
         int sizeOfRom,
         int inventoryNumber,
         int auditoriumNumber); //Конструктор з параметрами
-    string GetComputerFull(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
 	void SetCpu(string cpu);
@@ -40,6 +39,7 @@ public:
 	int GetSizeOfRom();
 	int GetInventoryNumber();
 	int GetAuditoriumNumber();
+	string GetComputerFull();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
