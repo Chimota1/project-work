@@ -30,6 +30,7 @@ public:
 	void SetHasFloppyDisk(bool hasFloppyDisk);
 	void SetSizeOfRom(int sizeOfRom);
 	void SetInventoryNumber(int inventoryNumber);
+	void SetAuditoriumNumber(int auditoriumNumber);
 	string GetGpu();
 	string GetCpu();
 	string GetMonitor();
@@ -38,6 +39,7 @@ public:
 	bool GetHasFloppyDisk();
 	int GetSizeOfRom();
 	int GetInventoryNumber();
+	int GetAuditoriumNumber();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК

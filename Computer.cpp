@@ -73,6 +73,10 @@ void Computer::SetInventoryNumber(int inventoryNumber) {
 	m_inventoryNumber = inventoryNumber;
 };
 
+void Computer::SetAuditoriumNumber(int auditoriumNumber) {
+	m_auditoriumNumber = auditoriumNumber;
+};
+
 
 string Computer::GetCpu() {
 	return m_cpu;
@@ -105,6 +109,10 @@ int Computer::GetSizeOfRom() {
 int Computer::GetInventoryNumber() {
 	return m_inventoryNumber;
 };
+
+int Computer::GetAuditoriumNumber() {
+	return m_auditoriumNumber;
+}
 
 
 //Get-метод
