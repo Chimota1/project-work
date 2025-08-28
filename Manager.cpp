@@ -1,9 +1,12 @@
 #include "Manager.h"
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
-Manager::Manager() {};
+Manager::Manager() : thisComputer{}
+{
+};
 
 Manager::~Manager()
 {

@@ -12,7 +12,7 @@ public:
 	Manager();
 	virtual ~Manager();
 private:
-shared_ptr<vector<Computer>> thisComputer;
+	vector<shared_ptr<Computer>> thisComputer;
 };
 
 #endif //MANAGER_H
