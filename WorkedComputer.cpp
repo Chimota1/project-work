@@ -68,15 +68,11 @@ void WorkedComputer::UpdateStatus()
 
 void WorkedComputer::SetCountUsers(int users)
 {
-    cout << "Set count Users" << endl;
-    cin >> users;
     m_countUsers = users;
 }
 
 void WorkedComputer::SetDays(int days)
 {
-	cout << "Write days without Repair"<< endl;
-    cin >> days;
     m_daysWithoutRepair = days;
 };
 
