@@ -23,6 +23,8 @@ public:
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
 	void SetCpu(string cpu);
+	void SetGpu(string gpu);
+	string GetGpu();
 	string GetCpu();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування

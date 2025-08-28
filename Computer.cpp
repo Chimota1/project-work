@@ -43,12 +43,20 @@ Computer::Computer(
 
 void Computer::SetCpu(string cpu) {
 	m_cpu = cpu;
-}
+};
+
+void Computer::SetGpu(string gpu) {
+	m_gpu = gpu;
+};
+
 
 string Computer::GetCpu() {
 	return m_cpu;
-}
+};
 
+string Computer::GetGpu() {
+	return m_gpu;
+}
 
 //Get-метод
 string Computer::GetComputerFull()
