@@ -57,6 +57,11 @@ void Computer::SetKeyboard(string keyboard) {
 	m_keyboard = keyboard;
 }
 
+void Computer::SetHasCdRom(bool hasCdRom) {
+	m_hasCdRom = hasCdRom;
+}
+
+
 string Computer::GetCpu() {
 	return m_cpu;
 };
@@ -71,6 +76,10 @@ string Computer::GetMonitor() {
 
 string Computer::GetKeyboard() {
 	return m_keyboard;
+}
+
+bool Computer::GetHasCdRom() {
+	return m_hasCdRom;
 }
 
 

@@ -26,10 +26,12 @@ public:
 	void SetGpu(string gpu);
 	void SetMonitor(string monitor);
 	void SetKeyboard(string keyboard);
+	void SetHasCdRom(bool hasCdRom);
 	string GetGpu();
 	string GetCpu();
 	string GetMonitor();
 	string GetKeyboard();
+	bool GetHasCdRom();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
