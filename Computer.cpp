@@ -51,15 +51,19 @@ void Computer::SetGpu(string gpu) {
 
 void Computer::SetMonitor(string monitor) {
 	m_monitor = monitor;
-}
+};
 
 void Computer::SetKeyboard(string keyboard) {
 	m_keyboard = keyboard;
-}
+};
 
 void Computer::SetHasCdRom(bool hasCdRom) {
 	m_hasCdRom = hasCdRom;
-}
+};
+
+void Computer::SetHasFloppyDisk(bool hasFloppyDisk) {
+	m_hasFloppyDisk = hasFloppyDisk;
+};
 
 
 string Computer::GetCpu() {
@@ -80,6 +84,10 @@ string Computer::GetKeyboard() {
 
 bool Computer::GetHasCdRom() {
 	return m_hasCdRom;
+}
+
+bool Computer::GetHasFloppyDisk() {
+	return m_hasFloppyDisk;
 }
 
 
