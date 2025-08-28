@@ -142,7 +142,7 @@ bool RepairComputer::NeedsSpareParts()
     return m_needNewParts = (input == 1);
 };
 
-void RepairComputer::ShowInfoAboutRepair()
+void RepairComputer::ShowInfoAboutRepair() const
 {
 	cout << GetInventoryNumber() << "in repair of" << GetDate() << "because" << GetCause();
 };

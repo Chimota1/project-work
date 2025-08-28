@@ -1,0 +1,3 @@
+D:/project_work/database_Oblik/project-work/cmake-build-debug/CMakeFiles/project-work.dir
+D:/project_work/database_Oblik/project-work/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/project_work/database_Oblik/project-work/cmake-build-debug/CMakeFiles/rebuild_cache.dir
