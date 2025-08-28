@@ -95,9 +95,11 @@ void RepairComputer::ShowFullInfo()
     vector<Computer>::iterator i;
     for(i = thisComputer.begin(); i != thisComputer.end();++i)
       {
-      	cout << i->GetComputer();
+      	cout << i->GetComputerFull();
       }
-      cout<< " " << m_cause << endl;
+      cout << " " << m_cause << endl;
+      cout << " " << m_describeOfProblem << endl;
+      cout << " " << m_dateOfRepair << endl;
 };
 
 void RepairComputer::UpdateRepairStatus()
