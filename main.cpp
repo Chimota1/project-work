@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Computer.h"
 #include "RepairComputer.h"
+#include "WorkedComputer.h"
+#include "Manager.h"
+#include "Interface.h"
 
 using namespace std;
 
