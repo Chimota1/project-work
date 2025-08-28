@@ -25,9 +25,11 @@ public:
 	void SetCpu(string cpu);
 	void SetGpu(string gpu);
 	void SetMonitor(string monitor);
+	void SetKeyboard(string keyboard);
 	string GetGpu();
 	string GetCpu();
 	string GetMonitor();
+	string GetKeyboard();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК

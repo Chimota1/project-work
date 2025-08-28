@@ -53,6 +53,10 @@ void Computer::SetMonitor(string monitor) {
 	m_monitor = monitor;
 }
 
+void Computer::SetKeyboard(string keyboard) {
+	m_keyboard = keyboard;
+}
+
 string Computer::GetCpu() {
 	return m_cpu;
 };
@@ -63,6 +67,10 @@ string Computer::GetGpu() {
 
 string Computer::GetMonitor() {
 	return m_monitor;
+}
+
+string Computer::GetKeyboard() {
+	return m_keyboard;
 }
 
 
