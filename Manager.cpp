@@ -13,6 +13,11 @@ m_thisComputer{thisComputer}
 {
 }
 
+Manager::Manager(const Manager &other)
+{
+    this->m_thisComputer = other.m_thisComputer;
+};
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
