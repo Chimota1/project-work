@@ -1,8 +1,0 @@
-# ninja log v6
-27	1106	7776811919198523	CMakeFiles/project-work.dir/Manager.cpp.obj	1a249766f41542c3
-43	2307	7776811919353850	CMakeFiles/project-work.dir/RepairComputer.cpp.obj	f2a91d06d3b57e7b
-35	1262	7776811919283662	CMakeFiles/project-work.dir/Interface.cpp.obj	7e83f760305ab89d
-2	2142	7776811918951124	CMakeFiles/project-work.dir/main.cpp.obj	5afeb6f87e098d67
-50	2263	7776811919429129	CMakeFiles/project-work.dir/WorkedComputer.cpp.obj	1d001ef22ce7fdb
-13	2289	7776811919066412	CMakeFiles/project-work.dir/Computer.cpp.obj	68eb7b246e0a8426
-2307	2523	7776811942001015	project-work.exe	d91705ff5ff38ac5
