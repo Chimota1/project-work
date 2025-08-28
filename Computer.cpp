@@ -65,6 +65,9 @@ void Computer::SetHasFloppyDisk(bool hasFloppyDisk) {
 	m_hasFloppyDisk = hasFloppyDisk;
 };
 
+void Computer::SetSizeOfRom(int sizeOfRom) {
+	m_sizeOfRom = sizeOfRom;
+};
 
 string Computer::GetCpu() {
 	return m_cpu;
@@ -72,24 +75,27 @@ string Computer::GetCpu() {
 
 string Computer::GetGpu() {
 	return m_gpu;
-}
+};
 
 string Computer::GetMonitor() {
 	return m_monitor;
-}
+};
 
 string Computer::GetKeyboard() {
 	return m_keyboard;
-}
+};
 
 bool Computer::GetHasCdRom() {
 	return m_hasCdRom;
-}
+};
 
 bool Computer::GetHasFloppyDisk() {
 	return m_hasFloppyDisk;
-}
+};
 
+int Computer::GetSizeOfRom() {
+	return m_sizeOfRom;
+};
 
 //Get-метод
 string Computer::GetComputerFull()
