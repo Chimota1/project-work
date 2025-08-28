@@ -23,14 +23,14 @@ public:
 	void SetDate(string date);
 	void SetDescribe(string describe);
 	void SetCause(string cause);
-	string GetDate ();
-	string GetDescribe ();
-	string GetCause ();
+	string GetDate () const;
+	string GetDescribe () const;
+	string GetCause () const;
 	void ShowFullInfo();
 	void UpdateRepairStatus();
 	int RepairCost(int cost);
 	bool NeedsSpareParts();
-	void ShowInfoAboutRepair();
+	void ShowInfoAboutRepair() const;
 	void ShowStatus() override;
 	int ServiceCost() override;
 	virtual ~RepairComputer();
