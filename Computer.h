@@ -22,6 +22,8 @@ public:
     string GetComputerFull(); //Get-метод
     Computer(const Computer &other); //Копіювальний конструктор
     Computer(Computer &&other) noexcept; //Конструктор переміщення
+	void SetCpu(string cpu);
+	string GetCpu();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК

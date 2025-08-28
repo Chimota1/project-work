@@ -41,6 +41,15 @@ Computer::Computer(
 {
 };
 
+void Computer::SetCpu(string cpu) {
+	m_cpu = cpu;
+}
+
+string Computer::GetCpu() {
+	return m_cpu;
+}
+
+
 //Get-метод
 string Computer::GetComputerFull()
 {
