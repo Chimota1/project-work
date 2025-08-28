@@ -29,6 +29,7 @@ public:
 	void SetHasCdRom(bool hasCdRom);
 	void SetHasFloppyDisk(bool hasFloppyDisk);
 	void SetSizeOfRom(int sizeOfRom);
+	void SetInventoryNumber(int inventoryNumber);
 	string GetGpu();
 	string GetCpu();
 	string GetMonitor();
@@ -36,6 +37,7 @@ public:
 	bool GetHasCdRom();
 	bool GetHasFloppyDisk();
 	int GetSizeOfRom();
+	int GetInventoryNumber();
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
 	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК

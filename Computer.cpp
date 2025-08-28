@@ -69,6 +69,11 @@ void Computer::SetSizeOfRom(int sizeOfRom) {
 	m_sizeOfRom = sizeOfRom;
 };
 
+void Computer::SetInventoryNumber(int inventoryNumber) {
+	m_inventoryNumber = inventoryNumber;
+};
+
+
 string Computer::GetCpu() {
 	return m_cpu;
 };
@@ -96,6 +101,11 @@ bool Computer::GetHasFloppyDisk() {
 int Computer::GetSizeOfRom() {
 	return m_sizeOfRom;
 };
+
+int Computer::GetInventoryNumber() {
+	return m_inventoryNumber;
+};
+
 
 //Get-метод
 string Computer::GetComputerFull()
