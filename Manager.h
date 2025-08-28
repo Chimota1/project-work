@@ -12,6 +12,7 @@ public:
 	Manager();
 	Manager(vector<shared_ptr<Computer>> thisComputer);
 	Manager (const Manager &other);
+	Manager (Manager &&other) noexcept;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
