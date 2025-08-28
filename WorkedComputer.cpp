@@ -68,24 +68,20 @@ void WorkedComputer::UpdateStatus()
 
 void WorkedComputer::SetCountUsers(int users)
 {
-    cout << "Set count Users" << endl;
-    cin >> users;
     m_countUsers = users;
 }
 
 void WorkedComputer::SetDays(int days)
 {
-	cout << "Write days without Repair"<< endl;
-    cin >> days;
     m_daysWithoutRepair = days;
 };
 
-int WorkedComputer::GetDays()
+int WorkedComputer::GetDays() const
 {
 	return m_daysWithoutRepair;
 };
 
-int WorkedComputer::GetCountUsers()
+int WorkedComputer::GetCountUsers() const
 {
     return m_countUsers;
 }
@@ -114,12 +110,10 @@ bool WorkedComputer::IsWorking()
 {
     if (m_statusOfWork == "Working")
     {
-        cout << "is working" << endl;
         return true;
     }
     else
-    {
-        cout << "is turned off" << endl;
+    {;
         return false;
     }
 }
