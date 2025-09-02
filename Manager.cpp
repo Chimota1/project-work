@@ -52,8 +52,8 @@ void const Manager::InventoryFilter(int inventoryNumber)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         cout << (*it)->GetComputerFull() << endl;
-    }
-}
+    };
+};
 
 void const Manager::SizeOfRomFilter(int sizeOfRom)
 {
@@ -61,7 +61,36 @@ void const Manager::SizeOfRomFilter(int sizeOfRom)
     {
         if ((*it)->GetSizeOfRom() == sizeOfRom)
         cout << (*it)->GetComputerFull() << endl;
-    }
+    };
+};
+
+void const Manager::HasCdRomFilter(bool hasCdRom)
+{
+    int k;
+    cout << "Write 1 if you want to find computers with CD-ROM, or 2 if without CD-ROM" << endl;
+    cin >> k;
+    switch (k)
+    {
+        case 1:
+            if (hasCdRom == true)
+            {
+                for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+                {
+                    if ((*it)->GetHasCdRom() == hasCdRom)
+                        cout << (*it)->GetComputerFull() << endl;
+                };
+            };
+
+        case 2:
+            if (hasCdRom == false)
+            {
+                for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+                {
+                    if ((*it)->GetHasCdRom() == hasCdRom)
+                        cout << (*it)->GetComputerFull() << endl;
+                };
+            };
+    };
 };
 
 Manager::~Manager()
