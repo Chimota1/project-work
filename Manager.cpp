@@ -23,7 +23,7 @@ Manager::Manager(Manager &&other) noexcept
     this->m_thisComputer = other.m_thisComputer;
 };
 
-void Manager::GetManager()
+ void const Manager::GetManager()
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
