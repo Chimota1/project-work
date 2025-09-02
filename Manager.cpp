@@ -46,6 +46,15 @@ void const Manager::AuditoriumFilter(int auditoriumNumber)
     }
 }
 
+void const Manager::InventoryFilter(int inventoryNumber)
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetInventoryNumber() == inventoryNumber)
+        cout << (*it)->GetComputerFull() << endl;
+    }
+}
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
