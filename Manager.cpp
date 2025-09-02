@@ -55,6 +55,15 @@ void const Manager::InventoryFilter(int inventoryNumber)
     }
 }
 
+void const Manager::SizeOfRomFilter(int sizeOfRom)
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetSizeOfRom() == sizeOfRom)
+        cout << (*it)->GetComputerFull() << endl;
+    }
+};
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;

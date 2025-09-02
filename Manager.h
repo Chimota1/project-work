@@ -17,6 +17,7 @@ public:
 	void SetManager(shared_ptr<Computer> thisComputer);
 	void const AuditoriumFilter(int auditoriumNumber);
 	void const InventoryFilter(int inventoryNumber);
+	void const SizeOfRomFilter(int sizeOfRom);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
