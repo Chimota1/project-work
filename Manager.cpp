@@ -31,6 +31,12 @@ void Manager::GetManager()
     }
 };
 
+void Manager::SetManager(shared_ptr<Computer> thisComputer)
+{
+    m_thisComputer.push_back(thisComputer);
+}
+
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;

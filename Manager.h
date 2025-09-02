@@ -14,6 +14,7 @@ public:
 	Manager (const Manager &other);
 	Manager (Manager &&other) noexcept;
 	void GetManager();
+	void SetManager(shared_ptr<Computer> thisComputer);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
