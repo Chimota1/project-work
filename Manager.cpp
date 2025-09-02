@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "Computer.h"
 #include <iostream>
 #include <memory>
 
@@ -34,8 +35,16 @@ Manager::Manager(Manager &&other) noexcept
 void Manager::SetManager(shared_ptr<Computer> thisComputer)
 {
     m_thisComputer.push_back(thisComputer);
-}
+};
 
+void const Manager::AuditoriumFilter(int auditoriumNumber)
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
+        cout << (*it)->GetComputerFull() << endl;
+    }
+}
 
 Manager::~Manager()
 {

@@ -15,6 +15,7 @@ public:
 	Manager (Manager &&other) noexcept;
 	void const GetManager();
 	void SetManager(shared_ptr<Computer> thisComputer);
+	void const AuditoriumFilter(int auditoriumNumber);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
