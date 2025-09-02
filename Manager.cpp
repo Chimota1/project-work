@@ -23,6 +23,14 @@ Manager::Manager(Manager &&other) noexcept
     this->m_thisComputer = other.m_thisComputer;
 };
 
+void Manager::GetManager()
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        cout << (*it)->GetComputerFull() << endl;
+    }
+};
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
