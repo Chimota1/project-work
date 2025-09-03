@@ -19,6 +19,7 @@ public:
 	void InventoryFilter(int inventoryNumber) const;
 	void SizeOfRomFilter(int sizeOfRom) const;
 	void HasCdRomFilter(bool hasCdRom) const;
+	void HasFloppyDiskFilter(bool hasFloppyDisk) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

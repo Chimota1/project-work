@@ -73,6 +73,15 @@ void Manager::HasCdRomFilter(bool hasCdRom) const
     };
 };
 
+void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
+        cout << (*it)->GetComputerFull() << endl;
+    };
+};
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
