@@ -13,12 +13,12 @@ public:
 	Manager(vector<shared_ptr<Computer>> thisComputer);
 	Manager (const Manager &other);
 	Manager (Manager &&other) noexcept;
-	void const GetManager();
+	void GetManager() const;
 	void SetManager(shared_ptr<Computer> thisComputer);
-	void const AuditoriumFilter(int auditoriumNumber);
-	void const InventoryFilter(int inventoryNumber);
-	void const SizeOfRomFilter(int sizeOfRom);
-	void  HasCdRomFilter(bool hasCdRom) const;
+	void AuditoriumFilter(int auditoriumNumber) const;
+	void InventoryFilter(int inventoryNumber) const;
+	void SizeOfRomFilter(int sizeOfRom) const;
+	void HasCdRomFilter(bool hasCdRom) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

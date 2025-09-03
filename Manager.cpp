@@ -24,7 +24,7 @@ Manager::Manager(Manager &&other) noexcept
     this->m_thisComputer = other.m_thisComputer;
 };
 
- void const Manager::GetManager()
+ void Manager::GetManager() const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -37,7 +37,7 @@ void Manager::SetManager(shared_ptr<Computer> thisComputer)
     m_thisComputer.push_back(thisComputer);
 };
 
-void const Manager::AuditoriumFilter(int auditoriumNumber)
+void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -46,7 +46,7 @@ void const Manager::AuditoriumFilter(int auditoriumNumber)
     }
 }
 
-void const Manager::InventoryFilter(int inventoryNumber)
+void Manager::InventoryFilter(int inventoryNumber) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -55,7 +55,7 @@ void const Manager::InventoryFilter(int inventoryNumber)
     };
 };
 
-void const Manager::SizeOfRomFilter(int sizeOfRom)
+void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
