@@ -97,7 +97,7 @@ void Manager::MonitorFilter(string monitor) const
     {
         if ((*it)->GetMonitor() == monitor)
         cout << (*it)->GetComputerFull() << endl;
-    }
+    };
 };
 
 void Manager::GpuFilter(string gpu) const
@@ -106,9 +106,17 @@ void Manager::GpuFilter(string gpu) const
     {
         if ((*it)->GetGpu() == gpu)
         cout << (*it)->GetComputerFull() << endl;
-    }
-}
+    };
+};
 
+void Manager::CpuFilter(string cpu) const
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetCpu() == cpu)
+        cout << (*it)->GetComputerFull() << endl;
+    }
+};
 
 Manager::~Manager()
 {
