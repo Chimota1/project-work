@@ -18,7 +18,7 @@ public:
 	void const AuditoriumFilter(int auditoriumNumber);
 	void const InventoryFilter(int inventoryNumber);
 	void const SizeOfRomFilter(int sizeOfRom);
-	void const HasCdRomFilter(bool hasCdRom);
+	void  HasCdRomFilter(bool hasCdRom) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
