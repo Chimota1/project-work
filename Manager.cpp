@@ -91,13 +91,23 @@ void Manager::KeyboardFilter(string keyboard) const
     };
 };
 
-void Manager::MonitorFilter(string monitor) const {
+void Manager::MonitorFilter(string monitor) const
+{
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
-        cout << (*it)->GetComputerFull()  << endl;
+        cout << (*it)->GetComputerFull() << endl;
     }
 };
+
+void Manager::GpuFilter(string gpu) const
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetGpu() == gpu)
+        cout << (*it)->GetComputerFull() << endl;
+    }
+}
 
 
 Manager::~Manager()

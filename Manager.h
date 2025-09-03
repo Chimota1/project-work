@@ -15,6 +15,8 @@ public:
 	Manager (Manager &&other) noexcept;
 	void GetManager() const;
 	void SetManager(shared_ptr<Computer> thisComputer);
+
+	// Фільтри
 	void AuditoriumFilter(int auditoriumNumber) const;
 	void InventoryFilter(int inventoryNumber) const;
 	void SizeOfRomFilter(int sizeOfRom) const;
@@ -22,6 +24,7 @@ public:
 	void HasFloppyDiskFilter(bool hasFloppyDisk) const;
 	void KeyboardFilter(string keyboard) const;
 	void MonitorFilter(string monitor) const;
+	void GpuFilter(string gpu) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
