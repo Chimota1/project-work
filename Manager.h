@@ -21,6 +21,7 @@ public:
 	void HasCdRomFilter(bool hasCdRom) const;
 	void HasFloppyDiskFilter(bool hasFloppyDisk) const;
 	void KeyboardFilter(string keyboard) const;
+	void MonitorFilter(string monitor) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

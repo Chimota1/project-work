@@ -91,6 +91,15 @@ void Manager::KeyboardFilter(string keyboard) const
     };
 };
 
+void Manager::MonitorFilter(string monitor) const {
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetMonitor() == monitor)
+        cout << (*it)->GetComputerFull()  << endl;
+    }
+};
+
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
