@@ -20,6 +20,7 @@ public:
 	void SizeOfRomFilter(int sizeOfRom) const;
 	void HasCdRomFilter(bool hasCdRom) const;
 	void HasFloppyDiskFilter(bool hasFloppyDisk) const;
+	void KeyboardFilter(string keyboard) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

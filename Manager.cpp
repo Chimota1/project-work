@@ -82,6 +82,15 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
     };
 };
 
+void Manager::KeyboardFilter(string keyboard) const
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetKeyboard() == keyboard)
+        cout << (*it)->GetComputerFull() << endl;
+    };
+};
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
