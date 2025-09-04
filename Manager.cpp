@@ -134,6 +134,12 @@ void Manager::RemoveComputer(int inventoryNumber) {
     }
 };
 
+void Manager::ClearAll()
+{
+    m_thisComputer.clear();
+}
+
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;

@@ -29,6 +29,7 @@ public:
 
 	void AddComputer(shared_ptr<Computer> computer);
 	void RemoveComputer(int inventoryNumber);
+	void ClearAll();
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
