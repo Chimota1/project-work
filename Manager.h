@@ -37,6 +37,8 @@ public:
 
 	void CountBrokenComputers() const;
     void CountWorkingComputers() const;
+
+	void ChangeToBroken(int inventoryNumber);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

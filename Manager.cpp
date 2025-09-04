@@ -174,6 +174,28 @@ void Manager::CountWorkingComputers() const
     cout << "Count of working computers: " << count << endl;
 }
 
+void Manager::ChangeToBroken(int inventoryNumber)
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
+        if ( (*it)->GetInventoryNumber()  == inventoryNumber)
+        {
+            shared_ptr<Computer> brokenComputer = make_shared<RepairComputer>();
+            brokenComputer->SetGpu((*it)->GetGpu());
+            brokenComputer->SetCpu((*it)->GetCpu());
+            brokenComputer->SetMonitor((*it)->GetMonitor());
+            brokenComputer->SetKeyboard((*it)->GetKeyboard());
+            brokenComputer->SetSizeOfRom((*it)->GetSizeOfRom());
+            brokenComputer->SetHasCdRom((*it)->GetHasCdRom());
+            brokenComputer->SetHasFloppyDisk((*it)->GetHasFloppyDisk());
+            brokenComputer->SetAuditoriumNumber((*it)->GetAuditoriumNumber());
+            brokenComputer->SetInventoryNumber((*it)->GetInventoryNumber());
+            m_thisComputer.erase(it);
+            m_thisComputer.push_back(brokenComputer);
+            break;
+        }
+    }
+}
+
 
 Manager::~Manager()
 {
