@@ -148,6 +148,16 @@ void Manager::GetCount() const
     cout << "Count of all computers" << m_thisComputer.size();
 }
 
+void Manager::CountBrokenComputers() const
+{
+    int count = 0;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+
+    }
+}
+
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;

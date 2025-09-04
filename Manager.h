@@ -35,6 +35,7 @@ public:
 	void ClearAll();
 	void GetCount() const;
 
+	void CountBrokenComputers() const;
 
 	virtual ~Manager();
 private:
