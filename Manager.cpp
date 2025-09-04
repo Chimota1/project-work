@@ -176,7 +176,8 @@ void Manager::CountWorkingComputers() const
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
         if ( (*it)->GetInventoryNumber()  == inventoryNumber)
         {
             shared_ptr<Computer> brokenComputer = make_shared<RepairComputer>();
@@ -191,6 +192,29 @@ void Manager::ChangeToBroken(int inventoryNumber)
             brokenComputer->SetInventoryNumber((*it)->GetInventoryNumber());
             m_thisComputer.erase(it);
             m_thisComputer.push_back(brokenComputer);
+            break;
+        }
+    }
+}
+
+void Manager::ChangeToWorking(int inventoryNumber)
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ( (*it)->GetInventoryNumber()  == inventoryNumber)
+        {
+            shared_ptr<Computer> workingComputer = make_shared<WorkedComputer>();
+            workingComputer->SetGpu((*it)->GetGpu());
+            workingComputer->SetCpu((*it)->GetCpu());
+            workingComputer->SetMonitor((*it)->GetMonitor());
+            workingComputer->SetKeyboard((*it)->GetKeyboard());
+            workingComputer->SetSizeOfRom((*it)->GetSizeOfRom());
+            workingComputer->SetHasCdRom((*it)->GetHasCdRom());
+            workingComputer->SetHasFloppyDisk((*it)->GetHasFloppyDisk());
+            workingComputer->SetAuditoriumNumber((*it)->GetAuditoriumNumber());
+            workingComputer->SetInventoryNumber((*it)->GetInventoryNumber());
+            m_thisComputer.erase(it);
+            m_thisComputer.push_back(workingComputer);
             break;
         }
     }
