@@ -153,8 +153,12 @@ void Manager::CountBrokenComputers() const
     int count = 0;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-
+        if (dynamic_cast<RepairComputer*>(it->get()) != nullptr)
+        {
+            count++;
+        }
     }
+    cout << "Count of broken computers: " << count << endl;
 }
 
 
