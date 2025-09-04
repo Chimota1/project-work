@@ -1,6 +1,10 @@
 #include "Manager.h"
 #include "Computer.h"
 #include <iostream>
+#include <string>
+#include <vector>
+#include "WorkedComputer.h"
+#include "RepairComputer.h"
 #include <memory>
 
 using namespace std;

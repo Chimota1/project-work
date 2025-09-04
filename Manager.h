@@ -1,6 +1,9 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 #include "Computer.h"
+#include <string>
+#include "WorkedComputer.h"
+#include "RepairComputer.h"
 #include <vector>
 #include <memory>
 
@@ -31,6 +34,8 @@ public:
 	void RemoveComputer(int inventoryNumber);
 	void ClearAll();
 	void GetCount() const;
+
+
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
