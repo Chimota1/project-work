@@ -26,6 +26,8 @@ public:
 	void MonitorFilter(string monitor) const;
 	void GpuFilter(string gpu) const;
 	void CpuFilter(string cpu) const;
+
+	void AddComputer(shared_ptr<Computer> computer);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

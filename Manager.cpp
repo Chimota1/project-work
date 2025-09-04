@@ -118,6 +118,11 @@ void Manager::CpuFilter(string cpu) const
     }
 };
 
+void Manager::AddComputer(shared_ptr<Computer> computer)
+{
+    m_thisComputer.push_back(computer);
+}
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
