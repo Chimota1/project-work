@@ -139,6 +139,10 @@ void Manager::ClearAll()
     m_thisComputer.clear();
 }
 
+void Manager::GetCount() const
+{
+    cout << "Count of all computers" << m_thisComputer.size();
+}
 
 Manager::~Manager()
 {
