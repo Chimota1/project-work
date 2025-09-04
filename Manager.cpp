@@ -161,6 +161,19 @@ void Manager::CountBrokenComputers() const
     cout << "Count of broken computers: " << count << endl;
 }
 
+void Manager::CountWorkingComputers() const
+{
+    int count = 0;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if (dynamic_cast<WorkedComputer*>(it->get()) != nullptr)
+        {
+            count++;
+        }
+    }
+    cout << "Count of working computers: " << count << endl;
+}
+
 
 Manager::~Manager()
 {

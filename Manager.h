@@ -36,6 +36,7 @@ public:
 	void GetCount() const;
 
 	void CountBrokenComputers() const;
+    void CountWorkingComputers() const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
