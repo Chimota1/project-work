@@ -56,21 +56,15 @@ RepairComputer::RepairComputer(
 
 void RepairComputer::SetDate(string date)
 {
-  cout << "Set date of problem" << endl;
-  cin >> date;
   m_dateOfRepair = date;
 };
 
 void RepairComputer::SetDescribe(string describe)
 {
-    cout << "Set describe of problem" << endl;
-    cin >> describe;
     m_describeOfProblem = describe;
 };
 void RepairComputer::SetCause(string cause)
 {
-    cout << "Set cause of problem" << endl;
-    cin >> cause;
     m_cause = cause;
 };
 
@@ -125,8 +119,6 @@ void RepairComputer::UpdateRepairStatus()
 
 int RepairComputer::RepairCost(int cost)
 {
-    cout << "add approximate cost" << endl;
-    cin >> cost;
     m_repairCost = cost;
     return m_repairCost;
 };
