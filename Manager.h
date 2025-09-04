@@ -28,6 +28,7 @@ public:
 	void CpuFilter(string cpu) const;
 
 	void AddComputer(shared_ptr<Computer> computer);
+	void RemoveComputer(int inventoryNumber);
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
