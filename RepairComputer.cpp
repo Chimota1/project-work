@@ -85,12 +85,7 @@ string RepairComputer::GetCause() const
 
 void RepairComputer::ShowFullInfo()
 {
- 	vector<Computer> thisComputer;
-    vector<Computer>::iterator i;
-    for(i = thisComputer.begin(); i != thisComputer.end();++i)
-      {
-      	cout << i->GetComputerFull();
-      }
+      cout << GetComputerFull() << endl;
       cout << " " << m_cause << endl;
       cout << " " << m_describeOfProblem << endl;
       cout << " " << m_dateOfRepair << endl;
