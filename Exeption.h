@@ -12,7 +12,7 @@ class Exeption {
     Exeption(string message);
     Exeption(const Exeption &other);
     Exeption(Exeption &&other) noexcept;
-
+    ~Exeption();
     private:
     string m_message;
 };

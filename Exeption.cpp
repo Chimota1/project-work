@@ -5,6 +5,7 @@
 #include "Exeption.h"
 #include <string>
 #include <exception>
+#include <iostream>
 
 using namespace std;
 
@@ -26,4 +27,9 @@ Exeption::Exeption(const Exeption &other)
 Exeption::Exeption(Exeption &&other) noexcept
 {
     this->m_message = other.m_message;
+};
+
+Exeption::~Exeption()
+{
+    cout << "Destructor of Exception class" <<endl;
 };
