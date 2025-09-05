@@ -11,6 +11,7 @@ class Exeption {
     Exeption();
     Exeption(string message);
     Exeption(const Exeption &other);
+    Exeption(Exeption &&other) noexcept;
 
     private:
     string m_message;

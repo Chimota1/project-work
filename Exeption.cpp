@@ -22,3 +22,8 @@ Exeption::Exeption(const Exeption &other)
 {
     this->m_message = other.m_message;
 };
+
+Exeption::Exeption(Exeption &&other) noexcept
+{
+    this->m_message = other.m_message;
+};
