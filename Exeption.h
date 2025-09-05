@@ -9,6 +9,7 @@ using namespace std;
 class Exeption {
     public:
     Exeption();
+    Exeption(string message);
 
     private:
     string m_message;

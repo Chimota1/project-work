@@ -8,6 +8,12 @@
 
 using namespace std;
 
-Exeption::Exeption(): m_message{"Unknown exeption"}
+Exeption::Exeption():
+    m_message{"Unknown exeption"}
+{
+};
+
+Exeption::Exeption(string message):
+    m_message{message}
 {
 };
