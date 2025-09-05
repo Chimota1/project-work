@@ -10,6 +10,7 @@ class Exeption {
     public:
     Exeption();
     Exeption(string message);
+    Exeption(const Exeption &other);
 
     private:
     string m_message;

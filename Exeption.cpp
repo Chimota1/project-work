@@ -17,3 +17,8 @@ Exeption::Exeption(string message):
     m_message{message}
 {
 };
+
+Exeption::Exeption(const Exeption &other)
+{
+    this->m_message = other.m_message;
+};
