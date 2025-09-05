@@ -1,14 +1,17 @@
-//
-// Created by Користувач on 05.09.2025.
-//
-
 #ifndef EXEPTION_H
 #define EXEPTION_H
 
+#include <string>
+#include <exception>
 
+using namespace std;
 
 class Exeption {
+    public:
+    Exeption();
 
+    private:
+    string m_message;
 };
 
 

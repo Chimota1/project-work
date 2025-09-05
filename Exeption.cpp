@@ -3,3 +3,11 @@
 //
 
 #include "Exeption.h"
+#include <string>
+#include <exception>
+
+using namespace std;
+
+Exeption::Exeption(): m_message{"Unknown exeption"}
+{
+};
