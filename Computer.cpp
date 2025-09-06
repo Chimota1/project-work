@@ -1,6 +1,6 @@
 #include "Computer.h"
 #include <iostream>
-#include <exception>
+#include "Exeption.h"
 
 using namespace std;
 
@@ -42,38 +42,47 @@ Computer::Computer(
 };
 
 void Computer::SetCpu(string cpu) {
+	if (cpu.empty()) throw Exeption("CPU string is empty");
 	m_cpu = cpu;
 };
 
 void Computer::SetGpu(string gpu) {
+	if (gpu.empty()) throw Exeption("GPU string is empty");
 	m_gpu = gpu;
 };
 
 void Computer::SetMonitor(string monitor) {
+	if (monitor.empty()) throw Exeption("Monitor string is empty");
 	m_monitor = monitor;
 };
 
 void Computer::SetKeyboard(string keyboard) {
+	if (keyboard.empty()) throw Exeption("Keyboard string is empty");
 	m_keyboard = keyboard;
 };
 
 void Computer::SetHasCdRom(bool hasCdRom) {
+	if (hasCdRom != 0 && hasCdRom != 1) throw Exeption("hasCdRom must be 0 or 1");
 	m_hasCdRom = hasCdRom;
 };
 
 void Computer::SetHasFloppyDisk(bool hasFloppyDisk) {
+	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("hasFloppyDisk must be 0 or 1");
 	m_hasFloppyDisk = hasFloppyDisk;
 };
 
 void Computer::SetSizeOfRom(int sizeOfRom) {
+	if (sizeOfRom <= 0) throw Exeption("sizeOfRom must be positive");
 	m_sizeOfRom = sizeOfRom;
 };
 
 void Computer::SetInventoryNumber(int inventoryNumber) {
+	if (inventoryNumber <= 0) throw Exeption("inventoryNumber must be positive");
 	m_inventoryNumber = inventoryNumber;
 };
 
 void Computer::SetAuditoriumNumber(int auditoriumNumber) {
+	if (auditoriumNumber <= 0) throw Exeption("auditoriumNumber must be positive");
 	m_auditoriumNumber = auditoriumNumber;
 };
 
@@ -170,22 +179,19 @@ Computer::Computer(Computer &&other) noexcept
 // Метод який змінює номер аудиторії де знаходиться ПК
 void Computer::MoveAuditorium(int number)
 {
-  cout << "Write new number auditorium" << endl;
-  cin >> number;
+	if (number <= 0)
+	throw Exeption("number must be bigger than 0 or negative");
   m_auditoriumNumber = number;
 };
 
 void Computer::HasCdRomUpdate(bool hasCdRom)
 {
-  cout << "Update (1 if have, 0 if have not)" << endl;
-  cin >> hasCdRom;
   m_hasCdRom = hasCdRom;
 };
 
 void Computer::HasFloppyDisk(bool hasFloppyDisk)
 {
-  cout << "Update (1 if have, 0 if have not)" << endl;
-  cin >> hasFloppyDisk;
+  if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("hasFloppyDisk must be 0 or 1");
   m_hasFloppyDisk = hasFloppyDisk;
 };
 

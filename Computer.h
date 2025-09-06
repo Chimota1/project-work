@@ -2,7 +2,7 @@
 #define COMPUTER_H
 
 #include <string>
-
+#include "Exeption.h"
 using namespace std;
 
 class Computer

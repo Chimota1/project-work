@@ -29,6 +29,11 @@ Exeption::Exeption(Exeption &&other) noexcept
     this->m_message = other.m_message;
 };
 
+const char* Exeption::what() const noexcept
+{
+    return m_message.c_str();
+};
+
 Exeption::~Exeption()
 {
     cout << "Destructor of Exception class" <<endl;
