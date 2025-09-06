@@ -10,4 +10,5 @@ add_executable(project-work
         Interface.cpp
         RepairComputer.cpp
         WorkedComputer.cpp
+        Exeption.cpp
 )
