@@ -51,7 +51,7 @@ void WorkedComputer::ShowStatus()
 void WorkedComputer::UpdateStatus()
 {
     int k;
-    cout << "set status PC \"1 if Working \\ 2 if Turned Off";
+    cout << "set status PC \"1 if Working \\ 2 if Turned Off\" << endl";
     cin >> k;
     switch (k)
     {
@@ -63,16 +63,22 @@ void WorkedComputer::UpdateStatus()
          case 2:
            m_statusOfWork = "Turned off";
            break;
+
+        default:
+           throw Exeption("Wrong number");
+           break;
     };
 };
 
 void WorkedComputer::SetCountUsers(int users)
 {
+    if (users < 0) throw Exeption("Count of users must 0 or positive");
     m_countUsers = users;
 }
 
 void WorkedComputer::SetDays(int days)
 {
+    if (days < 0) throw Exeption("Days without repair must be 0 or positive");
     m_daysWithoutRepair = days;
 };
 
@@ -92,6 +98,7 @@ int WorkedComputer::ServiceCost()
   	int serviceCost;
     cout << "Write Service cost" << endl;
     cin >> serviceCost;
+    if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
     m_serviceCostWorked = serviceCost;
     return m_serviceCostWorked;
 };
