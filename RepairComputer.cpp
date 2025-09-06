@@ -2,6 +2,7 @@
 #include "Computer.h"
 #include <iostream>
 #include <string>
+#include "Exeption.h"
 #include <vector>
 
 using namespace std;
@@ -56,15 +57,18 @@ RepairComputer::RepairComputer(
 
 void RepairComputer::SetDate(string date)
 {
-  m_dateOfRepair = date;
+    if (date == "") throw Exeption("Date is empty");
+    m_dateOfRepair = date;
 };
 
 void RepairComputer::SetDescribe(string describe)
 {
+    if (describe == "") throw Exeption("Describe is empty");
     m_describeOfProblem = describe;
 };
 void RepairComputer::SetCause(string cause)
 {
+    if (cause == "") throw Exeption("Cause is empty");
     m_cause = cause;
 };
 
@@ -108,13 +112,15 @@ void RepairComputer::UpdateRepairStatus()
         m_repairStatus = "ready";
         break;
         default:
-        cout << "wrong key";
+        throw Exeption("Wrong number");
+        break;
 	};
 };
 
 int RepairComputer::RepairCost(int cost)
 {
     m_repairCost = cost;
+    if (cost < 0) throw Exeption("Repair cost must be 0 or positive");
     return m_repairCost;
 };
 
@@ -123,8 +129,9 @@ bool RepairComputer::NeedsSpareParts()
     int input;
 	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
     cin >> input;
-    if (input != 0 && input != 1){
-		cout << "wrong key";
+    if (input != 0 && input != 1)
+    {
+        throw Exeption("Input must be 0 or 1");
     };
     return m_needNewParts = (input == 1);
 };
@@ -145,6 +152,7 @@ int RepairComputer::ServiceCost()
     cout << "Write Service cost" << endl;
     cin >> serviceCost;
     m_serviceCostRepair = serviceCost;
+    if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
     return m_serviceCostRepair + m_repairCost;
 };
 
