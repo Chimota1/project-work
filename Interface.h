@@ -31,6 +31,9 @@ public:
 	virtual void CountBrokenComputers() const = 0;
 	virtual void CountWorkingComputers() const = 0;
 
+	virtual void SortByInventoryNumber() = 0;
+	virtual void SortByAuditoriumNumber() = 0;
+
 	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
 };
