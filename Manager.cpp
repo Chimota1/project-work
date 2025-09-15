@@ -43,7 +43,7 @@ void Manager::SetManager(shared_ptr<Computer> thisComputer)
     m_thisComputer.push_back(thisComputer);
 };
 
-void Manager::AuditoriumFilter(int auditoriumNumber) const override
+void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -52,7 +52,7 @@ void Manager::AuditoriumFilter(int auditoriumNumber) const override
     }
 }
 
-void Manager::InventoryFilter(int inventoryNumber) const override
+void Manager::InventoryFilter(int inventoryNumber) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -61,7 +61,7 @@ void Manager::InventoryFilter(int inventoryNumber) const override
     };
 };
 
-void Manager::SizeOfRomFilter(int sizeOfRom) const override
+void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -70,7 +70,7 @@ void Manager::SizeOfRomFilter(int sizeOfRom) const override
     };
 };
 
-void Manager::HasCdRomFilter(bool hasCdRom) const override
+void Manager::HasCdRomFilter(bool hasCdRom) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -79,7 +79,7 @@ void Manager::HasCdRomFilter(bool hasCdRom) const override
     };
 };
 
-void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const override
+void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -88,7 +88,7 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const override
     };
 };
 
-void Manager::KeyboardFilter(string keyboard) const override
+void Manager::KeyboardFilter(string keyboard) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -97,7 +97,7 @@ void Manager::KeyboardFilter(string keyboard) const override
     };
 };
 
-void Manager::MonitorFilter(string monitor) const override
+void Manager::MonitorFilter(string monitor) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -106,7 +106,7 @@ void Manager::MonitorFilter(string monitor) const override
     };
 };
 
-void Manager::GpuFilter(string gpu) const override
+void Manager::GpuFilter(string gpu) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -115,7 +115,7 @@ void Manager::GpuFilter(string gpu) const override
     };
 };
 
-void Manager::CpuFilter(string cpu) const override
+void Manager::CpuFilter(string cpu) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -125,7 +125,7 @@ void Manager::CpuFilter(string cpu) const override
 };
 
 
-void Manager::RemoveComputer(int inventoryNumber) override
+void Manager::RemoveComputer(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -137,17 +137,17 @@ void Manager::RemoveComputer(int inventoryNumber) override
     }
 };
 
-void Manager::ClearAll() override
+void Manager::ClearAll()
 {
     m_thisComputer.clear();
 }
 
-void Manager::GetCount() const override
+void Manager::GetCount() const
 {
     cout << "Count of all computers" << m_thisComputer.size();
 }
 
-void Manager::CountBrokenComputers() const override
+void Manager::CountBrokenComputers() const
 {
     int count = 0;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
@@ -160,7 +160,7 @@ void Manager::CountBrokenComputers() const override
     cout << "Count of broken computers: " << count << endl;
 }
 
-void Manager::CountWorkingComputers() const override
+void Manager::CountWorkingComputers() const
 {
     int count = 0;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
@@ -173,7 +173,7 @@ void Manager::CountWorkingComputers() const override
     cout << "Count of working computers: " << count << endl;
 }
 
-void Manager::SortByInventoryNumber() override
+void Manager::SortByInventoryNumber()
 {
     sort(m_thisComputer.begin(), m_thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
@@ -182,7 +182,7 @@ void Manager::SortByInventoryNumber() override
          });
 };
 
-void Manager::SortByAuditoriumNumber() override
+void Manager::SortByAuditoriumNumber()
 {
     sort(m_thisComputer.begin(), m_thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
@@ -191,7 +191,7 @@ void Manager::SortByAuditoriumNumber() override
          });
 };
 
-void Manager::ChangeToBroken(int inventoryNumber) override
+void Manager::ChangeToBroken(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -214,7 +214,7 @@ void Manager::ChangeToBroken(int inventoryNumber) override
     }
 }
 
-void Manager::ChangeToWorking(int inventoryNumber) override
+void Manager::ChangeToWorking(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
