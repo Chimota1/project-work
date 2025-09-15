@@ -28,6 +28,9 @@ public:
 	virtual void ClearAll() = 0;
 	virtual void GetCount() const = 0;
 
+	virtual void CountBrokenComputers() const = 0;
+	virtual void CountWorkingComputers() const = 0;
+
 	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
 };
