@@ -33,9 +33,9 @@ public:
 	void GpuFilter(string gpu) const override;
 	void CpuFilter(string cpu) const override;
 
-	void RemoveComputer(int inventoryNumber);
-	void ClearAll();
-	void GetCount() const;
+	void RemoveComputer(int inventoryNumber) override;
+	void ClearAll() override;
+	void GetCount() const override;
 
 	void CountBrokenComputers() const;
     void CountWorkingComputers() const;

@@ -125,7 +125,8 @@ void Manager::CpuFilter(string cpu) const override
 };
 
 
-void Manager::RemoveComputer(int inventoryNumber) {
+void Manager::RemoveComputer(int inventoryNumber) override
+{
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber()  == inventoryNumber)
@@ -136,12 +137,12 @@ void Manager::RemoveComputer(int inventoryNumber) {
     }
 };
 
-void Manager::ClearAll()
+void Manager::ClearAll() override
 {
     m_thisComputer.clear();
 }
 
-void Manager::GetCount() const
+void Manager::GetCount() const override
 {
     cout << "Count of all computers" << m_thisComputer.size();
 }
