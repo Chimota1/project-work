@@ -37,8 +37,8 @@ public:
 	void ClearAll() override;
 	void GetCount() const override;
 
-	void CountBrokenComputers() const;
-    void CountWorkingComputers() const;
+	void CountBrokenComputers() const override;
+    void CountWorkingComputers() const override;
 
 	void SortByInventoryNumber();
 	void SortByAuditoriumNumber();

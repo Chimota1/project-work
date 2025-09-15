@@ -147,7 +147,7 @@ void Manager::GetCount() const override
     cout << "Count of all computers" << m_thisComputer.size();
 }
 
-void Manager::CountBrokenComputers() const
+void Manager::CountBrokenComputers() const override
 {
     int count = 0;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
@@ -160,7 +160,7 @@ void Manager::CountBrokenComputers() const
     cout << "Count of broken computers: " << count << endl;
 }
 
-void Manager::CountWorkingComputers() const
+void Manager::CountWorkingComputers() const override
 {
     int count = 0;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
