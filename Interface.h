@@ -34,6 +34,9 @@ public:
 	virtual void SortByInventoryNumber() = 0;
 	virtual void SortByAuditoriumNumber() = 0;
 
+	virtual void ChangeToBroken(int inventoryNumber) = 0;
+	virtual void ChangeToWorking(int inventoryNumber) = 0;
+
 	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
 };
