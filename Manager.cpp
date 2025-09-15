@@ -43,7 +43,7 @@ void Manager::SetManager(shared_ptr<Computer> thisComputer)
     m_thisComputer.push_back(thisComputer);
 };
 
-void Manager::AuditoriumFilter(int auditoriumNumber) const
+void Manager::AuditoriumFilter(int auditoriumNumber) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -52,7 +52,7 @@ void Manager::AuditoriumFilter(int auditoriumNumber) const
     }
 }
 
-void Manager::InventoryFilter(int inventoryNumber) const
+void Manager::InventoryFilter(int inventoryNumber) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -61,7 +61,7 @@ void Manager::InventoryFilter(int inventoryNumber) const
     };
 };
 
-void Manager::SizeOfRomFilter(int sizeOfRom) const
+void Manager::SizeOfRomFilter(int sizeOfRom) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -70,7 +70,7 @@ void Manager::SizeOfRomFilter(int sizeOfRom) const
     };
 };
 
-void Manager::HasCdRomFilter(bool hasCdRom) const
+void Manager::HasCdRomFilter(bool hasCdRom) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -79,7 +79,7 @@ void Manager::HasCdRomFilter(bool hasCdRom) const
     };
 };
 
-void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
+void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -88,7 +88,7 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
     };
 };
 
-void Manager::KeyboardFilter(string keyboard) const
+void Manager::KeyboardFilter(string keyboard) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -97,7 +97,7 @@ void Manager::KeyboardFilter(string keyboard) const
     };
 };
 
-void Manager::MonitorFilter(string monitor) const
+void Manager::MonitorFilter(string monitor) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -106,7 +106,7 @@ void Manager::MonitorFilter(string monitor) const
     };
 };
 
-void Manager::GpuFilter(string gpu) const
+void Manager::GpuFilter(string gpu) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -115,7 +115,7 @@ void Manager::GpuFilter(string gpu) const
     };
 };
 
-void Manager::CpuFilter(string cpu) const
+void Manager::CpuFilter(string cpu) const override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
