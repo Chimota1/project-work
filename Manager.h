@@ -4,6 +4,8 @@
 #include <string>
 #include "WorkedComputer.h"
 #include "RepairComputer.h"
+#include <iostream>
+#include <algorithm>
 #include <vector>
 #include <memory>
 
@@ -38,6 +40,7 @@ public:
 	void CountBrokenComputers() const;
     void CountWorkingComputers() const;
 
+	void SortByInventoryNumber();
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);
 	virtual ~Manager();

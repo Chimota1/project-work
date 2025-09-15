@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "WorkedComputer.h"
 #include "RepairComputer.h"
 #include <memory>
@@ -172,7 +173,15 @@ void Manager::CountWorkingComputers() const
         }
     }
     cout << "Count of working computers: " << count << endl;
-}
+};
+
+void Manager::SortByInventoryNumber()
+{
+       sort(m_thisComputer.begin(), m_thisComputer.end(),
+            [](const shared_ptr<Computer>& start, const shared_ptr<Computer>& tail) {
+                return start->GetInventoryNumber() < tail->GetInventoryNumber();
+            });
+};
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
