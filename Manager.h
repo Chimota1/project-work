@@ -33,7 +33,6 @@ public:
 	void GpuFilter(string gpu) const override;
 	void CpuFilter(string cpu) const override;
 
-	void AddComputer(shared_ptr<Computer> computer);
 	void RemoveComputer(int inventoryNumber);
 	void ClearAll();
 	void GetCount() const;

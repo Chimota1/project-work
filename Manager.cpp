@@ -124,10 +124,6 @@ void Manager::CpuFilter(string cpu) const override
     }
 };
 
-void Manager::AddComputer(shared_ptr<Computer> computer)
-{
-    m_thisComputer.push_back(computer);
-};
 
 void Manager::RemoveComputer(int inventoryNumber) {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
