@@ -13,7 +13,6 @@ using namespace std;
 class Interface
 {
 public:
-	Interface();
 	virtual void AuditoriumFilter(int auditoriumNumber) const = 0;
 	virtual void InventoryFilter(int inventoryNumber) const = 0;
 	virtual void SizeOfRomFilter(int sizeOfRom) const = 0;
