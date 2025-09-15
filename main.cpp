@@ -12,5 +12,21 @@ int main()
     bool isRunning = true;
     int k;
     Manager manager;
+
+    cout << "Welcome to the Computer Management System" << endl;
+    cout << "use key for using program" << endl;
+    while (isRunning)
+    {
+        cin >> k;
+        switch (k)
+        {
+            default:
+                cout << "Wrong key, try again" << endl;
+                break;
+            case 6:
+                isRunning = false;
+                break;
+        }
+    }
     return 0;
 };

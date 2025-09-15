@@ -7,7 +7,6 @@ add_executable(project-work
         main.cpp
         Computer.cpp
         Manager.cpp
-        Interface.cpp
         RepairComputer.cpp
         WorkedComputer.cpp
         Exeption.cpp
