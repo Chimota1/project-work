@@ -173,6 +173,24 @@ void Manager::CountWorkingComputers() const override
     cout << "Count of working computers: " << count << endl;
 }
 
+void Manager::SortByInventoryNumber() override
+{
+    sort(m_thisComputer.begin(), m_thisComputer.end(),
+         [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
+         {
+             return first->GetInventoryNumber() < last->GetInventoryNumber();
+         });
+};
+
+void Manager::SortByAuditoriumNumber() override
+{
+    sort(m_thisComputer.begin(), m_thisComputer.end(),
+         [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
+         {
+             return first->GetAuditoriumNumber() < last->GetAuditoriumNumber();
+         });
+};
+
 void Manager::ChangeToBroken(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)

@@ -40,8 +40,8 @@ public:
 	void CountBrokenComputers() const override;
     void CountWorkingComputers() const override;
 
-	void SortByInventoryNumber();
-	void SortByAuditoriumNumber();
+	void SortByInventoryNumber() override;
+	void SortByAuditoriumNumber() override;
 
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);
