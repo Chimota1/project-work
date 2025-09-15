@@ -1,11 +1,12 @@
 #include "Manager.h"
 #include "Computer.h"
-#include "WorkedComputer.h"
-#include "RepairComputer.h"
-#include "Exeption.h"
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
+#include "WorkedComputer.h"
+#include "RepairComputer.h"
+#include "Exeption.h"
 #include <memory>
 
 using namespace std;
@@ -39,132 +40,88 @@ Manager::Manager(Manager &&other) noexcept
 
 void Manager::SetManager(shared_ptr<Computer> thisComputer)
 {
-    if (thisComputer == nullptr) throw Exeption("Computer is empty");
     m_thisComputer.push_back(thisComputer);
 };
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        }
+        cout << (*it)->GetComputerFull() << endl;
     }
-    if (!found) throw Exeption("No computers found inthis auditorium");
 }
 
 void Manager::InventoryFilter(int inventoryNumber) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        }
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this inventory number");
 };
 
 void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetSizeOfRom() == sizeOfRom)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        }
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this size of ROM");
 };
 
 void Manager::HasCdRomFilter(bool hasCdRom) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-        if ((*it)->GetHasCdRom() == hasCdRom){
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        };
+        if ((*it)->GetHasCdRom() == hasCdRom)
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this CD-ROM status");
 };
 
 void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        };
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this Floppy Disk status");
 };
 
 void Manager::KeyboardFilter(string keyboard) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-        if ((*it)->GetKeyboard() == keyboard) {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        };
+        if ((*it)->GetKeyboard() == keyboard)
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this keyboard");
 };
 
 void Manager::MonitorFilter(string monitor) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        };
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this monitor");
 };
 
 void Manager::GpuFilter(string gpu) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
-        {
-            cout << (*it)->GetComputerFull() << endl;
-            found = true;
-        };
+        cout << (*it)->GetComputerFull() << endl;
     };
-    if (!found) throw Exeption("No computers found with this GPU");
 };
 
 void Manager::CpuFilter(string cpu) const
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetCpu() == cpu)
-        {
         cout << (*it)->GetComputerFull() << endl;
-        found = true;
-        };
-    };
-    if (!found) throw Exeption("No computers found with this CPU");
+    }
 };
 
 void Manager::AddComputer(shared_ptr<Computer> computer)
@@ -173,19 +130,14 @@ void Manager::AddComputer(shared_ptr<Computer> computer)
 };
 
 void Manager::RemoveComputer(int inventoryNumber) {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber()  == inventoryNumber)
         {
             m_thisComputer.erase(it);
-            found = true;
             break;
-        };
-    };
-    if (!found) {
-        throw Exeption("No computer found with this inventory number");
-    };
+        }
+    }
 };
 
 void Manager::ClearAll()
@@ -195,7 +147,6 @@ void Manager::ClearAll()
 
 void Manager::GetCount() const
 {
-    if (m_thisComputer.empty()) throw Exeption("No computers in the list");
     cout << "Count of all computers" << m_thisComputer.size();
 }
 
@@ -227,7 +178,6 @@ void Manager::CountWorkingComputers() const
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ( (*it)->GetInventoryNumber()  == inventoryNumber)
@@ -244,16 +194,13 @@ void Manager::ChangeToBroken(int inventoryNumber)
             brokenComputer->SetInventoryNumber((*it)->GetInventoryNumber());
             m_thisComputer.erase(it);
             m_thisComputer.push_back(brokenComputer);
-            found = true;
             break;
         }
     }
-    if (!found) throw Exeption("No computer found with this inventory number");
 }
 
 void Manager::ChangeToWorking(int inventoryNumber)
 {
-    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ( (*it)->GetInventoryNumber()  == inventoryNumber)
@@ -270,11 +217,9 @@ void Manager::ChangeToWorking(int inventoryNumber)
             workingComputer->SetInventoryNumber((*it)->GetInventoryNumber());
             m_thisComputer.erase(it);
             m_thisComputer.push_back(workingComputer);
-            found = true;
             break;
         }
     }
-    if (!found) throw Exeption("No computer found with this inventory number");
 }
 
 
