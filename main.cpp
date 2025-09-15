@@ -39,7 +39,7 @@ int main() {
     {
         if (chooseAccount == 1 && isAdmin == false)
         {
-            cout << "You are using Admin account, please enter password" << endl;
+            cout << "You are using Admin account, please enter password, or create" << endl;
             cin >> password;
             cin >> k;
             switch (k)
