@@ -175,6 +175,7 @@ void Manager::CountWorkingComputers() const
 
 void Manager::SortByInventoryNumber()
 {
+    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot sort");
     sort(m_thisComputer.begin(), m_thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
