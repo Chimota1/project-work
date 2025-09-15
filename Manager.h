@@ -43,8 +43,8 @@ public:
 	void SortByInventoryNumber() override;
 	void SortByAuditoriumNumber() override;
 
-	void ChangeToBroken(int inventoryNumber);
-	void ChangeToWorking(int inventoryNumber);
+	void ChangeToBroken(int inventoryNumber) override;
+	void ChangeToWorking(int inventoryNumber) override;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

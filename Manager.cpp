@@ -191,7 +191,7 @@ void Manager::SortByAuditoriumNumber() override
          });
 };
 
-void Manager::ChangeToBroken(int inventoryNumber)
+void Manager::ChangeToBroken(int inventoryNumber) override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
@@ -214,7 +214,7 @@ void Manager::ChangeToBroken(int inventoryNumber)
     }
 }
 
-void Manager::ChangeToWorking(int inventoryNumber)
+void Manager::ChangeToWorking(int inventoryNumber) override
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
