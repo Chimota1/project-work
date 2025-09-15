@@ -139,6 +139,7 @@ void Manager::RemoveComputer(int inventoryNumber)
 
 void Manager::ClearAll()
 {
+    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot sort");
     m_thisComputer.clear();
 }
 
