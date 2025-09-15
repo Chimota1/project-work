@@ -23,9 +23,12 @@ public:
 	virtual void MonitorFilter(string monitor) const = 0;
 	virtual void GpuFilter(string gpu) const = 0;
 	virtual void CpuFilter(string cpu) const = 0;
-	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
-private:
+	virtual void RemoveComputer(int inventoryNumber) = 0;
+	virtual void ClearAll() = 0;
+	virtual void GetCount() const = 0;
+
+	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
 };
 #endif //INTERFACE_H
