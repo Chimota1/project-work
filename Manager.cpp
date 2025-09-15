@@ -183,6 +183,14 @@ void Manager::SortByInventoryNumber()
             });
 };
 
+void Manager::SortByAuditoriumNumber()
+{
+       sort(m_thisComputer.begin(), m_thisComputer.end(),
+            [](const shared_ptr<Computer>& start, const shared_ptr<Computer>& tail) {
+                return start->GetAuditoriumNumber() < tail->GetAuditoriumNumber();
+            });
+};
+
 void Manager::ChangeToBroken(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)

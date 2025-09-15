@@ -41,6 +41,8 @@ public:
     void CountWorkingComputers() const;
 
 	void SortByInventoryNumber();
+	void SortByAuditoriumNumber();
+
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);
 	virtual ~Manager();
