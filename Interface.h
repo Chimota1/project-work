@@ -14,7 +14,16 @@ class Interface
 {
 public:
 	Interface();
-	~Interface();
+	virtual void AuditoriumFilter(int auditoriumNumber) const = 0;
+	virtual void InventoryFilter(int inventoryNumber) const = 0;
+	virtual void SizeOfRomFilter(int sizeOfRom) const = 0;
+	virtual void HasCdRomFilter(bool hasCdRom) const = 0;
+	virtual void HasFloppyDiskFilter(bool hasFloppyDisk) const = 0;
+	virtual void KeyboardFilter(string keyboard) const = 0;
+	virtual void MonitorFilter(string monitor) const = 0;
+	virtual void GpuFilter(string gpu) const = 0;
+	virtual void CpuFilter(string cpu) const = 0;
+	virtual ~Interface() {cout << "Interface destructor called" << endl;};
 
 private:
 
