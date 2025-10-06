@@ -10,6 +10,8 @@
 #include "json.hpp"
 #include <fstream>
 #include <memory>
+#include <cstdlib>
+
 
 using namespace std;
 using json = nlohmann::json;
@@ -68,6 +70,63 @@ void Manager::ViewAllUsers() const
         throw Exeption("Error reading users.json: " + string(e.what()));
     }
 };
+
+void Manager::AddUser()
+{
+    try {
+        bool isAdmin;
+        string username, password;
+        cout << "Is the new user an Admin? (1 for yes, 0 for no): ";
+        cin >> isAdmin;
+
+        cout << "Enter new username: ";
+        cin >> username;
+
+        if (isAdmin) {
+            cout << "Enter new password: ";
+            cin >> password;
+        }
+
+        srand(time(0));
+        int newId = rand() % 900 + 100;
+
+        json users;
+        ifstream jsonFile("users.json");
+        if (jsonFile.is_open()) {
+            jsonFile >> users;
+            jsonFile.close();
+        }
+
+        json newUser = {
+            {"id", newId},
+            {"username", username},
+            {"isAdmin", isAdmin}
+        };
+
+        users.push_back(newUser);
+
+        ofstream outJsonFile("users.json");
+        if (!outJsonFile.is_open())
+            throw Exeption("Cannot open users.json file for writing.");
+        outJsonFile << setw(4) << users;
+        outJsonFile.close();
+
+        if (isAdmin) {
+            ofstream passFile("passwords.txt", ios::app);
+            if (!passFile.is_open())
+                throw Exeption("Cannot open passwords.txt file for writing.");
+            passFile << username << " " << password << endl;
+            passFile.close();
+        }
+
+        cout << "User added successfully!" << endl;
+        cout << "Assigned ID: " << newId << endl;
+    }
+    catch (const Exeption& e)
+    {
+        cerr << "Error adding user: " << e.what() << endl;
+    }
+}
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {

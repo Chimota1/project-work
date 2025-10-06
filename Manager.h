@@ -23,6 +23,7 @@ public:
 	void SetManager(shared_ptr<Computer> thisComputer);
 
 	void ViewAllUsers() const;
+	void AddUser();
 
 	// Фільтри
 	void AuditoriumFilter(int auditoriumNumber) const;
