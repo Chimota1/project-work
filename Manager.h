@@ -24,6 +24,7 @@ public:
 
 	void ViewAllUsers() const;
 	void AddUser();
+    void RemoveUser();
 
 	// Фільтри
 	void AuditoriumFilter(int auditoriumNumber) const;

@@ -128,6 +128,43 @@ void Manager::AddUser()
     }
 }
 
+void Manager::RemoveUser()
+{
+    try {
+        int userId;
+        cout << "Enter the ID of the user to remove: ";
+        cin >> userId;
+
+        json users;
+        ifstream jsonFile("users.json");
+        if (!jsonFile.is_open())
+            throw Exeption("Cannot open users.json file.");
+        jsonFile >> users;
+        jsonFile.close();
+
+        auto it = remove_if(users.begin(), users.end(),
+                            [userId](const json& user) { return user["id"] == userId; });
+
+        if (it == users.end()) {
+            cout << "User with ID " << userId << " not found." << endl;
+            return;
+        }
+
+        users.erase(it, users.end());
+
+        ofstream outJsonFile("users.json");
+        if (!outJsonFile.is_open())
+            throw Exeption("Cannot open users.json file for writing.");
+        outJsonFile << setw(4) << users;
+        outJsonFile.close();
+
+        cout << "User removed successfully!" << endl;
+    }
+    catch (const Exeption& e) {
+        cerr << "Error removing user: " << e.what() << endl;
+    }
+};
+
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
