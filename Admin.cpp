@@ -119,16 +119,17 @@ void Admin::MainMenu(Manager& manager)
         {
             case 1:
                 cout << "Viewing all users..." << endl;
+                manager.ViewAllUsers();
                 break;
 
             case 2:
                 cout << "Adding a user..." << endl;
-                // Implement add user functionality
+                manager.AddUser();
                 break;
 
             case 3:
                 cout << "Removing a user..." << endl;
-                // Implement remove user functionality
+                manager.RemoveUser();
                 break;
 
             case 4:
