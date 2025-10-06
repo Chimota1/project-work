@@ -205,11 +205,39 @@ void Admin::MainMenu(Manager& manager)
     } while (choice != 15);
 };
 
-int Admin::GetID() const
+void Admin::SetID()
 {
-    return m_id;
-};
+    try {
+        ifstream jsonFile("users.json");
+        if (!jsonFile.is_open())
+            throw Exeption("Cannot open users.json file.");
 
+        json users;
+        jsonFile >> users;
+        jsonFile.close();
+
+        bool found = false;
+
+        for (const auto& user : users)
+        {
+            if (user.contains("username") && user["username"] == m_username)
+            {
+                if (user.contains("id"))
+                    m_id = user["id"];
+                if (user.contains("username"))
+                    m_username = user["username"];
+                found = true;
+                break;
+            }
+        }
+
+        if (!found)
+            throw Exeption("User not found in users.json");
+    }
+    catch (const Exeption& e) {
+        cerr << "Error while setting ID: " << e.what() << endl;
+    }
+}
 void Admin::FilterMenu(Manager& manager)
 {
     int sortChoice;

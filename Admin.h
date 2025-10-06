@@ -16,6 +16,7 @@ class Admin : public IUser
     Admin(Admin&& other) noexcept;
     void Login() override;
     void MainMenu(Manager& manager) override;
+    void SetID();
     int GetID() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
