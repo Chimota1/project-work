@@ -6,10 +6,12 @@
 #include "RepairComputer.h"
 #include <iostream>
 #include <algorithm>
+#include "json.hpp"
 #include <vector>
 #include <memory>
 
 using namespace std;
+using json = nlohmann::json;
 
 class Manager
 {
