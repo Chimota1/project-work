@@ -11,7 +11,6 @@
 #include <memory>
 
 using namespace std;
-using json = nlohmann::json;
 
 class Manager
 {
@@ -22,6 +21,8 @@ public:
 	Manager (Manager &&other) noexcept;
 	void GetManager() const;
 	void SetManager(shared_ptr<Computer> thisComputer);
+
+	void ViewAllUsers() const;
 
 	// Фільтри
 	void AuditoriumFilter(int auditoriumNumber) const;

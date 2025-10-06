@@ -7,9 +7,12 @@
 #include "WorkedComputer.h"
 #include "RepairComputer.h"
 #include "Exeption.h"
+#include "json.hpp"
+#include <fstream>
 #include <memory>
 
 using namespace std;
+using json = nlohmann::json;
 
 Manager::Manager() : m_thisComputer{}
 {
@@ -41,6 +44,29 @@ Manager::Manager(Manager &&other) noexcept
 void Manager::SetManager(shared_ptr<Computer> thisComputer)
 {
     m_thisComputer.push_back(thisComputer);
+};
+
+void Manager::ViewAllUsers() const
+{
+    try
+    {
+        ifstream jsonFile("users.json");
+        if (!jsonFile.is_open())
+            throw Exeption("Cannot open users.json file.");
+
+        json users;
+        jsonFile >> users;
+
+        cout << "List of all users:" << endl;
+        for (const auto& user : users)
+        {
+            cout << "ID: " << user["id"] << ", Username: " << user["username"] << endl;
+        }
+    }
+    catch (const Exeption& e)
+    {
+        throw Exeption("Error reading users.json: " + string(e.what()));
+    }
 };
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
