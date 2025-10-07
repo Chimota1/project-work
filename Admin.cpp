@@ -15,27 +15,28 @@ using json = nlohmann::json;
 using namespace std;
 
 Admin::Admin()
-    : m_id(0), m_username(""), m_password("")
+    : m_id(0), m_username(""), m_password(""), m_status("admin")
 {
 };
 
-Admin::Admin(int id, const string& username, const string& password)
-    : m_id(id), m_username(username), m_password(password)
+Admin::Admin(int id, const string& username, const string& password,const string& status)
+    : m_id(id), m_username(username), m_password(password), m_status(status)
 {
 };
 
 Admin::Admin(const Admin& other)
-    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password)
+    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
 {
 };
 
 Admin::Admin(Admin&& other) noexcept
-    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password)
+    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
 {
 }
 
 void Admin::Login()
 {
+    Manager manager;
     string username, password;
     cout << "Enter username: ";
     cin >> username;
@@ -55,7 +56,6 @@ void Admin::Login()
         string loginData, role;
 
         if (iss >> id >> loginData >> role) {
-            // Розділяємо loginData на username:password
             size_t colonPos = loginData.find(':');
             if (colonPos != string::npos) {
                 string fileUsername = loginData.substr(0, colonPos);
@@ -63,6 +63,10 @@ void Admin::Login()
 
                 if (username == fileUsername && password == filePassword) {
                     found = true;
+                    m_username = fileUsername;
+                    m_password = filePassword;
+                    m_id = manager.GetLastID();
+                    m_status = role;
                     break;
                 }
             }
@@ -198,40 +202,6 @@ void Admin::MainMenu(Manager& manager)
     } while (choice != 15);
 };
 
-void Admin::SetID()
-{
-    try {
-        ifstream jsonFile("users.json");
-        if (!jsonFile.is_open())
-            throw Exeption("Cannot open users.json file.");
-
-        json users;
-        jsonFile >> users;
-        jsonFile.close();
-
-        bool found = false;
-
-        for (const auto& user : users)
-        {
-            if (user.contains("username") && user["username"] == m_username)
-            {
-                if (user.contains("id"))
-                    m_id = user["id"];
-                if (user.contains("username"))
-                    m_username = user["username"];
-                found = true;
-                break;
-            }
-        }
-
-        if (!found)
-            throw Exeption("User not found in users.json");
-    }
-    catch (const Exeption& e) {
-        cerr << "Error while setting ID: " << e.what() << endl;
-    }
-}
-
 int Admin::GetID() const
 {
     return m_id;
@@ -354,6 +324,11 @@ void Admin::SortMenu(Manager& manager)
         cout << "Invalid choice. Please try again." << endl;
     };
 };
+
+string Admin::GetStatus() const
+{
+    return m_status;
+}
 
 Admin::~Admin()
 {

@@ -1,63 +1,79 @@
 #include "DefaultUser.h"
 #include "IUser.h"
 #include "Manager.h"
-#include "json.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include "Exeption.h"
 
-using json = nlohmann::json;
 using namespace std;
 
 DefaultUser::DefaultUser()
-    : m_id(0), m_username("")
+    : m_id(0), m_username(""), m_password(""), m_status("user")
 {
 };
 
-DefaultUser::DefaultUser(int id, const string& username)
-    : m_id(id), m_username(username)
+DefaultUser::DefaultUser(int id, const string& username, const string& password, const string status)
+    : m_id(id), m_username(username), m_password(password), m_status(status)
 {
 };
 
 DefaultUser::DefaultUser(const DefaultUser& other)
-    : m_id(other.m_id), m_username(other.m_username)
+    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
 {
 };
 
 DefaultUser::DefaultUser(DefaultUser&& other) noexcept
-    : m_id(other.m_id), m_username(other.m_username)
+    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
 {
 }
 
 void DefaultUser::Login()
 {
-    string username;
-    json users;
+    Manager manager;
+    string username, password;
     cout << "Enter username: ";
     cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
     bool found = false;
-    ifstream jsonFile("users.json");
-    if (!jsonFile.is_open())
-        throw Exeption("Cannot open users.json file.");
-    jsonFile >> users;
-    for (const auto& user : users)
-    {
-        if (user.contains("username") && user["username"] == username)
-        {
-            cout << "Welcome, " << user["role"] << "!" << endl;
-            m_id = user["id"];
-            m_username = username;
-            found = true;
-            break;
+
+    ifstream userFile("users.txt");
+    if (!userFile.is_open())
+        throw Exeption("Cannot open users.txt file.");
+
+    string line;
+    while (getline(userFile, line)) {
+        istringstream iss(line);
+        int id;
+        string loginData, role;
+
+        if (iss >> id >> loginData >> role) {
+            size_t colonPos = loginData.find(':');
+            if (colonPos != string::npos) {
+                string fileUsername = loginData.substr(0, colonPos);
+                string filePassword = loginData.substr(colonPos + 1);
+
+                if (username == fileUsername && password == filePassword) {
+                    found = true;
+                    m_username = fileUsername;
+                    m_password = filePassword;
+                    m_id = manager.GetLastID();
+           			m_status = role;
+                    break;
+                }
+            }
         }
     }
-    if (!found)
-        throw Exeption("Invalid username");
-    jsonFile.close();
-    Manager manager;
-    MainMenu(manager);
-};
+
+    userFile.close();
+
+    if (found)
+        cout << "Login successful!" << endl;
+    else
+        throw Exeption("Invalid username or password");
+}
 
 void DefaultUser::MainMenu(Manager& manager)
 {
@@ -121,16 +137,21 @@ void DefaultUser::MainMenu(Manager& manager)
                 break;
 
             default:
-                cout << "Invalid choice. Please try again." << endl;
-        }
-        manager.SaveToJson("database.json");
-    } while (choice != 8);
-};
+                 cout << "Invalid choice. Please try again." << endl;
+        	}
+        	manager.SaveToJson("database.json");
+    	} while (choice != 8);
+	};
 
 int DefaultUser::GetID() const
 {
     return m_id;
 };
+
+string DefaultUser::GetStatus() const
+{
+	return m_status;
+}
 
 void DefaultUser::FilterMenu(Manager& manager)
 {

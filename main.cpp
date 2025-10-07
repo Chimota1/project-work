@@ -30,14 +30,20 @@ int main()
     if (IsAdmin)
     {
         user = new Admin();
-        user->Login();
-        delete user;
+        if (user->GetStatus() == "admin") {
+            user->Login();
+            delete user;
+        }
+        else throw Exeption("you are not a admin");
     }
     else
     {
         user = new DefaultUser();
-        user->Login();
-        delete user;
+        if (user->GetStatus() == "user") {
+            user->Login();
+            delete user;
+        }
+        else throw Exeption("you are not a user");
     }
     return 0;
 };

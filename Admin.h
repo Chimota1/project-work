@@ -11,15 +11,15 @@ class Admin : public IUser
 {
     public:
     Admin();
-    Admin(int id, const string& username, const string& password);
+    Admin(int id, const string& username, const string& password, const string& status);
     Admin(const Admin& other);
     Admin(Admin&& other) noexcept;
     void Login() override;
     void MainMenu(Manager& manager) override;
-    void SetID();
     int GetID() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
+    string GetStatus() const override;
     virtual ~Admin();
 
 
@@ -27,6 +27,7 @@ class Admin : public IUser
         int m_id;
         string m_username;
         string m_password;
+        string m_status;
     };
 
 #endif //ADMIN_H

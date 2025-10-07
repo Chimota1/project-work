@@ -25,6 +25,7 @@ public:
 	void ViewAllUsers() const;
 	void AddUser();
     void RemoveUser();
+	int GetLastID() const;
 
 	// Фільтри
 	void AuditoriumFilter(int auditoriumNumber) const;
@@ -58,6 +59,7 @@ public:
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;
+	int m_lastID;
 };
 
 #endif //MANAGER_H

@@ -73,7 +73,7 @@ void Manager::AddUser()
 {
     try {
         string username, password, role;
-        int newId;
+        int newID;
         cout << "Adding new User: ";
         cout << "Enter new username: ";
         cin >> username;
@@ -82,13 +82,14 @@ void Manager::AddUser()
         cout << "Enter role (admin/user): ";
         cin >> role;
         ofstream userFile("users.txt", ios::app);
-        GenerateID(newId);
+        GenerateID(newID);
         if (!userFile.is_open())
             throw Exeption("Cannot open users.txt file.");
-        userFile << newId << " " << username << ":" << password << " " << role << endl;
+        userFile << newID << " " << username << ":" << password << " " << role << endl;
         userFile.close();
         cout << "User added successfully!" << endl;
-        cout << "Assigned ID: " << newId << endl;
+        cout << "Assigned ID: " << newID << endl;
+        m_lastID = newID;
     }
     catch (const Exeption& e)
     {
@@ -134,6 +135,11 @@ void Manager::RemoveUser() {
     catch (const Exeption& e) {
         cerr << "Error removing user: " << e.what() << endl;
     }
+}
+
+int Manager::GetLastID() const
+{
+    return m_lastID;
 }
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
@@ -309,7 +315,7 @@ void Manager::InitComputer() {
             cin >> statusOfWork;
             if (statusOfWork == "Working")
                 workedComp->TurnOn();
-            else
+            else if (statusOfWork == "Turned off")
                 workedComp->TurnOff();
         }
     }
