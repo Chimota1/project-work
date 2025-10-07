@@ -101,7 +101,7 @@ void Admin::MainMenu(Manager& manager)
         cout << "1. View all Users" << endl;
         cout << "2. Add User" << endl;
         cout << "3. Remove User" << endl;
-        cout << "4. Show Users Computer" << endl;
+        cout << "4. Add new Computer" << endl;
         cout << "5. See my ID" << endl;
         cout << "6. Filter Computers" << endl;
         cout << "7. Sort Computers by:" << endl;
@@ -134,8 +134,8 @@ void Admin::MainMenu(Manager& manager)
                 break;
 
             case 4:
-                cout << "Showing users computer..." << endl;
-                manager.GetManager();
+                cout << "Adding new computer..." << endl;
+                manager.InitComputer();
                 break;
 
             case 5:
