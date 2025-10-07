@@ -87,6 +87,16 @@ string RepairComputer::GetCause() const
     return m_cause;
 };
 
+int RepairComputer::GetRepairCost() const
+{
+    return m_repairCost;
+};
+
+string RepairComputer::GetRepairStatus() const
+{
+    return m_repairStatus;
+};
+
 void RepairComputer::ShowFullInfo()
 {
       cout << GetComputerFull() << endl;
@@ -98,7 +108,7 @@ void RepairComputer::ShowFullInfo()
 void RepairComputer::UpdateRepairStatus()
 {
   	int k;
-    cout << "Press key: 1 if waiting diagnostic, 2 if in procces, 3 if ready,"<<endl;
+    cout << "Press key: 1 if waiting diagnostic, 2 if in procces, 3 if ready," << endl;
     cin >> k;
 	switch(k)
     {

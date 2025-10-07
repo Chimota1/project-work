@@ -26,6 +26,8 @@ public:
 	string GetDate () const;
 	string GetDescribe () const;
 	string GetCause () const;
+	string GetRepairStatus() const;
+	int GetRepairCost() const;
 	void ShowFullInfo();
 	void UpdateRepairStatus();
 	int RepairCost(int cost);

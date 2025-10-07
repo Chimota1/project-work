@@ -16,12 +16,12 @@ public:
     int countUsers);
     WorkedComputer(const WorkedComputer &other);
 	WorkedComputer(WorkedComputer &&other) noexcept;
-    virtual void ShowStatus() override;
-    virtual int ServiceCost() override;
+	void ShowStatus() override;
+	int ServiceCost() override;
     void SetDays(int days);
     void SetCountUsers(int users);
     int GetDays() const;
-	int GetCountUsers() const;
+	int GetCountUsers() const;;
     void UpdateStatus();
 	void TurnOn();
 	void TurnOff();

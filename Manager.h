@@ -47,8 +47,11 @@ public:
 	void SortByInventoryNumber();
 	void SortByAuditoriumNumber();
 
+
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);
+
+	void SaveToJson(const string& filename) const;
 	virtual ~Manager();
 private:
 	vector<shared_ptr<Computer>> m_thisComputer;

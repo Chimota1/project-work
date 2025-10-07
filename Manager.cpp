@@ -362,6 +362,52 @@ void Manager::ChangeToWorking(int inventoryNumber)
     }
 }
 
+void Manager::SaveToJson(const string& filename) const
+{
+    json j;
+    for (const auto& computer : m_thisComputer)
+    {
+        json compJson;
+        compJson["inventoryNumber"] = computer->GetInventoryNumber();
+        compJson["auditoriumNumber"] = computer->GetAuditoriumNumber();
+        compJson["sizeOfRom"] = computer->GetSizeOfRom();
+        compJson["hasCdRom"] = computer->GetHasCdRom();
+        compJson["hasFloppyDisk"] = computer->GetHasFloppyDisk();
+        compJson["keyboard"] = computer->GetKeyboard();
+        compJson["monitor"] = computer->GetMonitor();
+        compJson["gpu"] = computer->GetGpu();
+        compJson["cpu"] = computer->GetCpu();
+
+        if (auto* wc = dynamic_cast<WorkedComputer*>(computer.get()))
+        {
+            compJson["status"] = "working";
+            compJson["statusOfWork"] = wc->IsWorking() ? "Working" : "Turned off";
+            compJson["daysWithoutRepair"] = wc->GetDays();
+            compJson["countUsers"] = wc->GetCountUsers();
+            compJson["isWorking"] = wc->IsWorking();
+
+        }
+        else if (auto* rc = dynamic_cast<RepairComputer*>(computer.get()))
+        {
+            compJson["status"] = "broken";
+            compJson["repairStatus"] = rc->GetRepairStatus();
+            compJson["dateOfRepair"] = rc->GetDate();
+            compJson["describeOfProblem"] = rc->GetDescribe();
+            compJson["cause"] = rc->GetCause();
+            compJson["repairCost"] = rc->GetRepairCost();
+        }
+
+        j.push_back(compJson);
+    }
+
+    ofstream outFile(filename);
+    if (!outFile.is_open())
+    {
+        throw Exeption("Could not open file for writing: " + filename);
+    }
+    outFile << setw(4) << j << endl;
+    outFile.close();
+}
 
 Manager::~Manager()
 {
