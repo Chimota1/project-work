@@ -1,6 +1,7 @@
 #include "Computer.h"
 #include <iostream>
 #include "Exeption.h"
+#include <string>
 
 using namespace std;
 
@@ -180,19 +181,19 @@ Computer::Computer(Computer &&other) noexcept
 void Computer::MoveAuditorium(int number)
 {
 	if (number <= 0)
-	throw Exeption("number must be bigger than 0 or negative");
-  m_auditoriumNumber = number;
+	throw Exeption("number must be greater than 0");
+    m_auditoriumNumber = number;
 };
 
 void Computer::HasCdRomUpdate(bool hasCdRom)
 {
-  m_hasCdRom = hasCdRom;
+	m_hasCdRom = hasCdRom;
 };
 
 void Computer::HasFloppyDisk(bool hasFloppyDisk)
 {
-  if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("hasFloppyDisk must be 0 or 1");
-  m_hasFloppyDisk = hasFloppyDisk;
+	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("hasFloppyDisk must be 0 or 1");
+	m_hasFloppyDisk = hasFloppyDisk;
 };
 
 
