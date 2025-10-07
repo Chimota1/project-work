@@ -246,6 +246,115 @@ void Manager::CpuFilter(string cpu) const
     }
 };
 
+void Manager::InitComputer() {
+    int choice;
+    cout << "Choose type of computer to add:" << endl;
+    cout << "1. Worked Computer" << endl;
+    cout << "2. Repair Computer" << endl;
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    shared_ptr<Computer> newComputer;
+
+    if (choice == 1)
+    {
+        newComputer = make_shared<WorkedComputer>();
+    }
+    else if (choice == 2)
+    {
+        newComputer = make_shared<RepairComputer>();
+    }
+    else
+    {
+        throw Exeption("Invalid choice for computer type.");
+    }
+
+    int inventoryNumber, auditoriumNumber, sizeOfRom;
+    bool hasCdRom, hasFloppyDisk;
+    string keyboard, monitor, gpu, cpu;
+
+    cout << "Enter Inventory Number: ";
+    cin >> inventoryNumber;
+    newComputer->SetInventoryNumber(inventoryNumber);
+
+    cout << "Enter Auditorium Number: ";
+    cin >> auditoriumNumber;
+    newComputer->SetAuditoriumNumber(auditoriumNumber);
+
+    cout << "Enter Size of ROM (GB): ";
+    cin >> sizeOfRom;
+    newComputer->SetSizeOfRom(sizeOfRom);
+
+    cout << "Has CD-ROM (1 for yes, 0 for no): ";
+    cin >> hasCdRom;
+    newComputer->SetHasCdRom(hasCdRom);
+
+    cout << "Has Floppy Disk (1 for yes, 0 for no): ";
+    cin >> hasFloppyDisk;
+    newComputer->SetHasFloppyDisk(hasFloppyDisk);
+
+    cout << "Enter Keyboard Type: ";
+    cin >> keyboard;
+    newComputer->SetKeyboard(keyboard);
+
+    cout << "Enter Monitor Type: ";
+    cin >> monitor;
+    newComputer->SetMonitor(monitor);
+
+    cout << "Enter GPU Type: ";
+    cin >> gpu;
+    newComputer->SetGpu(gpu);
+
+    cout << "Enter CPU Type: ";
+    cin >> cpu;
+    newComputer->SetCpu(cpu);
+
+    if (choice == 1)
+    {
+        auto workedComp = dynamic_cast<WorkedComputer*>(newComputer.get());
+        if (workedComp)
+        {
+            int daysWithoutRepair, countUsers;
+            string statusOfWork;
+
+            cout << "Enter Days Without Repair: ";
+            cin >> daysWithoutRepair;
+            workedComp->SetDays(daysWithoutRepair);
+            cout << "Enter Count of Users: ";
+            cin >> countUsers;
+            workedComp->SetCountUsers(countUsers);
+            cout << "Enter Status of Work (Working/Turned off): ";
+            cin >> statusOfWork;
+            if (statusOfWork == "Working")
+                workedComp->TurnOn();
+            else
+                workedComp->TurnOff();
+        }
+    }
+    else if (choice == 2) {
+        auto repairComp = dynamic_cast<RepairComputer*>(newComputer.get());
+        if (repairComp)
+        {
+            string dateOfRepair, describeOfProblem, cause;
+            int repairCost;
+            cout << "Enter Date of Repair (YYYY-MM-DD): ";
+            cin >> dateOfRepair;
+            repairComp->SetDate(dateOfRepair);
+            cout << "Enter Description of Problem: ";
+            cin.ignore();
+            getline(cin, describeOfProblem);
+            repairComp->SetDescribe(describeOfProblem);
+            cout << "Enter Cause of Problem: ";
+            getline(cin, cause);
+            repairComp->SetCause(cause);
+            cout << "Enter Repair Cost: ";
+            cin >> repairCost;
+            repairComp->RepairCost(repairCost);
+        }
+    }
+    m_thisComputer.push_back(newComputer);
+    SaveToJson("database.json");
+}
 
 void Manager::RemoveComputer(int inventoryNumber)
 {

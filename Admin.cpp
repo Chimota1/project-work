@@ -94,6 +94,7 @@ void Admin::Login()
 void Admin::MainMenu(Manager& manager)
 {
     int choice;
+    manager.LoadFromJson("database.json");
     do
     {
         cout << "\nAdmin Main Menu" << endl;
@@ -203,6 +204,7 @@ void Admin::MainMenu(Manager& manager)
             default:
                 cout << "Invalid choice. Please try again." << endl;
         }
+        manager.SaveToJson("database.json");
     } while (choice != 15);
 };
 
@@ -242,6 +244,7 @@ void Admin::SetID()
 void Admin::FilterMenu(Manager& manager)
 {
     int sortChoice;
+    manager.LoadFromJson("database.json");
     cout << "Filter computers by: " << endl;
     cout << "1. Inventory Number" << endl;
     cout << "2. Auditorium Number" << endl;
