@@ -409,6 +409,64 @@ void Manager::SaveToJson(const string& filename) const
     outFile.close();
 }
 
+void Manager::LoadFromJson(const string& filename)
+{
+    ifstream inFile(filename);
+    if (!inFile.is_open())
+    {
+        throw Exeption("Could not open file for reading: " + filename);
+    }
+
+    json j;
+    inFile >> j;
+    inFile.close();
+
+    m_thisComputer.clear();
+
+    for (const auto& compJson : j)
+    {
+        shared_ptr<Computer> computer;
+
+        if (compJson["status"] == "working")
+        {
+            auto wc = make_shared<WorkedComputer>();
+            wc->SetDays(compJson.value("daysWithoutRepair", 0));
+            wc->SetCountUsers(compJson.value("countUsers", 0));
+            if (compJson.value("isWorking", false))
+                wc->TurnOn();
+            else
+                wc->TurnOff();
+            computer = wc;
+        }
+        else if (compJson["status"] == "broken")
+        {
+            auto rc = make_shared<RepairComputer>();
+            rc->SetDate(compJson.value("dateOfRepair", ""));
+            rc->SetDescribe(compJson.value("describeOfProblem", ""));
+            rc->SetCause(compJson.value("cause", ""));
+            rc->RepairCost(compJson.value("repairCost", 0));
+            rc->UpdateRepairStatus();
+            computer = rc;
+        }
+        else
+        {
+            throw Exeption("Unknown computer status in JSON");
+        }
+
+        computer->SetInventoryNumber(compJson.value("inventoryNumber", 0));
+        computer->SetAuditoriumNumber(compJson.value("auditoriumNumber", 0));
+        computer->SetSizeOfRom(compJson.value("sizeOfRom", 0));
+        computer->SetHasCdRom(compJson.value("hasCdRom", false));
+        computer->SetHasFloppyDisk(compJson.value("hasFloppyDisk", false));
+        computer->SetKeyboard(compJson.value("keyboard", ""));
+        computer->SetMonitor(compJson.value("monitor", ""));
+        computer->SetGpu(compJson.value("gpu", ""));
+        computer->SetCpu(compJson.value("cpu", ""));
+
+        m_thisComputer.push_back(computer);
+    }
+}
+
 Manager::~Manager()
 {
     cout << "Destructor of manager class" << endl;
