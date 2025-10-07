@@ -1,5 +1,7 @@
 #include "WorkedComputer.h"
 #include "Computer.h"
+#include "Exeption.h"
+#include <string>
 #include <iostream>
 
 using namespace std;

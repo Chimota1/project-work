@@ -52,18 +52,16 @@ void Manager::ViewAllUsers() const
 {
     try
     {
-        ifstream jsonFile("users.json");
-        if (!jsonFile.is_open())
+        ifstream userFile("users.txt");
+        if (!userFile.is_open())
             throw Exeption("Cannot open users.json file.");
-
-        json users;
-        jsonFile >> users;
-
         cout << "List of all users:" << endl;
-        for (const auto& user : users)
+        string line;
+        while (getline(userFile, line))
         {
-            cout << "ID: " << user["id"] << ", Username: " << user["username"] << endl;
+            cout << line << endl;
         }
+        userFile.close();
     }
     catch (const Exeption& e)
     {
@@ -74,51 +72,21 @@ void Manager::ViewAllUsers() const
 void Manager::AddUser()
 {
     try {
-        bool isAdmin;
-        string username, password;
-        cout << "Is the new user an Admin? (1 for yes, 0 for no): ";
-        cin >> isAdmin;
-
+        string username, password, role;
+        int newId;
+        cout << "Adding new User: ";
         cout << "Enter new username: ";
         cin >> username;
-
-        if (isAdmin) {
-            cout << "Enter new password: ";
-            cin >> password;
-        }
-
-        srand(time(0));
-        int newId = rand() % 900 + 100;
-
-        json users;
-        ifstream jsonFile("users.json");
-        if (jsonFile.is_open()) {
-            jsonFile >> users;
-            jsonFile.close();
-        }
-
-        json newUser = {
-            {"id", newId},
-            {"username", username},
-            {"isAdmin", isAdmin}
-        };
-
-        users.push_back(newUser);
-
-        ofstream outJsonFile("users.json");
-        if (!outJsonFile.is_open())
-            throw Exeption("Cannot open users.json file for writing.");
-        outJsonFile << setw(4) << users;
-        outJsonFile.close();
-
-        if (isAdmin) {
-            ofstream passFile("passwords.txt", ios::app);
-            if (!passFile.is_open())
-                throw Exeption("Cannot open passwords.txt file for writing.");
-            passFile << username << " " << password << endl;
-            passFile.close();
-        }
-
+        cout << "Enter new password: ";
+        cin >> password;
+        cout << "Enter role (admin/user): ";
+        cin >> role;
+        ofstream userFile("users.txt", ios::app);
+        GenerateID(newId);
+        if (!userFile.is_open())
+            throw Exeption("Cannot open users.txt file.");
+        userFile << newId << " " << username << ":" << password << " " << role << endl;
+        userFile.close();
         cout << "User added successfully!" << endl;
         cout << "Assigned ID: " << newId << endl;
     }
@@ -128,42 +96,45 @@ void Manager::AddUser()
     }
 }
 
-void Manager::RemoveUser()
-{
+void Manager::RemoveUser() {
     try {
         int userId;
         cout << "Enter the ID of the user to remove: ";
         cin >> userId;
 
-        json users;
-        ifstream jsonFile("users.json");
-        if (!jsonFile.is_open())
-            throw Exeption("Cannot open users.json file.");
-        jsonFile >> users;
-        jsonFile.close();
+        ifstream userFile("users.txt");
+        if (!userFile.is_open())
+            throw Exeption("Cannot open users.txt file.");
 
-        auto it = remove_if(users.begin(), users.end(),
-                            [userId](const json& user) { return user["id"] == userId; });
+        string line;
+        vector<string> lines;
+        bool found = false;
+        while (getline(userFile, line)) {
+            if (line.find(to_string(userId) + " ") != 0) {
+                lines.push_back(line);
+            } else {
+                found = true;
+            }
+        }
+        userFile.close();
 
-        if (it == users.end()) {
+        if (!found) {
             cout << "User with ID " << userId << " not found." << endl;
             return;
         }
 
-        users.erase(it, users.end());
-
-        ofstream outJsonFile("users.json");
-        if (!outJsonFile.is_open())
-            throw Exeption("Cannot open users.json file for writing.");
-        outJsonFile << setw(4) << users;
-        outJsonFile.close();
+        ofstream outFile("users.txt");
+        for (const auto& l : lines) {
+            outFile << l << endl;
+        }
+        outFile.close();
 
         cout << "User removed successfully!" << endl;
     }
     catch (const Exeption& e) {
         cerr << "Error removing user: " << e.what() << endl;
     }
-};
+}
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
@@ -246,6 +217,13 @@ void Manager::CpuFilter(string cpu) const
     }
 };
 
+int Manager::GenerateID(int& id)
+{
+    srand(time(0));
+    id = rand() % 999 + 100;
+    return id;
+}
+
 void Manager::InitComputer() {
     int choice;
     cout << "Choose type of computer to add:" << endl;
@@ -294,19 +272,23 @@ void Manager::InitComputer() {
     newComputer->SetHasFloppyDisk(hasFloppyDisk);
 
     cout << "Enter Keyboard Type: ";
-    cin >> keyboard;
+    cin.ignore();
+    getline(cin, keyboard);
     newComputer->SetKeyboard(keyboard);
 
     cout << "Enter Monitor Type: ";
-    cin >> monitor;
+    cin.ignore();
+    getline(cin, monitor);
     newComputer->SetMonitor(monitor);
 
     cout << "Enter GPU Type: ";
-    cin >> gpu;
+    cin.ignore();
+    getline(cin, gpu);
     newComputer->SetGpu(gpu);
 
     cout << "Enter CPU Type: ";
-    cin >> cpu;
+    cin.ignore();
+    getline(cin, cpu);
     newComputer->SetCpu(cpu);
 
     if (choice == 1)
@@ -429,9 +411,11 @@ void Manager::ChangeToBroken(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-        if ( (*it)->GetInventoryNumber()  == inventoryNumber)
+        if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
-            shared_ptr<Computer> brokenComputer = make_shared<RepairComputer>();
+            auto brokenComputer = make_shared<RepairComputer>();
+
+            // Копіюємо спільні поля
             brokenComputer->SetGpu((*it)->GetGpu());
             brokenComputer->SetCpu((*it)->GetCpu());
             brokenComputer->SetMonitor((*it)->GetMonitor());
@@ -441,20 +425,51 @@ void Manager::ChangeToBroken(int inventoryNumber)
             brokenComputer->SetHasFloppyDisk((*it)->GetHasFloppyDisk());
             brokenComputer->SetAuditoriumNumber((*it)->GetAuditoriumNumber());
             brokenComputer->SetInventoryNumber((*it)->GetInventoryNumber());
-            m_thisComputer.erase(it);
-            m_thisComputer.push_back(brokenComputer);
-            break;
+
+            // Поля ремонтного комп'ютера
+            string dateOfRepair, describeOfProblem, cause;
+            int repairCost;
+
+            cout << "Enter Date of Repair (YYYY-MM-DD): ";
+            cin >> dateOfRepair;
+            brokenComputer->SetDate(dateOfRepair);
+
+            cout << "Enter Problem Description: ";
+            cin.ignore();
+            getline(cin, describeOfProblem);
+            brokenComputer->SetDescribe(describeOfProblem);
+
+            cout << "Enter Cause of Problem: ";
+            getline(cin, cause);
+            brokenComputer->SetCause(cause);
+
+            cout << "Enter Repair Cost: ";
+            cin >> repairCost;
+            brokenComputer->RepairCost(repairCost);
+
+            brokenComputer->UpdateRepairStatus();
+
+            *it = brokenComputer; // заміна без видалення
+            SaveToJson("database.json");
+            cout << "Computer status changed to BROKEN successfully!\n";
+            return;
         }
     }
+
+    cout << "Computer with inventory number " << inventoryNumber << " not found.\n";
 }
+
 
 void Manager::ChangeToWorking(int inventoryNumber)
 {
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-        if ( (*it)->GetInventoryNumber()  == inventoryNumber)
+        if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
-            shared_ptr<Computer> workingComputer = make_shared<WorkedComputer>();
+            // Створюємо новий об’єкт типу WorkedComputer
+            auto workingComputer = make_shared<WorkedComputer>();
+
+            // Копіюємо спільні поля
             workingComputer->SetGpu((*it)->GetGpu());
             workingComputer->SetCpu((*it)->GetCpu());
             workingComputer->SetMonitor((*it)->GetMonitor());
@@ -464,12 +479,35 @@ void Manager::ChangeToWorking(int inventoryNumber)
             workingComputer->SetHasFloppyDisk((*it)->GetHasFloppyDisk());
             workingComputer->SetAuditoriumNumber((*it)->GetAuditoriumNumber());
             workingComputer->SetInventoryNumber((*it)->GetInventoryNumber());
-            m_thisComputer.erase(it);
-            m_thisComputer.push_back(workingComputer);
-            break;
+
+            int daysWithoutRepair, countUsers;
+            cout << "Enter Days Without Repair: ";
+            cin >> daysWithoutRepair;
+            workingComputer->SetDays(daysWithoutRepair);
+
+            cout << "Enter Count of Users: ";
+            cin >> countUsers;
+            workingComputer->SetCountUsers(countUsers);
+
+            string status;
+            cout << "Enter Status (Working/Turned off): ";
+            cin >> status;
+            if (status == "Working")
+                workingComputer->TurnOn();
+            else
+                workingComputer->TurnOff();
+
+            *it = workingComputer;
+
+            SaveToJson("database.json");
+            cout << "Computer status changed to WORKING successfully!\n";
+            return;
         }
     }
+
+    cout << "Computer with inventory number " << inventoryNumber << " not found.\n";
 }
+
 
 void Manager::SaveToJson(const string& filename) const
 {

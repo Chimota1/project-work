@@ -7,7 +7,6 @@
 #include <string>
 #include <cstdlib>
 #include <fstream>
-#include <sstream>
 #include "json.hpp"
 #include "Exeption.h"
 #include "Manager.h"
@@ -45,50 +44,41 @@ void Admin::Login()
 
     bool found = false;
 
-    ifstream jsonFile("users.json");
-    ifstream passFile("password.txt");
+    ifstream userFile("users.txt");
+    if (!userFile.is_open())
+        throw Exeption("Cannot open users.txt file.");
 
-    if (!jsonFile.is_open() || !passFile.is_open())
-        throw Exeption("Cannot open user data files.");
+    string line;
+    while (getline(userFile, line)) {
+        istringstream iss(line);
+        int id;
+        string loginData, role;
 
-    json users;
-    jsonFile >> users;
+        if (iss >> id >> loginData >> role) {
+            // Розділяємо loginData на username:password
+            size_t colonPos = loginData.find(':');
+            if (colonPos != string::npos) {
+                string fileUsername = loginData.substr(0, colonPos);
+                string filePassword = loginData.substr(colonPos + 1);
 
-    string fileUser, filePass;
-    while (passFile >> fileUser >> filePass)
-    {
-        if (fileUser == username && filePass == password)
-        {
-            found = true;
-            break;
-        }
-    }
-
-    if (found)
-    {
-        cout << "Login successful!" << endl;
-        for (auto& user : users)
-        {
-            if (user["username"] == username)
-            {
-                cout << "Welcome, " << user["role"] << "!" << endl;
-                m_id = user["id"];
-                m_username = username;
-                break;
+                if (username == fileUsername && password == filePassword) {
+                    found = true;
+                    break;
+                }
             }
         }
+    }
+    userFile.close();
+
+    if (found) {
+        cout << "Login successful!" << endl;
         Manager manager;
         MainMenu(manager);
     }
-    else
-    {
+    else {
         throw Exeption("Invalid username or password");
     }
-
-    jsonFile.close();
-    passFile.close();
 }
-
 
 
 void Admin::MainMenu(Manager& manager)
@@ -242,6 +232,11 @@ void Admin::SetID()
     }
 }
 
+int Admin::GetID() const
+{
+    return m_id;
+};
+
 void Admin::FilterMenu(Manager& manager)
 {
     int sortChoice;
@@ -258,74 +253,84 @@ void Admin::FilterMenu(Manager& manager)
     cout << "9. CPU" << endl;
     cout << "Enter your choice: ";
     cin >> sortChoice;
-    switch(sortChoice)
+    switch (sortChoice)
     {
-        case 1:
+        case 1: {
             int inventoryNumber;
             cout << "Enter inventory number: ";
             cin >> inventoryNumber;
             manager.InventoryFilter(inventoryNumber);
-        break;
+            break;
+        }
 
-        case 2:
+        case 2: {
             int auditoriumNumber;
             cout << "Enter auditorium number: ";
             cin >> auditoriumNumber;
             manager.AuditoriumFilter(auditoriumNumber);
-        break;
+            break;
+        }
 
-        case 3:
+        case 3: {
             int sizeOfRom;
             cout << "Enter size of ROM: ";
             cin >> sizeOfRom;
             manager.SizeOfRomFilter(sizeOfRom);
-        break;
+            break;
+        }
 
-        case 4:
+        case 4: {
             bool hasCdRom;
             cout << "Has CD-ROM (1 for yes, 0 for no): ";
             cin >> hasCdRom;
             manager.HasCdRomFilter(hasCdRom);
-        break;
+            break;
+        }
 
-        case 5:
+        case 5: {
             bool hasFloppyDisk;
             cout << "Has Floppy Disk (1 for yes, 0 for no): ";
             cin >> hasFloppyDisk;
             manager.HasFloppyDiskFilter(hasFloppyDisk);
-        break;
+            break;
+        }
 
-        case 6:
+        case 6: {
             string keyboard;
             cout << "Enter keyboard type: ";
             cin >> keyboard;
             manager.KeyboardFilter(keyboard);
-        break;
+            break;
+        }
 
-        case 7:
+        case 7: {
             string monitor;
             cout << "Enter monitor type: ";
             cin >> monitor;
             manager.MonitorFilter(monitor);
-        break;
+            break;
+        }
 
-        case 8:
+        case 8: {
             string gpu;
             cout << "Enter GPU type: ";
             cin >> gpu;
             manager.GpuFilter(gpu);
-        break;
+            break;
+        }
 
-        case 9:
+        case 9: {
             string cpu;
             cout << "Enter CPU type: ";
             cin >> cpu;
             manager.CpuFilter(cpu);
-        break;
+            break;
+        }
 
         default:
             cout << "Invalid choice. Please try again." << endl;
-    };
+        break;
+    }
 }
 
 void Admin::SortMenu(Manager& manager)

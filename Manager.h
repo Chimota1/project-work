@@ -37,6 +37,7 @@ public:
 	void GpuFilter(string gpu) const;
 	void CpuFilter(string cpu) const;
 
+	int GenerateID(int& id);
 	void InitComputer();
 	void RemoveComputer(int inventoryNumber);
 	void ClearAll();

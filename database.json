@@ -1,3 +1,36 @@
 [
-
+    {
+        "auditoriumNumber": 12,
+        "cause": "Unknown",
+        "cpu": "MD Ryzen 3400g",
+        "dateOfRepair": "Unknown Date",
+        "describeOfProblem": "",
+        "gpu": "TX 2050",
+        "hasCdRom": true,
+        "hasFloppyDisk": true,
+        "inventoryNumber": 123,
+        "keyboard": "MSI a",
+        "monitor": "eyboard A",
+        "repairCost": 0,
+        "repairStatus": "Unknown",
+        "sizeOfRom": 512,
+        "status": "broken"
+    },
+    {
+        "auditoriumNumber": 12,
+        "cause": "CPU",
+        "cpu": "md Ryzen 3400g",
+        "dateOfRepair": "2001-10-29",
+        "describeOfProblem": "So_long",
+        "gpu": "TX 2050",
+        "hasCdRom": true,
+        "hasFloppyDisk": false,
+        "inventoryNumber": 111,
+        "keyboard": "MSI",
+        "monitor": "SI",
+        "repairCost": 12000,
+        "repairStatus": "Unknown",
+        "sizeOfRom": 128,
+        "status": "broken"
+    }
 ]

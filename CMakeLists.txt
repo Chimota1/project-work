@@ -11,4 +11,5 @@ add_executable(project-work
         WorkedComputer.cpp
         Exeption.cpp
         Admin.cpp
+        DefaultUser.cpp
 )

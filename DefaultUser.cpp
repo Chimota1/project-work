@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "Exeption.h"
 
 using json = nlohmann::json;
 using namespace std;
@@ -246,4 +247,9 @@ void DefaultUser::SortMenu(Manager& manager)
     {
         cout << "Invalid choice. Please try again." << endl;
     };
+};
+
+DefaultUser::~DefaultUser()
+{
+    cout << "DefaultUser destructor called" << endl;
 };
