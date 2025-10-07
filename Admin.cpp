@@ -241,6 +241,7 @@ void Admin::SetID()
         cerr << "Error while setting ID: " << e.what() << endl;
     }
 }
+
 void Admin::FilterMenu(Manager& manager)
 {
     int sortChoice;
