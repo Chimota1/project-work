@@ -55,11 +55,11 @@ void DefaultUser::Login()
                 string fileUsername = loginData.substr(0, colonPos);
                 string filePassword = loginData.substr(colonPos + 1);
 
-                if (username == fileUsername && password == filePassword) {
+                if (username == fileUsername && password == filePassword && role == "user") {
                     found = true;
                     m_username = fileUsername;
                     m_password = filePassword;
-                    m_id = manager.GetLastID();
+                    m_id = id;
            			m_status = role;
                     break;
                 }
@@ -89,7 +89,8 @@ void DefaultUser::MainMenu(Manager& manager)
         cout << "5. Count Computers" << endl;
         cout << "6. Count Broken Computers" << endl;
         cout << "7. Count Working Computers" << endl;
-        cout << "8. Logout" << endl;
+        cout << "8. Help\n";
+        cout << "0. Logout" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -97,7 +98,7 @@ void DefaultUser::MainMenu(Manager& manager)
         {
             case 1:
                 cout << "Viewing all computers..." << endl;
-                manager.GetManager();
+                manager.ViewAllComputer();
                 break;
 
             case 2:
@@ -132,7 +133,7 @@ void DefaultUser::MainMenu(Manager& manager)
                  cout << endl;
                 break;
 
-            case 8:
+            case 0:
                 cout << "Logging out..." << endl;
                 break;
 
@@ -147,6 +148,55 @@ int DefaultUser::GetID() const
 {
     return m_id;
 };
+
+void DefaultUser::HelpMenu() const
+{
+    cout << "\n==================== USER HELP MENU ====================\n";
+    cout << "Welcome to the Computer Management System (CMS)\n";
+    cout << "This section will help you understand how to use the program as a regular user.\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "\nUSER MAIN MENU OVERVIEW:\n";
+    cout << "1. View all Computers     → Shows all computers stored in the database\n";
+    cout << "2. See my ID              → Displays your user ID from the system\n";
+    cout << "3. Filter Computers       → Allows you to filter computers by various parameters\n";
+    cout << "4. Sort Computers by      → Sorts computers by inventory or auditorium number\n";
+    cout << "5. Count Computers        → Shows the total number of computers\n";
+    cout << "6. Count Broken Computers → Displays how many computers are currently broken\n";
+    cout << "7. Count Working Computers→ Displays how many computers are working\n";
+    cout << "8. Help                   → Displays this help information\n";
+    cout << "9. Logout                 → Exits to the login screen\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "\nPROGRAM DESCRIPTION:\n";
+    cout << " - As a regular user, you can only *view and analyze* computer data.\n";
+    cout << " - You CANNOT add, delete, or modify computers or users.\n";
+    cout << " - All information you see comes from 'database.json'.\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "\nINPUT RULES:\n";
+    cout << " - Use numbers for choosing menu options.\n";
+    cout << " - When asked YES/NO questions, use 1 for YES and 0 for NO.\n";
+    cout << " - Do not leave empty input fields (e.g., when entering text).\n";
+    cout << " - Dates, if requested, must be in the format YYYY-MM-DD.\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "\nFILTER & SORT EXAMPLES:\n";
+    cout << " - Filter by 'Inventory Number' to find a specific computer.\n";
+    cout << " - Filter by 'CPU' or 'GPU' to find certain configurations.\n";
+    cout << " - Sort computers by 'Auditorium Number' to group them by room.\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "\nADDITIONAL NOTES:\n";
+    cout << " - Data is automatically loaded from and saved to 'database.json'.\n";
+    cout << " - You can explore data safely — changes are not allowed in this mode.\n";
+    cout << " - If you get an error message (Exeption), check your input format.\n";
+    cout << "---------------------------------------------------------\n";
+
+    cout << "Tip: Use 'Filter Computers' to quickly find what you need.\n";
+    cout << "===========================================================\n";
+}
+
 
 string DefaultUser::GetStatus() const
 {

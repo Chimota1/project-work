@@ -11,17 +11,21 @@ public:
 	WorkedComputer();
     WorkedComputer(
     string statusOfWork,
+    string employmentStatus,
     int serviceCostWorked,
     int daysWithoutRepair,
     int countUsers);
     WorkedComputer(const WorkedComputer &other);
 	WorkedComputer(WorkedComputer &&other) noexcept;
 	void ShowStatus() override;
-	int ServiceCost() override;
+	void ServiceCost(int serviceCost) override;
     void SetDays(int days);
     void SetCountUsers(int users);
+	void SetEmploymentStatus(const string& status);
     int GetDays() const;
-	int GetCountUsers() const;;
+	int GetCountUsers() const;
+	int GetServiceCost() const;
+	string GetEmploymentStatus() const;
     void UpdateStatus();
 	void TurnOn();
 	void TurnOff();
@@ -29,6 +33,7 @@ public:
 	virtual ~WorkedComputer();
 private:
     string m_statusOfWork;
+	string m_employmentStatus;
     int m_serviceCostWorked;
     int m_daysWithoutRepair;
     int m_countUsers;

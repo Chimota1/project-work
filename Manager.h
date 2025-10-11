@@ -19,7 +19,7 @@ public:
 	Manager(vector<shared_ptr<Computer>> thisComputer);
 	Manager (const Manager &other);
 	Manager (Manager &&other) noexcept;
-	void GetManager() const;
+	vector<shared_ptr<Computer>>& GetManager();
 	void SetManager(shared_ptr<Computer> thisComputer);
 
 	void ViewAllUsers() const;
@@ -39,6 +39,7 @@ public:
 	void CpuFilter(string cpu) const;
 
 	int GenerateID(int& id);
+	void ViewAllComputer() const;
 	void InitComputer();
 	void RemoveComputer(int inventoryNumber);
 	void ClearAll();

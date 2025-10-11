@@ -28,13 +28,16 @@ public:
 	string GetCause () const;
 	string GetRepairStatus() const;
 	int GetRepairCost() const;
+	int GetServiceCost() const;
+	bool GetNeedNewParts() const;
+
 	void ShowFullInfo();
 	void UpdateRepairStatus();
 	int RepairCost(int cost);
-	bool NeedsSpareParts();
+	void NeedsSpareParts(bool needNewParts);
 	void ShowInfoAboutRepair() const;
 	void ShowStatus() override;
-	int ServiceCost() override;
+	void ServiceCost(int serviceCost) override;
 	virtual ~RepairComputer();
 private:
 	string m_dateOfRepair;

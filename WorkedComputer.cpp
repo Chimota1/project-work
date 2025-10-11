@@ -11,18 +11,21 @@ WorkedComputer::WorkedComputer():
 	m_statusOfWork{"Unknown"},
 	m_serviceCostWorked{0},
     m_daysWithoutRepair{0},
-    m_countUsers{0}
+    m_countUsers{0},
+    m_employmentStatus{"Freely"}
 {
 };
 
 WorkedComputer::WorkedComputer(
     string statusOfWork,
+    string employmentStatus,
     int serviceCostWorked,
     int daysWithoutRepair,
     int countUsers
     ):
     Computer(),
 	m_statusOfWork{statusOfWork},
+    m_employmentStatus{employmentStatus},
 	m_serviceCostWorked{serviceCostWorked},
     m_daysWithoutRepair{daysWithoutRepair},
     m_countUsers{countUsers}
@@ -32,6 +35,7 @@ WorkedComputer::WorkedComputer(
 WorkedComputer::WorkedComputer(const WorkedComputer &other)
 {
 	this->m_statusOfWork = other.m_statusOfWork;
+    this->m_employmentStatus = other.m_employmentStatus;
     this->m_serviceCostWorked = other.m_serviceCostWorked;
     this->m_daysWithoutRepair = other.m_daysWithoutRepair;
     this->m_countUsers = other.m_countUsers;
@@ -39,7 +43,8 @@ WorkedComputer::WorkedComputer(const WorkedComputer &other)
 
 WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 {
-	this->m_statusOfWork = other.m_statusOfWork;
+    this->m_statusOfWork = other.m_statusOfWork;
+    this->m_employmentStatus = other.m_employmentStatus;
     this->m_serviceCostWorked = other.m_serviceCostWorked;
     this->m_daysWithoutRepair = other.m_daysWithoutRepair;
     this->m_countUsers = other.m_countUsers;
@@ -53,22 +58,20 @@ void WorkedComputer::ShowStatus()
 void WorkedComputer::UpdateStatus()
 {
     int k;
-    cout << "set status PC \"1 if Working \\ 2 if Turned Off\" << endl";
+    cout << "set status PC \"1 if Freely \\ 2 if Busy\"" << endl;
     cin >> k;
     switch (k)
     {
-         case 1:
-
-           m_statusOfWork = "Working";
-           break;
+        case 1:
+           m_employmentStatus = "Freely";
+        break;
 
          case 2:
-           m_statusOfWork = "Turned off";
-           break;
+           m_employmentStatus = "Busy";
+         break;
 
-        default:
+         default:
            throw Exeption("Wrong number");
-           break;
     };
 };
 
@@ -84,30 +87,43 @@ void WorkedComputer::SetDays(int days)
     m_daysWithoutRepair = days;
 };
 
+void WorkedComputer::SetEmploymentStatus(const string& status)
+{
+    if (status != "Freely" && status != "Busy")
+        throw Exeption("Invalid employment status in JSON file");
+    m_employmentStatus = status;
+};
+
 int WorkedComputer::GetDays() const
 {
 	return m_daysWithoutRepair;
 };
+
 
 int WorkedComputer::GetCountUsers() const
 {
     return m_countUsers;
 }
 
-
-int WorkedComputer::ServiceCost()
+int WorkedComputer::GetServiceCost() const
 {
-  	int serviceCost;
-    cout << "Write Service cost" << endl;
-    cin >> serviceCost;
+    return m_serviceCostWorked;
+}
+
+string WorkedComputer::GetEmploymentStatus() const
+{
+    return m_employmentStatus;
+}
+
+void WorkedComputer::ServiceCost(int serviceCost)
+{
     if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
     m_serviceCostWorked = serviceCost;
-    return m_serviceCostWorked;
 };
 
 void WorkedComputer::TurnOn()
 {
-    m_statusOfWork = "Working";
+    m_statusOfWork = "Turned on";
 }
 
 void WorkedComputer::TurnOff()
@@ -117,7 +133,7 @@ void WorkedComputer::TurnOff()
 
 bool WorkedComputer::IsWorking()
 {
-    if (m_statusOfWork == "Working")
+    if (m_statusOfWork == "Turned on")
     {
         return true;
     }

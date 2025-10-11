@@ -17,8 +17,12 @@ class Admin : public IUser
     void Login() override;
     void MainMenu(Manager& manager) override;
     int GetID() const override;
+    void HelpMenu() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
+    void WorkedMenu(Manager& manager);
+    void RepairMenu(Manager& manager);
+    void ChangesMenu(Manager& manager);
     string GetStatus() const override;
     virtual ~Admin();
 

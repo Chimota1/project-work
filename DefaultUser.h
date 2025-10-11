@@ -15,6 +15,7 @@ public:
     void MainMenu(Manager& manager) override;
     int GetID() const override;
     string GetStatus() const override;
+    void HelpMenu() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
     virtual ~DefaultUser();

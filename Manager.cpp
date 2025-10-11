@@ -16,7 +16,8 @@
 using namespace std;
 using json = nlohmann::json;
 
-Manager::Manager() : m_thisComputer{}
+Manager::Manager() :
+m_thisComputer{}
 {
 };
 
@@ -35,12 +36,9 @@ Manager::Manager(Manager &&other) noexcept
     this->m_thisComputer = other.m_thisComputer;
 };
 
- void Manager::GetManager() const
+vector<shared_ptr<Computer>>& Manager::GetManager()
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
-    {
-        cout << (*it)->GetComputerFull() << endl;
-    }
+    return m_thisComputer;
 };
 
 void Manager::SetManager(shared_ptr<Computer> thisComputer)
@@ -74,7 +72,6 @@ void Manager::AddUser()
     try {
         string username, password, role;
         int newID;
-        cout << "Adding new User: ";
         cout << "Enter new username: ";
         cin >> username;
         cout << "Enter new password: ";
@@ -230,6 +227,15 @@ int Manager::GenerateID(int& id)
     return id;
 }
 
+void Manager::ViewAllComputer() const
+{
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        cout << (*it)->GetComputerFull() << endl;
+    }
+};
+
+
 void Manager::InitComputer() {
     int choice;
     cout << "Choose type of computer to add:" << endl;
@@ -277,23 +283,21 @@ void Manager::InitComputer() {
     cin >> hasFloppyDisk;
     newComputer->SetHasFloppyDisk(hasFloppyDisk);
 
-    cout << "Enter Keyboard Type: ";
     cin.ignore();
+
+    cout << "Enter Keyboard Type: ";
     getline(cin, keyboard);
     newComputer->SetKeyboard(keyboard);
 
     cout << "Enter Monitor Type: ";
-    cin.ignore();
     getline(cin, monitor);
     newComputer->SetMonitor(monitor);
 
     cout << "Enter GPU Type: ";
-    cin.ignore();
     getline(cin, gpu);
     newComputer->SetGpu(gpu);
 
     cout << "Enter CPU Type: ";
-    cin.ignore();
     getline(cin, cpu);
     newComputer->SetCpu(cpu);
 
@@ -302,21 +306,26 @@ void Manager::InitComputer() {
         auto workedComp = dynamic_cast<WorkedComputer*>(newComputer.get());
         if (workedComp)
         {
-            int daysWithoutRepair, countUsers;
-            string statusOfWork;
-
+            int daysWithoutRepair, countUsers,serviceCost,statusOfWork;
             cout << "Enter Days Without Repair: ";
             cin >> daysWithoutRepair;
             workedComp->SetDays(daysWithoutRepair);
             cout << "Enter Count of Users: ";
             cin >> countUsers;
             workedComp->SetCountUsers(countUsers);
-            cout << "Enter Status of Work (Working/Turned off): ";
+            cout << "Enter Status of Work (1 if Turned on/ 2. if Turned off): ";
             cin >> statusOfWork;
-            if (statusOfWork == "Working")
+            if (statusOfWork == 1)
+            {
                 workedComp->TurnOn();
-            else if (statusOfWork == "Turned off")
+            }
+            else if (statusOfWork == 2)
+            {
                 workedComp->TurnOff();
+            }
+            cout << "Enter Service Cost: ";
+            cin >> serviceCost;
+            workedComp->ServiceCost(serviceCost);
         }
     }
     else if (choice == 2) {
@@ -333,6 +342,7 @@ void Manager::InitComputer() {
             getline(cin, describeOfProblem);
             repairComp->SetDescribe(describeOfProblem);
             cout << "Enter Cause of Problem: ";
+            cin.ignore();
             getline(cin, cause);
             repairComp->SetCause(cause);
             cout << "Enter Repair Cost: ";
@@ -358,7 +368,7 @@ void Manager::RemoveComputer(int inventoryNumber)
 
 void Manager::ClearAll()
 {
-    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot sort");
+    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot clear");
     m_thisComputer.clear();
 }
 
@@ -401,6 +411,7 @@ void Manager::SortByInventoryNumber()
          {
              return first->GetInventoryNumber() < last->GetInventoryNumber();
          });
+    SaveToJson("database.json");
 };
 
 void Manager::SortByAuditoriumNumber()
@@ -411,6 +422,7 @@ void Manager::SortByAuditoriumNumber()
          {
              return first->GetAuditoriumNumber() < last->GetAuditoriumNumber();
          });
+    SaveToJson("database.json");
 };
 
 void Manager::ChangeToBroken(int inventoryNumber)
@@ -421,7 +433,6 @@ void Manager::ChangeToBroken(int inventoryNumber)
         {
             auto brokenComputer = make_shared<RepairComputer>();
 
-            // Копіюємо спільні поля
             brokenComputer->SetGpu((*it)->GetGpu());
             brokenComputer->SetCpu((*it)->GetCpu());
             brokenComputer->SetMonitor((*it)->GetMonitor());
@@ -431,8 +442,6 @@ void Manager::ChangeToBroken(int inventoryNumber)
             brokenComputer->SetHasFloppyDisk((*it)->GetHasFloppyDisk());
             brokenComputer->SetAuditoriumNumber((*it)->GetAuditoriumNumber());
             brokenComputer->SetInventoryNumber((*it)->GetInventoryNumber());
-
-            // Поля ремонтного комп'ютера
             string dateOfRepair, describeOfProblem, cause;
             int repairCost;
 
@@ -446,6 +455,7 @@ void Manager::ChangeToBroken(int inventoryNumber)
             brokenComputer->SetDescribe(describeOfProblem);
 
             cout << "Enter Cause of Problem: ";
+            cin.ignore();
             getline(cin, cause);
             brokenComputer->SetCause(cause);
 
@@ -455,7 +465,7 @@ void Manager::ChangeToBroken(int inventoryNumber)
 
             brokenComputer->UpdateRepairStatus();
 
-            *it = brokenComputer; // заміна без видалення
+            *it = brokenComputer;
             SaveToJson("database.json");
             cout << "Computer status changed to BROKEN successfully!\n";
             return;
@@ -472,10 +482,7 @@ void Manager::ChangeToWorking(int inventoryNumber)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
-            // Створюємо новий об’єкт типу WorkedComputer
             auto workingComputer = make_shared<WorkedComputer>();
-
-            // Копіюємо спільні поля
             workingComputer->SetGpu((*it)->GetGpu());
             workingComputer->SetCpu((*it)->GetCpu());
             workingComputer->SetMonitor((*it)->GetMonitor());
@@ -534,10 +541,12 @@ void Manager::SaveToJson(const string& filename) const
         if (auto* wc = dynamic_cast<WorkedComputer*>(computer.get()))
         {
             compJson["status"] = "working";
-            compJson["statusOfWork"] = wc->IsWorking() ? "Working" : "Turned off";
+            compJson["statusOfWork"] = wc->IsWorking() ? "Turned on" : "Turned off";
             compJson["daysWithoutRepair"] = wc->GetDays();
             compJson["countUsers"] = wc->GetCountUsers();
             compJson["isWorking"] = wc->IsWorking();
+            compJson["serviceCost"] = wc->GetServiceCost();
+            compJson["employmentStatus"] = wc->GetEmploymentStatus();
 
         }
         else if (auto* rc = dynamic_cast<RepairComputer*>(computer.get()))
@@ -548,6 +557,7 @@ void Manager::SaveToJson(const string& filename) const
             compJson["describeOfProblem"] = rc->GetDescribe();
             compJson["cause"] = rc->GetCause();
             compJson["repairCost"] = rc->GetRepairCost();
+            compJson["needNewParts"] = rc->GetNeedNewParts();
         }
 
         j.push_back(compJson);
@@ -589,14 +599,15 @@ void Manager::LoadFromJson(const string& filename)
                 wc->TurnOn();
             else
                 wc->TurnOff();
+            wc->SetEmploymentStatus(compJson.value("employmentStatus","Freely"));
             computer = wc;
         }
         else if (compJson["status"] == "broken")
         {
             auto rc = make_shared<RepairComputer>();
-            rc->SetDate(compJson.value("dateOfRepair", ""));
-            rc->SetDescribe(compJson.value("describeOfProblem", ""));
-            rc->SetCause(compJson.value("cause", ""));
+            rc->SetDate(compJson.value("dateOfRepair", "Unknown"));
+            rc->SetDescribe(compJson.value("describeOfProblem", "Unknown"));
+            rc->SetCause(compJson.value("cause", "Unknown"));
             rc->RepairCost(compJson.value("repairCost", 0));
             rc->UpdateRepairStatus();
             computer = rc;

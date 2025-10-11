@@ -13,6 +13,7 @@ class IUser
      virtual void MainMenu(Manager& manager) = 0;
      virtual int GetID() const = 0;
      virtual string GetStatus() const = 0;
+     virtual void HelpMenu() const = 0;
      virtual ~IUser()
      {
            cout << "IUser destructor called" << endl;

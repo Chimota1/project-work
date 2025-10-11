@@ -14,36 +14,66 @@ int main()
 {
     IUser* user = nullptr;
     Manager manager;
-    bool IsAdmin = false;
+    bool isRuning = true;
+    int choiceInMenu;
+
     ifstream userFile("users.txt");
     if (!userFile.is_open())
         throw Exeption("Cannot open users.txt file.");
     userFile.seekg(0, ios::end);
-
     if (userFile.tellg() == 0)
     {
         cout << "No users found. Please create an admin account." << endl;
         manager.AddUser();
     }
-    cout << "Are you an admin? (1 for Yes, 0 for No): ";
-    cin >> IsAdmin;
-    if (IsAdmin)
+    userFile.close();
+    do
     {
-        user = new Admin();
-        if (user->GetStatus() == "admin") {
-            user->Login();
-            delete user;
+        cout << "1. Start \n";
+        cout << "2. End Program \n";
+        cin >> choiceInMenu;
+
+        if (choiceInMenu == 1)
+        {
+            int adminChoice;
+            cout << "Are you an admin? (1. YES, 2. NO) \n";
+            cin >> adminChoice;
+
+            if (adminChoice == 1)
+            {
+                Admin* admin = new Admin();
+                try {
+                    admin->Login();
+                    admin->MainMenu(manager);
+                }
+                catch (const Exeption& e) {
+                    cerr << "Error: " << e.what() << endl;
+                }
+                delete admin;
+            }
+            else if (adminChoice == 2)
+            {
+                DefaultUser* userDefault = new DefaultUser();
+                try {
+                    userDefault->Login();
+                    userDefault->MainMenu(manager);
+                }
+                catch (const Exeption& e) {
+                    cerr << "Error: " << e.what() << endl;
+                }
+                delete userDefault;
+            }
+            else
+            {
+                cout << "Invalid choice, please enter 1 or 2.\n";
+            }
         }
-        else throw Exeption("you are not a admin");
-    }
-    else
-    {
-        user = new DefaultUser();
-        if (user->GetStatus() == "user") {
-            user->Login();
-            delete user;
+        else if (choiceInMenu == 2)
+        {
+            isRuning = false;
         }
-        else throw Exeption("you are not a user");
-    }
+
+    } while (isRuning);
+
     return 0;
-};
+}

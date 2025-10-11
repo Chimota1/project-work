@@ -9,7 +9,7 @@ using namespace std;
 
 RepairComputer::RepairComputer() :
     m_dateOfRepair{"Unknown Date"},
-    m_describeOfProblem{""},
+    m_describeOfProblem{"Unknown"},
     m_cause{"Unknown"},
     m_repairStatus{"Unknown"},
     m_repairCost{0},
@@ -57,18 +57,18 @@ RepairComputer::RepairComputer(
 
 void RepairComputer::SetDate(string date)
 {
-    if (date == "") throw Exeption("Date is empty");
+    if (date.empty()) throw Exeption("Date is empty");
     m_dateOfRepair = date;
 };
 
 void RepairComputer::SetDescribe(string describe)
 {
-    if (describe == "") throw Exeption("Describe is empty");
+    if (describe.empty()) throw Exeption("Describe is empty");
     m_describeOfProblem = describe;
 };
 void RepairComputer::SetCause(string cause)
 {
-    if (cause == "") throw Exeption("Cause is empty");
+    if (cause.empty()) throw Exeption("Cause is empty");
     m_cause = cause;
 };
 
@@ -134,16 +134,15 @@ int RepairComputer::RepairCost(int cost)
     return m_repairCost;
 };
 
-bool RepairComputer::NeedsSpareParts()
+void RepairComputer::NeedsSpareParts(bool needNewParts)
 {
-    int input;
 	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
-    cin >> input;
-    if (input != 0 && input != 1)
+    cin >> needNewParts;
+    if (needNewParts != 0 && needNewParts != 1)
     {
         throw Exeption("Input must be 0 or 1");
     };
-    return m_needNewParts = (input == 1);
+    m_needNewParts = needNewParts;
 };
 
 void RepairComputer::ShowInfoAboutRepair() const
@@ -156,15 +155,18 @@ void RepairComputer::ShowStatus()
     cout << "Status: " << m_repairStatus << endl;
 };
 
-int RepairComputer::ServiceCost()
+void RepairComputer::ServiceCost(int serviceCost)
 {
-	int serviceCost;
-    cout << "Write Service cost" << endl;
-    cin >> serviceCost;
-    m_serviceCostRepair = serviceCost;
     if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
-    return m_serviceCostRepair + m_repairCost;
+    m_serviceCostRepair = serviceCost;
+    cout << "Total cost (service + repair): "
+         << m_serviceCostRepair + m_repairCost << endl;
 };
+
+bool RepairComputer::GetNeedNewParts() const
+{
+    return m_needNewParts;
+}
 
 RepairComputer::~RepairComputer()
 {

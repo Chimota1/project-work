@@ -41,7 +41,7 @@ public:
 	int GetAuditoriumNumber() const;
 	string GetComputerFull() const;
 	virtual void ShowStatus() = 0; // Метод демонстрування стану
-	virtual int ServiceCost() = 0; // Метод демонстрування вартості осблуговування
+	virtual void ServiceCost(int serviceCost) = 0; // Метод демонстрування вартості осблуговування
     void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
 	void HasCdRomUpdate(bool hasCdRom); // Метод який оновлює значення чи є Cd-ROM
 	void HasFloppyDisk(bool hasFloppyDisk); // Метод який оновлює значення чи є Floppy Disk
