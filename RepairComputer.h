@@ -23,6 +23,8 @@ public:
 	void SetDate(string date);
 	void SetDescribe(string describe);
 	void SetCause(string cause);
+	void SetNeedParts(bool needNewParts);
+	void SetRepairStatus (string repairStatus);
 	string GetDate () const;
 	string GetDescribe () const;
 	string GetCause () const;

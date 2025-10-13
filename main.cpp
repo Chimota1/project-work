@@ -44,7 +44,6 @@ int main()
                 Admin* admin = new Admin();
                 try {
                     admin->Login();
-                    admin->MainMenu(manager);
                 }
                 catch (const Exeption& e) {
                     cerr << "Error: " << e.what() << endl;
@@ -56,7 +55,6 @@ int main()
                 DefaultUser* userDefault = new DefaultUser();
                 try {
                     userDefault->Login();
-                    userDefault->MainMenu(manager);
                 }
                 catch (const Exeption& e) {
                     cerr << "Error: " << e.what() << endl;

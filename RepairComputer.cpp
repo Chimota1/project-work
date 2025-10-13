@@ -72,6 +72,16 @@ void RepairComputer::SetCause(string cause)
     m_cause = cause;
 };
 
+void RepairComputer::SetNeedParts(bool needNewParts)
+{
+    m_needNewParts = needNewParts;
+};
+
+void RepairComputer::SetRepairStatus(string repairStatus)
+{
+    m_repairStatus = repairStatus;
+}
+
 string RepairComputer::GetDate() const
 {
     return m_dateOfRepair;
@@ -133,6 +143,8 @@ int RepairComputer::RepairCost(int cost)
     if (cost < 0) throw Exeption("Repair cost must be 0 or positive");
     return m_repairCost;
 };
+
+
 
 void RepairComputer::NeedsSpareParts(bool needNewParts)
 {

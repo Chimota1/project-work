@@ -608,8 +608,9 @@ void Manager::LoadFromJson(const string& filename)
             rc->SetDate(compJson.value("dateOfRepair", "Unknown"));
             rc->SetDescribe(compJson.value("describeOfProblem", "Unknown"));
             rc->SetCause(compJson.value("cause", "Unknown"));
+            rc->SetRepairStatus(compJson.value("repairStatus","waiting diagnostic"));
             rc->RepairCost(compJson.value("repairCost", 0));
-            rc->UpdateRepairStatus();
+            rc->SetNeedParts(compJson.value("needNewParts", true));
             computer = rc;
         }
         else

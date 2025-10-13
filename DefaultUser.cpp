@@ -61,6 +61,7 @@ void DefaultUser::Login()
                     m_password = filePassword;
                     m_id = id;
            			m_status = role;
+                    MainMenu(manager);
                     break;
                 }
             }

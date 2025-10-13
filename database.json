@@ -91,21 +91,21 @@
     },
     {
         "auditoriumNumber": 890,
-        "countUsers": 2,
+        "cause": "PU",
         "cpu": "Intel",
-        "daysWithoutRepair": 14,
-        "employmentStatus": "Freely",
+        "dateOfRepair": "2010-10-25",
+        "describeOfProblem": "Don`t Launch",
         "gpu": "NVidia",
         "hasCdRom": true,
         "hasFloppyDisk": false,
         "inventoryNumber": 560,
-        "isWorking": false,
         "keyboard": "Hator",
         "monitor": "Samsung",
-        "serviceCost": 0,
+        "needNewParts": false,
+        "repairCost": 12000,
+        "repairStatus": "waiting diagnostic",
         "sizeOfRom": 780,
-        "status": "working",
-        "statusOfWork": "Turned off"
+        "status": "broken"
     },
     {
         "auditoriumNumber": 300,
@@ -121,7 +121,7 @@
         "monitor": "MSI",
         "needNewParts": true,
         "repairCost": 12000,
-        "repairStatus": "in procces",
+        "repairStatus": "ready",
         "sizeOfRom": 670,
         "status": "broken"
     }

@@ -81,6 +81,7 @@ void Admin::Login()
 
     if (found) {
         cout << "Login successful!" << endl;
+        MainMenu(manager);
     }
     else {
         throw Exeption("Invalid username or password");
@@ -429,13 +430,8 @@ void Admin::WorkedMenu(Manager& manager) {
                             break;
 
                         case 5:
-                        {
                             cout << "Changing computer status to Broken..." << endl;
-                            int inventoryNumber;
-                            cout << "Enter inventory number of the computer: ";
-                            cin >> inventoryNumber;
                             manager.ChangeToBroken(inventoryNumber);
-                        }
                             break;
 
                         case 6:
@@ -484,7 +480,6 @@ void Admin::WorkedMenu(Manager& manager) {
 
                         case 0:
                             cout << "Returning to admin menu...\n";
-                            MainMenu(manager);
                             break;
 
                         default:
@@ -634,15 +629,12 @@ void Admin::RepairMenu(Manager& manager)
                         break;
 
                         case 15:
-                        {
                             cout << "Changing status to WORKING..." << endl;
                             manager.ChangeToWorking(inventoryNumber);
                             break;
-                        }
 
                         case 0:
                             cout << "Returning to Admin Menu...\n";
-                            MainMenu(manager);
                             break;
 
                         default:
