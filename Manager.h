@@ -12,6 +12,10 @@
 
 using namespace std;
 
+/**
+ * @brief Клас-менеджер для керування колекцією об'єктів Computer.
+ * 
+ */
 class Manager
 {
 public:
@@ -22,12 +26,19 @@ public:
 	vector<shared_ptr<Computer>>& GetManager();
 	void SetManager(shared_ptr<Computer> thisComputer);
 
+	// методи для роботи з користувачами
 	void ViewAllUsers() const;
 	void AddUser();
     void RemoveUser();
+
+	/**
+	 * @brief Дає ID останнього користувача
+	 * 
+	 * @return int 
+	 */
 	int GetLastID() const;
 
-	// Фільтри
+	// Фільтри по комплектуючими
 	void AuditoriumFilter(int auditoriumNumber) const;
 	void InventoryFilter(int inventoryNumber) const;
 	void SizeOfRomFilter(int sizeOfRom) const;
@@ -38,24 +49,63 @@ public:
 	void GpuFilter(string gpu) const;
 	void CpuFilter(string cpu) const;
 
+	/**
+	 * @brief генерує ID користувача
+	 * 
+	 * @param id 
+	 * @return int 
+	 */
 	int GenerateID(int& id);
+
+	// методи для роботи з комп'ютерами
 	void ViewAllComputer() const;
 	void InitComputer();
 	void RemoveComputer(int inventoryNumber);
+
+	/**
+	 * @brief очищує весь JSON
+	 * 
+	 */
 	void ClearAll();
+
+	/**
+	 * @brief дає кількість комп'ютерів
+	 * 
+	 */
 	void GetCount() const;
 
+	/**
+	 * @brief виводить кількість несправних комп'ютерів
+	 * 
+	 */
 	void CountBrokenComputers() const;
+
+	/**
+	 * @brief виводить кількість робочих комп'ютерів
+	 * 
+	 */
     void CountWorkingComputers() const;
 
+	//Сортування
 	void SortByInventoryNumber();
 	void SortByAuditoriumNumber();
 
-
+	// Зміна статусу
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);
 
+	/**
+	 * @brief зберігає всі данні в JSON
+	 * 
+	 * @param filename 
+	 */
 	void SaveToJson(const string& filename) const;
+
+	/**
+	 * @brief завантажує данні з JSON
+	 * 
+	 * @param filename 
+	 */
 	void LoadFromJson(const string& filename);
 	virtual ~Manager();
 private:

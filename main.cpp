@@ -14,7 +14,7 @@ int main()
 {
     IUser* user = nullptr;
     Manager manager;
-    bool isRuning = true;
+    bool isRunning = true;
     int choiceInMenu;
 
     ifstream userFile("users.txt");
@@ -27,17 +27,27 @@ int main()
         manager.AddUser();
     }
     userFile.close();
+
     do
     {
-        cout << "1. Start \n";
+        cout << "\n1. Start \n";
         cout << "2. End Program \n";
+        cout << "Enter your choice: ";
         cin >> choiceInMenu;
 
         if (choiceInMenu == 1)
         {
             int adminChoice;
-            cout << "Are you an admin? (1. YES, 2. NO) \n";
-            cin >> adminChoice;
+            try {
+                cout << "Are you an admin? (1. YES, 2. NO, 3. EXIT) \n";
+                cin >> adminChoice;
+                if (adminChoice != 1 && adminChoice != 2 && adminChoice != 3)
+                    throw Exeption("wrong input");
+            }
+            catch (const Exeption& e) {
+                cerr << "Error: " << e.what() << endl;
+                continue;
+            }
 
             if (adminChoice == 1)
             {
@@ -61,17 +71,21 @@ int main()
                 }
                 delete userDefault;
             }
-            else
+            else if (adminChoice == 3)
             {
-                cout << "Invalid choice, please enter 1 or 2.\n";
+                continue;
             }
         }
         else if (choiceInMenu == 2)
         {
-            isRuning = false;
+            isRunning = false;
+        }
+        else
+        {
+            cout << "Invalid menu choice. Try again.\n";
         }
 
-    } while (isRuning);
+    } while (isRunning);
 
     return 0;
 }

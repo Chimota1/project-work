@@ -6,6 +6,11 @@
 
 using namespace std;
 
+/**
+ * @brief клас нащадок
+ * @details містить іфнормацію про несправних пк	
+ * 
+ */
 class RepairComputer : public Computer
 {
 public:
@@ -33,8 +38,24 @@ public:
 	int GetServiceCost() const;
 	bool GetNeedNewParts() const;
 
+	/**
+	 * @brief Виводить всю повну інформацію про несправний пк
+	 * 
+	 */
 	void ShowFullInfo();
+
+	/**
+	 * @brief змінює статус лагодження пк
+	 * @details є 3 статуса: 1. в діагностиці, 2. в процессі лагодження, 3. готова до відправки назад
+	 * 
+	 */
 	void UpdateRepairStatus();
+	/**
+	 * @brief показує 
+	 * 
+	 * @param cost 
+	 * @return int 
+	 */
 	int RepairCost(int cost);
 	void NeedsSpareParts(bool needNewParts);
 	void ShowInfoAboutRepair() const;

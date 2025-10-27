@@ -80,69 +80,75 @@ void DefaultUser::MainMenu(Manager& manager)
 {
     int choice;
     manager.LoadFromJson("database.json");
-    do
-    {
-        cout << "\nUser Main Menu" << endl;
-        cout << "1. View all Computers" << endl;
-        cout << "2. See my ID" << endl;
-        cout << "3. Filter Computers" << endl;
-        cout << "4. Sort Computers by:" << endl;
-        cout << "5. Count Computers" << endl;
-        cout << "6. Count Broken Computers" << endl;
-        cout << "7. Count Working Computers" << endl;
-        cout << "8. Help\n";
-        cout << "0. Logout" << endl;
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice)
+    try {
+        do
         {
-            case 1:
-                cout << "Viewing all computers..." << endl;
+            cout << "\nUser Main Menu" << endl;
+            cout << "1. View all Computers" << endl;
+            cout << "2. See my ID" << endl;
+            cout << "3. Filter Computers" << endl;
+            cout << "4. Sort Computers by:" << endl;
+            cout << "5. Count Computers" << endl;
+            cout << "6. Count Broken Computers" << endl;
+            cout << "7. Count Working Computers" << endl;
+            cout << "8. Help\n";
+            cout << "0. Logout" << endl;
+            cout << "Enter your choice: ";
+            cin >> choice;
+
+            switch (choice)
+            {
+                case 1:
+                    cout << "Viewing all computers..." << endl;
                 manager.ViewAllComputer();
                 break;
 
-            case 2:
-                cout << "Your ID is: " << GetID() << endl;
+                case 2:
+                    cout << "Your ID is: " << GetID() << endl;
                 break;
 
-            case 3:
-                cout << "Filtering computers..." << endl;
+                case 3:
+                    cout << "Filtering computers..." << endl;
                 FilterMenu(manager);
                 break;
 
-            case 4:
-                cout << "Sorting computers..." << endl;
+                case 4:
+                    cout << "Sorting computers..." << endl;
                 SortMenu(manager);
                 break;
 
-            case 5:
-				cout << "Total computers: ";
+                case 5:
+                    cout << "Total computers: ";
                 manager.GetCount();
                 cout << endl;
                 break;
 
-            case 6:
-				cout << "Total broken computers: ";
+                case 6:
+                    cout << "Total broken computers: ";
                 manager.CountBrokenComputers();
                 cout << endl;
                 break;
 
-            case 7:
-                 cout << "Total working computers: ";
-				 manager.CountWorkingComputers();
-                 cout << endl;
+                case 7:
+                    cout << "Total working computers: ";
+                manager.CountWorkingComputers();
+                cout << endl;
                 break;
 
-            case 0:
-                cout << "Logging out..." << endl;
+                case 0:
+                    cout << "Logging out..." << endl;
                 break;
 
-            default:
-                 cout << "Invalid choice. Please try again." << endl;
-        	}
-        	manager.SaveToJson("database.json");
-    	} while (choice != 8);
+                default:
+                    throw Exeption("wrong input");
+            }
+            manager.SaveToJson("database.json");
+        } while (choice != 8);
+    }
+    catch (Exeption e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
 	};
 
 int DefaultUser::GetID() const

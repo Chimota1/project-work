@@ -93,103 +93,113 @@ void Admin::MainMenu(Manager& manager)
 {
     int choice;
     manager.LoadFromJson("database.json");
-    do
+    try
     {
-        cout << "\nAdmin Main Menu\n";
-        cout << "1. View all Users\n";
-        cout << "2. Add User\n";
-        cout << "3. Remove User\n";
-        cout << "4. Add new Computer\n";
-        cout << "5. See my ID\n";
-        cout << "6. Filter Computers \n";
-        cout << "7. Sort Computers by: \n";
-        cout << "8. Clear All Computers\n";
-        cout << "9. Count Computers\n";
-        cout << "10. Menu of Worked Computer\n";
-        cout << "11. Menu of Repair Computer\n";
-        cout << "12. Remove Computer\n";
-        cout << "13. Changes Menu\n";
-        cout << "14. Help\n";
-        cout << "15. Logout\n";
-        cout << "Enter your choice: ";
-        cin >> choice;
-
-        switch (choice)
+        do
         {
-            case 1:
-                cout << "Viewing all users..." << endl;
+            cout << "\nAdmin Main Menu\n";
+            cout << "1. View all Users\n";
+            cout << "2. Add User\n";
+            cout << "3. Remove User\n";
+            cout << "4. Add new Computer\n";
+            cout << "5. See my ID\n";
+            cout << "6. Filter Computers \n";
+            cout << "7. Sort Computers by: \n";
+            cout << "8. Clear All Computers\n";
+            cout << "9. Count Computers\n";
+            cout << "10. Menu of Worked Computer\n";
+            cout << "11. Menu of Repair Computer\n";
+            cout << "12. Remove Computer\n";
+            cout << "13. Changes Menu\n";
+            cout << "14. Help\n";
+            cout << "15. Logout\n";
+            cout << "Enter your choice: ";
+            cin >> choice;
+
+            switch (choice)
+            {
+                case 1:
+                    cout << "Viewing all users..." << endl;
                 manager.ViewAllUsers();
                 break;
 
-            case 2:
-                cout << "Adding a user..." << endl;
+                case 2:
+                    cout << "Adding a user..." << endl;
                 manager.AddUser();
                 break;
 
-            case 3:
-                cout << "Removing a user..." << endl;
+                case 3:
+                    cout << "Removing a user..." << endl;
                 manager.RemoveUser();
                 break;
 
-            case 4:
-                cout << "Adding new computer..." << endl;
+                case 4:
+                    cout << "Adding new computer..." << endl;
                 manager.InitComputer();
                 break;
 
-            case 5:
-                cout << "Your ID is: " << GetID() << endl;
+                case 5:
+                    cout << "Your ID is: " << GetID() << endl;
                 break;
 
-            case 6:
-                FilterMenu(manager);
+                case 6:
+                    FilterMenu(manager);
                 break;
 
-            case 7:
-                SortMenu(manager);
+                case 7:
+                    SortMenu(manager);
                 break;
 
-            case 8:
-                cout << "Clearing all computers..." << endl;
+                case 8:
+                    cout << "Clearing all computers..." << endl;
                 manager.ClearAll();
                 break;
 
-            case 9:
-                cout << "Counting all computers..." << endl;
+                case 9:
+                    cout << "Counting all computers..." << endl;
                 manager.GetCount();
                 break;
 
-            case 10:
-                WorkedMenu(manager);
+                case 10:
+                    WorkedMenu(manager);
                 break;
 
-            case 11:
-                RepairMenu(manager);
+                case 11:
+                    RepairMenu(manager);
                 break;
 
-            case 12:
-                cout << "Removing a computer..." << endl;
+                case 12:
+                    cout << "Removing a computer..." << endl;
                 {
                     int inventoryNumber;
                     cout << "Enter inventory number of the computer to remove: ";
                     cin >> inventoryNumber;
                     manager.RemoveComputer(inventoryNumber);
                 }
-            break;
-
-            case 13:
-                ChangesMenu(manager);
                 break;
 
-            case 14:
-                HelpMenu();
-            case 15:
-                cout << "Logging out..." << endl;
+                case 13:
+                    ChangesMenu(manager);
                 break;
-            default:
-                cout << "Invalid choice. Please try again." << endl;
-        }
-        manager.SaveToJson("database.json");
-    } while (choice != 15);
+
+                case 14:
+                    HelpMenu();
+                break;
+
+                case 15:
+                    cout << "Logging out..." << endl;
+                break;
+
+                default:
+                    throw Exeption("wrong input");
+            }
+            manager.SaveToJson("database.json");
+        } while (choice != 15);
+    }
+    catch (Exeption e)
+    {
+        cerr << "Error: " << e.what() << endl;
+    }
 };
 
 int Admin::GetID() const
@@ -220,7 +230,7 @@ void Admin::HelpMenu() const
         cout << "12. Remove Computer      → Delete specific computer by inventory number\n";
         cout << "13. Changes Menu         → Edit any computer’s basic information\n";
         cout << "14. Help                 → Shows this help menu\n";
-        cout << "0. Logout                → Exit admin mode and return to login\n";
+        cout << "15. Logout                → Exit admin mode and return to login\n";
         cout << "----------------------------------------------------\n";
 
         cout << "\nPROGRAM DESCRIPTION:\n";
@@ -537,8 +547,9 @@ void Admin::RepairMenu(Manager& manager)
                 cout << "11. Show Problem Description\n";
                 cout << "12. Show Cause of Problem\n";
                 cout << "13. Show Repair Cost\n";
-                cout << "14. Show if need new parts\n";
-                cout << "15. Change to Working Computer\n";
+                cout << "14. Show Full Info About Repair\n";
+                cout << "15. Show if need new parts\n";
+                cout << "16. Change to Working Computer\n";
                 cout << "0. Back to Admin Menu\n";
                 cout << "Your choice: ";
                 cin >> choice;
@@ -625,10 +636,14 @@ void Admin::RepairMenu(Manager& manager)
                             break;
 
                         case 14:
-                            (repair->GetNeedNewParts() ? "Yes" : "No");
-                        break;
-
+                            cout << "Full info: " << endl;
+                            repair->ShowInfoAboutRepair();
+                            break;
                         case 15:
+                            (repair->GetNeedNewParts() ? "Yes" : "No");
+                            break;
+
+                        case 16:
                             cout << "Changing status to WORKING..." << endl;
                             manager.ChangeToWorking(inventoryNumber);
                             break;

@@ -5,10 +5,14 @@
 
 using namespace std;
 
+/**
+ * @brief абстрактний клас
+ * 
+ */
 class Computer
 {
 public:
-	Computer();//Конструктор за замовчуванням
+	Computer();
     Computer(
     	string cpu,
         string gpu,
@@ -18,9 +22,9 @@ public:
         bool hasFloppyDisk,
         int sizeOfRom,
         int inventoryNumber,
-        int auditoriumNumber); //Конструктор з параметрами
-    Computer(const Computer &other); //Копіювальний конструктор
-    Computer(Computer &&other) noexcept; //Конструктор переміщення
+        int auditoriumNumber);
+    Computer(const Computer &other);
+    Computer(Computer &&other) noexcept;
 	void SetCpu(string cpu);
 	void SetGpu(string gpu);
 	void SetMonitor(string monitor);
@@ -40,12 +44,43 @@ public:
 	int GetInventoryNumber() const;
 	int GetAuditoriumNumber() const;
 	string GetComputerFull() const;
-	virtual void ShowStatus() = 0; // Метод демонстрування стану
-	virtual void ServiceCost(int serviceCost) = 0; // Метод демонстрування вартості осблуговування
-    void MoveAuditorium(int number); // Метод який змінює номер аудиторії де знаходиться ПК
-	void HasCdRomUpdate(bool hasCdRom); // Метод який оновлює значення чи є Cd-ROM
-	void HasFloppyDisk(bool hasFloppyDisk); // Метод який оновлює значення чи є Floppy Disk
-	virtual ~Computer(); //Деструктор
+
+	/**
+	 * @brief чисто віртуальна функція, яка виводить інформацію про статус ПК
+	 * 
+	 */
+	virtual void ShowStatus() = 0;
+	
+	/**
+	 * @brief чисто віртуальна функція, яка виводить вартість обслуговування пк
+	 * 
+	 * @param serviceCost 
+	 */
+
+	virtual void ServiceCost(int serviceCost) = 0;
+
+	/**
+	 * @brief змінює номер авдиторії пк
+	 * 
+	 * @param number 
+	 */
+    void MoveAuditorium(int number);
+
+	/**
+	 * @brief оновлює інформацію про наявність CD-ROM
+	 * 
+	 * @param hasCdRom 
+	 */
+	void HasCdRomUpdate(bool hasCdRom);
+
+	/**
+	 * @brief оновлює інформацію про наявність Floppy-Disk
+	 * 
+	 * @param hasFloppyDisk 
+	 */
+	void HasFloppyDisk(bool hasFloppyDisk);
+
+	virtual ~Computer();
 
 private:
 	string m_cpu;
