@@ -11,7 +11,7 @@
 #include <fstream>
 #include <memory>
 #include <cstdlib>
-
+#include <limits>
 
 using namespace std;
 using json = nlohmann::json;
@@ -52,8 +52,7 @@ void Manager::ViewAllUsers() const
     {
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw Exeption("Cannot open users.json file.");
-        cout << "List of all users:" << endl;
+            throw Exeption("Не вдається відкрити файл users.json.");
         string line;
         while (getline(userFile, line))
         {
@@ -63,7 +62,7 @@ void Manager::ViewAllUsers() const
     }
     catch (const Exeption& e)
     {
-        throw Exeption("Error reading users.json: " + string(e.what()));
+        throw Exeption("Помилка зчитування users.json: " + string(e.what()));
     }
 };
 
@@ -72,37 +71,38 @@ void Manager::AddUser()
     try {
         string username, password, role;
         int newID;
-        cout << "Enter new username: ";
+        cout << "Введіть нове ім'я користувача:";
         cin >> username;
-        cout << "Enter new password: ";
+        cout << "Введіть новий пароль: ";
         cin >> password;
-        cout << "Enter role (admin/user): ";
+        cout << "Введіть роль (admin/user): ";
         cin >> role;
+        if (role != "admin || role != user") throw Exeption ("неправильна роль");
         ofstream userFile("users.txt", ios::app);
         GenerateID(newID);
         if (!userFile.is_open())
-            throw Exeption("Cannot open users.txt file.");
+            throw Exeption("Не вдається відкрити users.txt файл.");
         userFile << newID << " " << username << ":" << password << " " << role << endl;
         userFile.close();
-        cout << "User added successfully!" << endl;
-        cout << "Assigned ID: " << newID << endl;
+        cout << "Користувач успішно доданий!" << endl;
+        cout << "Присвоєно ID: " << newID << endl;
         m_lastID = newID;
     }
     catch (const Exeption& e)
     {
-        cerr << "Error adding user: " << e.what() << endl;
+        cerr << "Помилка при додаванні користувача: " << e.what() << endl;
     }
 }
 
 void Manager::RemoveUser() {
     try {
         int userId;
-        cout << "Enter the ID of the user to remove: ";
+        cout << "Введіть ID користувача, щоб видалити: ";
         cin >> userId;
 
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw Exeption("Cannot open users.txt file.");
+            throw Exeption("Не вдається відкрити файл users.txt.");
 
         string line;
         vector<string> lines;
@@ -117,8 +117,7 @@ void Manager::RemoveUser() {
         userFile.close();
 
         if (!found) {
-            cout << "User with ID " << userId << " not found." << endl;
-            return;
+            throw Exeption ("Користувача з таким ID не існує");
         }
 
         ofstream outFile("users.txt");
@@ -127,10 +126,10 @@ void Manager::RemoveUser() {
         }
         outFile.close();
 
-        cout << "User removed successfully!" << endl;
+        cout << "Користувач успішно видалений!" << endl;
     }
     catch (const Exeption& e) {
-        cerr << "Error removing user: " << e.what() << endl;
+        cerr << "Помилка при видаленні користувача: " << e.what() << endl;
     }
 }
 
@@ -141,83 +140,124 @@ int Manager::GetLastID() const
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
-        if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
-        cout << (*it)->GetComputerFull() << endl;
-    }
-}
+        if ((*it)->GetAuditoriumNumber() == auditoriumNumber) {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
+    };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+};
 
 void Manager::InventoryFilter(int inventoryNumber) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
-    {
-        if ((*it)->GetSizeOfRom() == sizeOfRom)
-        cout << (*it)->GetComputerFull() << endl;
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
+        if ((*it)->GetSizeOfRom() == sizeOfRom){
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::HasCdRomFilter(bool hasCdRom) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetHasCdRom() == hasCdRom)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::KeyboardFilter(string keyboard) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetKeyboard() == keyboard)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::MonitorFilter(string monitor) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::GpuFilter(string gpu) const
 {
+    bool found = false;
     for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
-        cout << (*it)->GetComputerFull() << endl;
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
     };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::CpuFilter(string cpu) const
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
-    {
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
         if ((*it)->GetCpu() == cpu)
-        cout << (*it)->GetComputerFull() << endl;
-    }
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        };
+    };
+    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 int Manager::GenerateID(int& id)
@@ -236,68 +276,98 @@ void Manager::ViewAllComputer() const
 };
 
 
-void Manager::InitComputer() {
+void Manager::InitComputer()
+{
     int choice;
-    cout << "Choose type of computer to add:" << endl;
-    cout << "1. Worked Computer" << endl;
-    cout << "2. Repair Computer" << endl;
-    cout << "Enter your choice: ";
+    cout << "Виберіть тип комп'ютера, який потрібно додати:" << endl;
+    cout << "1. Справний комп'ютер" << endl;
+    cout << "2. Несправиний комп'ютер" << endl;
+    cout << "Введіть свій вибір: ";
     cin >> choice;
+
+    if (cin.fail() || (choice != 1 && choice != 2))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Введіть 1 або 2.");
+    }
 
     shared_ptr<Computer> newComputer;
 
     if (choice == 1)
-    {
         newComputer = make_shared<WorkedComputer>();
-    }
-    else if (choice == 2)
-    {
-        newComputer = make_shared<RepairComputer>();
-    }
     else
-    {
-        throw Exeption("Invalid choice for computer type.");
-    }
+        newComputer = make_shared<RepairComputer>();
 
     int inventoryNumber, auditoriumNumber, sizeOfRom;
     bool hasCdRom, hasFloppyDisk;
     string keyboard, monitor, gpu, cpu;
 
-    cout << "Enter Inventory Number: ";
+    cout << "Введіть інвентарний номер: ";
     cin >> inventoryNumber;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірний тип введення. Очікувалось число.");
+    }
     newComputer->SetInventoryNumber(inventoryNumber);
 
-    cout << "Enter Auditorium Number: ";
+    cout << "Введіть номер аудиторії: ";
     cin >> auditoriumNumber;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірний тип введення. Очікувалось число.");
+    }
     newComputer->SetAuditoriumNumber(auditoriumNumber);
 
-    cout << "Enter Size of ROM (GB): ";
+    cout << "Введіть розмір ROM (GB): ";
     cin >> sizeOfRom;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірний тип введення. Очікувалось число.");
+    }
     newComputer->SetSizeOfRom(sizeOfRom);
 
-    cout << "Has CD-ROM (1 for yes, 0 for no): ";
+    cout << "Має CD-ROM (1 якщо так, 0 якщо ні): ";
     cin >> hasCdRom;
+    if (cin.fail() || (hasCdRom != 0 && hasCdRom != 1))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Введіть 1 або 0.");
+    }
     newComputer->SetHasCdRom(hasCdRom);
 
-    cout << "Has Floppy Disk (1 for yes, 0 for no): ";
+    cout << "Має Floppy Disk (1 якщо так, 0 якщо ні): ";
     cin >> hasFloppyDisk;
+    if (cin.fail() || (hasFloppyDisk != 0 && hasFloppyDisk != 1))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Введіть 1 або 0.");
+    }
     newComputer->SetHasFloppyDisk(hasFloppyDisk);
 
-    cin.ignore();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    cout << "Enter Keyboard Type: ";
+    cout << "Введіть тип клавіатури: ";
     getline(cin, keyboard);
     newComputer->SetKeyboard(keyboard);
 
-    cout << "Enter Monitor Type: ";
+    cout << "Введіть тип монітора: ";
     getline(cin, monitor);
     newComputer->SetMonitor(monitor);
 
-    cout << "Enter GPU Type: ";
+    cout << "Введіть тип графічного процесора: ";
     getline(cin, gpu);
     newComputer->SetGpu(gpu);
 
-    cout << "Enter CPU Type: ";
+    cout << "Введіть тип процесора: ";
     getline(cin, cpu);
     newComputer->SetCpu(cpu);
 
@@ -306,50 +376,91 @@ void Manager::InitComputer() {
         auto workedComp = dynamic_cast<WorkedComputer*>(newComputer.get());
         if (workedComp)
         {
-            int daysWithoutRepair, countUsers,serviceCost,statusOfWork;
-            cout << "Enter Days Without Repair: ";
+            int daysWithoutRepair, countUsers, serviceCost, statusOfWork;
+
+            cout << "Введіть дні без ремонту: ";
             cin >> daysWithoutRepair;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Невірний тип введення. Очікувалось число.");
+            }
             workedComp->SetDays(daysWithoutRepair);
-            cout << "Enter Count of Users: ";
+
+            cout << "Введіть кількість користувачів: ";
             cin >> countUsers;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Невірний тип введення. Очікувалось число.");
+            }
             workedComp->SetCountUsers(countUsers);
-            cout << "Enter Status of Work (1 if Turned on/ 2. if Turned off): ";
+
+            cout << "Введіть статус роботи (1 якщо включено / 2 якщо вимкнено): ";
             cin >> statusOfWork;
-            if (statusOfWork == 1)
+            if (cin.fail() || (statusOfWork != 1 && statusOfWork != 2))
             {
-                workedComp->TurnOn();
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Невірне введення. Введіть 1 або 2.");
             }
-            else if (statusOfWork == 2)
-            {
-                workedComp->TurnOff();
-            }
-            cout << "Enter Service Cost: ";
+
+            if (statusOfWork == 1) workedComp->TurnOn();
+            else workedComp->TurnOff();
+
+            cout << "Введіть вартість послуги: ";
             cin >> serviceCost;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Невірний тип введення. Очікувалось число.");
+            }
             workedComp->ServiceCost(serviceCost);
         }
     }
-    else if (choice == 2) {
+
+    else if (choice == 2)
+    {
         auto repairComp = dynamic_cast<RepairComputer*>(newComputer.get());
         if (repairComp)
         {
             string dateOfRepair, describeOfProblem, cause;
             int repairCost;
-            cout << "Enter Date of Repair (YYYY-MM-DD): ";
+
+            cout << "Введіть дату ремонту (YYYY-MM-DD): ";
             cin >> dateOfRepair;
+            if (cin.fail() || dateOfRepair.length() != 10)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Неприпустимий формат дати. Очікуваний YYYY-MM-DD.");
+            }
             repairComp->SetDate(dateOfRepair);
-            cout << "Enter Description of Problem: ";
-            cin.ignore();
+
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Введіть опис проблеми: ";
             getline(cin, describeOfProblem);
             repairComp->SetDescribe(describeOfProblem);
-            cout << "Enter Cause of Problem: ";
-            cin.ignore();
+
+            cout << "Введіть причину проблеми: ";
             getline(cin, cause);
             repairComp->SetCause(cause);
-            cout << "Enter Repair Cost: ";
+
+            cout << "Введіть вартість ремонту: ";
             cin >> repairCost;
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw Exeption("Невірний тип введення. Очікували кількість.");
+            }
             repairComp->RepairCost(repairCost);
         }
     }
+
     m_thisComputer.push_back(newComputer);
     SaveToJson("database.json");
 }
@@ -368,13 +479,13 @@ void Manager::RemoveComputer(int inventoryNumber)
 
 void Manager::ClearAll()
 {
-    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot clear");
+    if (m_thisComputer.empty()) throw Exeption("список порожній, не можливо очистити");
     m_thisComputer.clear();
 }
 
 void Manager::GetCount() const
 {
-    cout << "Count of all computers" << m_thisComputer.size();
+    cout << "Кількість всіх комп'ютерів" << m_thisComputer.size();
 }
 
 void Manager::CountBrokenComputers() const
@@ -386,8 +497,9 @@ void Manager::CountBrokenComputers() const
         {
             count++;
         }
+        if (count == 0) throw Exeption("У базі даних не знайдено зламаних комп'ютерів!");
     }
-    cout << "Count of broken computers: " << count << endl;
+    cout << "Кількість зламаних комп'ютерів: " << count << endl;
 }
 
 void Manager::CountWorkingComputers() const
@@ -399,13 +511,14 @@ void Manager::CountWorkingComputers() const
         {
             count++;
         }
+        if (count == 0) throw Exeption("У базі даних не знайдено робочих комп'ютерів!");
     }
-    cout << "Count of working computers: " << count << endl;
+    cout << "Кількість робочих комп'ютерів: " << count << endl;
 }
 
 void Manager::SortByInventoryNumber()
 {
-    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot sort");
+    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо відсортувати");
     sort(m_thisComputer.begin(), m_thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
@@ -416,7 +529,7 @@ void Manager::SortByInventoryNumber()
 
 void Manager::SortByAuditoriumNumber()
 {
-    if (m_thisComputer.empty()) throw Exeption("list is empty, cannot sort");
+    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо відсортувати");
     sort(m_thisComputer.begin(), m_thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
@@ -445,21 +558,21 @@ void Manager::ChangeToBroken(int inventoryNumber)
             string dateOfRepair, describeOfProblem, cause;
             int repairCost;
 
-            cout << "Enter Date of Repair (YYYY-MM-DD): ";
+            cout << "Введіть дату ремонту (YYYY-MM-DD): ";
             cin >> dateOfRepair;
             brokenComputer->SetDate(dateOfRepair);
 
-            cout << "Enter Problem Description: ";
+            cout << "Введіть опис проблеми: ";
             cin.ignore();
             getline(cin, describeOfProblem);
             brokenComputer->SetDescribe(describeOfProblem);
 
-            cout << "Enter Cause of Problem: ";
+            cout << "Введіть причину проблеми: ";
             cin.ignore();
             getline(cin, cause);
             brokenComputer->SetCause(cause);
 
-            cout << "Enter Repair Cost: ";
+            cout << "Введіть вартість ремонту: ";
             cin >> repairCost;
             brokenComputer->RepairCost(repairCost);
 
@@ -467,12 +580,12 @@ void Manager::ChangeToBroken(int inventoryNumber)
 
             *it = brokenComputer;
             SaveToJson("database.json");
-            cout << "Computer status changed to BROKEN successfully!\n";
+            cout << "Статус комп'ютера успішно змінено на несправний!\n";
             return;
         }
     }
 
-    cout << "Computer with inventory number " << inventoryNumber << " not found.\n";
+    cout << "Комп'ютер з інвентарним номером " << inventoryNumber << " не знайдено.\n";
 }
 
 
@@ -494,16 +607,16 @@ void Manager::ChangeToWorking(int inventoryNumber)
             workingComputer->SetInventoryNumber((*it)->GetInventoryNumber());
 
             int daysWithoutRepair, countUsers;
-            cout << "Enter Days Without Repair: ";
+            cout << "Введіть дні без ремонту: ";
             cin >> daysWithoutRepair;
             workingComputer->SetDays(daysWithoutRepair);
 
-            cout << "Enter Count of Users: ";
+            cout << "Введіть кількість користувачів: ";
             cin >> countUsers;
             workingComputer->SetCountUsers(countUsers);
 
             string status;
-            cout << "Enter Status (Working/Turned off): ";
+            cout << "Введіть статус (Working/Turned off): ";
             cin >> status;
             if (status == "Working")
                 workingComputer->TurnOn();
@@ -513,12 +626,12 @@ void Manager::ChangeToWorking(int inventoryNumber)
             *it = workingComputer;
 
             SaveToJson("database.json");
-            cout << "Computer status changed to WORKING successfully!\n";
+            cout << "Статус комп'ютера змінено на справний!\n";
             return;
         }
     }
 
-    cout << "Computer with inventory number " << inventoryNumber << " not found.\n";
+    cout << "Комп'ютер з інвентарним номером " << inventoryNumber << " не знайдено.\n";
 }
 
 
@@ -566,7 +679,7 @@ void Manager::SaveToJson(const string& filename) const
     ofstream outFile(filename);
     if (!outFile.is_open())
     {
-        throw Exeption("Could not open file for writing: " + filename);
+        throw Exeption("Не вдалося відкрити файл для запису: " + filename);
     }
     outFile << setw(4) << j << endl;
     outFile.close();
@@ -577,7 +690,7 @@ void Manager::LoadFromJson(const string& filename)
     ifstream inFile(filename);
     if (!inFile.is_open())
     {
-        throw Exeption("Could not open file for reading: " + filename);
+        throw Exeption("Не вдалося відкрити файл для читання: " + filename);
     }
 
     json j;
@@ -615,7 +728,7 @@ void Manager::LoadFromJson(const string& filename)
         }
         else
         {
-            throw Exeption("Unknown computer status in JSON");
+            throw Exeption("Невідомий статус комп'ютера в JSON");
         }
 
         computer->SetInventoryNumber(compJson.value("inventoryNumber", 0));
@@ -634,5 +747,5 @@ void Manager::LoadFromJson(const string& filename)
 
 Manager::~Manager()
 {
-    cout << "Destructor of manager class" << endl;
+    cout << "Деструктор класу менеджер" << endl;
 };

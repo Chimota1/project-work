@@ -19,33 +19,33 @@ int main()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw Exeption("Cannot open users.txt file.");
+        throw Exeption("Не вдається відкрити users.txt файл.");
     userFile.seekg(0, ios::end);
     if (userFile.tellg() == 0)
     {
-        cout << "No users found. Please create an admin account." << endl;
+        cout << "Користувачів не знайдено. Будь ласка, створіть обліковий запис адміністратора." << endl;
         manager.AddUser();
     }
     userFile.close();
 
     do
     {
-        cout << "\n1. Start \n";
-        cout << "2. End Program \n";
-        cout << "Enter your choice: ";
+        cout << "\n1. Початок \n";
+        cout << "2. Кінцева програма \n";
+        cout << "Введіть свій вибір: ";
         cin >> choiceInMenu;
 
         if (choiceInMenu == 1)
         {
             int adminChoice;
             try {
-                cout << "Are you an admin? (1. YES, 2. NO, 3. EXIT) \n";
+                cout << "Ви адміністратор? (1. ТАК, 2. НІ, 3. ВИХІД) \n";
                 cin >> adminChoice;
                 if (adminChoice != 1 && adminChoice != 2 && adminChoice != 3)
-                    throw Exeption("wrong input");
+                    throw Exeption("Неправильне введення");
             }
             catch (const Exeption& e) {
-                cerr << "Error: " << e.what() << endl;
+                cerr << "Помилка: " << e.what() << endl;
                 continue;
             }
 
@@ -56,7 +56,7 @@ int main()
                     admin->Login();
                 }
                 catch (const Exeption& e) {
-                    cerr << "Error: " << e.what() << endl;
+                    cerr << "Помилка: " << e.what() << endl;
                 }
                 delete admin;
             }
@@ -67,7 +67,7 @@ int main()
                     userDefault->Login();
                 }
                 catch (const Exeption& e) {
-                    cerr << "Error: " << e.what() << endl;
+                    cerr << "Помилка: " << e.what() << endl;
                 }
                 delete userDefault;
             }
@@ -82,7 +82,7 @@ int main()
         }
         else
         {
-            cout << "Invalid menu choice. Try again.\n";
+            cout << "Невірний вибір меню. Спробуй ще раз.\n";
         }
 
     } while (isRunning);

@@ -9,7 +9,7 @@
 using namespace std;
 
 DefaultUser::DefaultUser()
-    : m_id(0), m_username(""), m_password(""), m_status("user")
+    : m_id(0), m_username(""), m_password(""), m_status("користувач")
 {
 };
 
@@ -32,16 +32,16 @@ void DefaultUser::Login()
 {
     Manager manager;
     string username, password;
-    cout << "Enter username: ";
+    cout << "Введіть ім'я користувача: ";
     cin >> username;
-    cout << "Enter password: ";
+    cout << "Введіть пароль: ";
     cin >> password;
 
     bool found = false;
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw Exeption("Cannot open users.txt file.");
+        throw Exeption("Не вдалося відкрити файл users.txt.");
 
     string line;
     while (getline(userFile, line)) {
@@ -71,9 +71,9 @@ void DefaultUser::Login()
     userFile.close();
 
     if (found)
-        cout << "Login successful!" << endl;
+        cout << "Вхід успішний!" << endl;
     else
-        throw Exeption("Invalid username or password");
+        throw Exeption("Невірне ім'я користувача або пароль");
 }
 
 void DefaultUser::MainMenu(Manager& manager)
@@ -83,73 +83,77 @@ void DefaultUser::MainMenu(Manager& manager)
     try {
         do
         {
-            cout << "\nUser Main Menu" << endl;
-            cout << "1. View all Computers" << endl;
-            cout << "2. See my ID" << endl;
-            cout << "3. Filter Computers" << endl;
-            cout << "4. Sort Computers by:" << endl;
-            cout << "5. Count Computers" << endl;
-            cout << "6. Count Broken Computers" << endl;
-            cout << "7. Count Working Computers" << endl;
-            cout << "8. Help\n";
-            cout << "0. Logout" << endl;
-            cout << "Enter your choice: ";
+            cout << "\nГоловне меню користувача" << endl;
+            cout << "1. Переглянути всі комп’ютери" << endl;
+            cout << "2. Переглянути мій ID" << endl;
+            cout << "3. Відфільтрувати комп’ютери" << endl;
+            cout << "4. Відсортувати комп’ютери за:" << endl;
+            cout << "5. Підрахувати кількість комп’ютерів" << endl;
+            cout << "6. Підрахувати кількість зламаних комп’ютерів" << endl;
+            cout << "7. Підрахувати кількість робочих комп’ютерів" << endl;
+            cout << "8. Довідка" << endl;
+            cout << "0. Вийти з системи" << endl;
+            cout << "Ваш вибір: ";
             cin >> choice;
 
             switch (choice)
             {
                 case 1:
-                    cout << "Viewing all computers..." << endl;
-                manager.ViewAllComputer();
-                break;
+                    cout << "Перегляд усіх комп’ютерів..." << endl;
+                    manager.ViewAllComputer();
+                    break;
 
                 case 2:
-                    cout << "Your ID is: " << GetID() << endl;
-                break;
+                    cout << "Ваш ID: " << GetID() << endl;
+                    break;
 
                 case 3:
-                    cout << "Filtering computers..." << endl;
-                FilterMenu(manager);
-                break;
+                    cout << "Фільтрація комп’ютерів..." << endl;
+                    FilterMenu(manager);
+                    break;
 
                 case 4:
-                    cout << "Sorting computers..." << endl;
-                SortMenu(manager);
-                break;
+                    cout << "Сортування комп’ютерів..." << endl;
+                    SortMenu(manager);
+                    break;
 
                 case 5:
-                    cout << "Total computers: ";
-                manager.GetCount();
-                cout << endl;
-                break;
+                    cout << "Загальна кількість комп’ютерів: ";
+                    manager.GetCount();
+                    cout << endl;
+                    break;
 
                 case 6:
-                    cout << "Total broken computers: ";
-                manager.CountBrokenComputers();
-                cout << endl;
-                break;
+                    cout << "Кількість зламаних комп’ютерів: ";
+                    manager.CountBrokenComputers();
+                    cout << endl;
+                    break;
 
                 case 7:
-                    cout << "Total working computers: ";
-                manager.CountWorkingComputers();
-                cout << endl;
-                break;
+                    cout << "Кількість робочих комп’ютерів: ";
+                    manager.CountWorkingComputers();
+                    cout << endl;
+                    break;
+
+                case 8:
+                    HelpMenu();
+                    break;
 
                 case 0:
-                    cout << "Logging out..." << endl;
-                break;
+                    cout << "Вихід із системи..." << endl;
+                    break;
 
                 default:
-                    throw Exeption("wrong input");
+                    throw Exeption("Неправильне введення");
             }
             manager.SaveToJson("database.json");
-        } while (choice != 8);
+        } while (choice != 0);
     }
     catch (Exeption e)
     {
-        cerr << "Error: " << e.what() << endl;
+        cerr << "Помилка: " << e.what() << endl;
     }
-	};
+};
 
 int DefaultUser::GetID() const
 {
@@ -158,52 +162,51 @@ int DefaultUser::GetID() const
 
 void DefaultUser::HelpMenu() const
 {
-    cout << "\n==================== USER HELP MENU ====================\n";
-    cout << "Welcome to the Computer Management System (CMS)\n";
-    cout << "This section will help you understand how to use the program as a regular user.\n";
+    cout << "\n==================== МЕНЮ ДОВІДКИ КОРИСТУВАЧА ====================\n";
+    cout << "Ласкаво просимо до системи керування комп’ютерами (CMS)\n";
+    cout << "Цей розділ допоможе вам зрозуміти, як користуватись програмою як звичайному користувачу.\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "\nUSER MAIN MENU OVERVIEW:\n";
-    cout << "1. View all Computers     → Shows all computers stored in the database\n";
-    cout << "2. See my ID              → Displays your user ID from the system\n";
-    cout << "3. Filter Computers       → Allows you to filter computers by various parameters\n";
-    cout << "4. Sort Computers by      → Sorts computers by inventory or auditorium number\n";
-    cout << "5. Count Computers        → Shows the total number of computers\n";
-    cout << "6. Count Broken Computers → Displays how many computers are currently broken\n";
-    cout << "7. Count Working Computers→ Displays how many computers are working\n";
-    cout << "8. Help                   → Displays this help information\n";
-    cout << "9. Logout                 → Exits to the login screen\n";
+    cout << "\nОГЛЯД ГОЛОВНОГО МЕНЮ КОРИСТУВАЧА:\n";
+    cout << "1. Переглянути всі комп’ютери     → Показує всі комп’ютери з бази даних\n";
+    cout << "2. Переглянути мій ID             → Відображає ваш системний ID\n";
+    cout << "3. Відфільтрувати комп’ютери     → Дає змогу фільтрувати комп’ютери за параметрами\n";
+    cout << "4. Відсортувати комп’ютери       → Сортує за інвентарним або аудиторним номером\n";
+    cout << "5. Підрахувати кількість          → Показує загальну кількість комп’ютерів\n";
+    cout << "6. Зламані комп’ютери             → Показує кількість зламаних\n";
+    cout << "7. Робочі комп’ютери              → Показує кількість робочих\n";
+    cout << "8. Довідка                        → Виводить це меню допомоги\n";
+    cout << "0. Вийти                          → Повертає до входу\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "\nPROGRAM DESCRIPTION:\n";
-    cout << " - As a regular user, you can only *view and analyze* computer data.\n";
-    cout << " - You CANNOT add, delete, or modify computers or users.\n";
-    cout << " - All information you see comes from 'database.json'.\n";
+    cout << "\nОПИС ПРОГРАМИ:\n";
+    cout << " - Як звичайний користувач, ви можете лише *переглядати та аналізувати* дані.\n";
+    cout << " - Ви НЕ МОЖЕТЕ додавати, видаляти або змінювати інформацію.\n";
+    cout << " - Всі дані беруться з файлу 'database.json'.\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "\nINPUT RULES:\n";
-    cout << " - Use numbers for choosing menu options.\n";
-    cout << " - When asked YES/NO questions, use 1 for YES and 0 for NO.\n";
-    cout << " - Do not leave empty input fields (e.g., when entering text).\n";
-    cout << " - Dates, if requested, must be in the format YYYY-MM-DD.\n";
+    cout << "\nПРАВИЛА ВВЕДЕННЯ:\n";
+    cout << " - Використовуйте цифри для вибору пунктів меню.\n";
+    cout << " - Для запитань типу ТАК/НІ використовуйте 1 (так) або 0 (ні).\n";
+    cout << " - Не залишайте порожніх полів під час введення.\n";
+    cout << " - Дати (якщо потрібно) вводьте у форматі РРРР-ММ-ДД.\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "\nFILTER & SORT EXAMPLES:\n";
-    cout << " - Filter by 'Inventory Number' to find a specific computer.\n";
-    cout << " - Filter by 'CPU' or 'GPU' to find certain configurations.\n";
-    cout << " - Sort computers by 'Auditorium Number' to group them by room.\n";
+    cout << "\nПРИКЛАДИ ФІЛЬТРАЦІЇ ТА СОРТУВАННЯ:\n";
+    cout << " - За 'інвентарним номером' — знайти конкретний комп’ютер.\n";
+    cout << " - За 'CPU' або 'GPU' — знайти потрібну конфігурацію.\n";
+    cout << " - За 'аудиторією' — згрупувати за приміщенням.\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "\nADDITIONAL NOTES:\n";
-    cout << " - Data is automatically loaded from and saved to 'database.json'.\n";
-    cout << " - You can explore data safely — changes are not allowed in this mode.\n";
-    cout << " - If you get an error message (Exeption), check your input format.\n";
+    cout << "\nДОДАТКОВІ ПРИМІТКИ:\n";
+    cout << " - Дані автоматично зберігаються у 'database.json'.\n";
+    cout << " - Ви можете безпечно переглядати інформацію, зміни не зберігаються.\n";
+    cout << " - Якщо з’явилася помилка — перевірте правильність введення.\n";
     cout << "---------------------------------------------------------\n";
 
-    cout << "Tip: Use 'Filter Computers' to quickly find what you need.\n";
+    cout << "Порада: використовуйте 'Фільтрацію', щоб швидко знайти потрібні дані.\n";
     cout << "===========================================================\n";
 }
-
 
 string DefaultUser::GetStatus() const
 {
@@ -214,23 +217,24 @@ void DefaultUser::FilterMenu(Manager& manager)
 {
     int sortChoice;
     manager.LoadFromJson("database.json");
-    cout << "Filter computers by: " << endl;
-    cout << "1. Inventory Number" << endl;
-    cout << "2. Auditorium Number" << endl;
-    cout << "3. Size of ROM" << endl;
-    cout << "4. Has CD-ROM" << endl;
-    cout << "5. Has Floppy Disk" << endl;
-    cout << "6. Keyboard" << endl;
-    cout << "7. Monitor" << endl;
-    cout << "8. GPU" << endl;
-    cout << "9. CPU" << endl;
-    cout << "Enter your choice: ";
+    cout << "Фільтрувати комп’ютери за: " << endl;
+    cout << "1. Інвентарним номером" << endl;
+    cout << "2. Номером аудиторії" << endl;
+    cout << "3. Обсягом ПЗП" << endl;
+    cout << "4. Наявністю CD-ROM" << endl;
+    cout << "5. Наявністю дисководу" << endl;
+    cout << "6. Типом клавіатури" << endl;
+    cout << "7. Типом монітора" << endl;
+    cout << "8. Типом GPU" << endl;
+    cout << "9. Типом CPU" << endl;
+    cout << "Ваш вибір: ";
     cin >> sortChoice;
+
     switch(sortChoice)
     {
         case 1: {
             int inventoryNumber;
-            cout << "Enter inventory number: ";
+            cout << "Введіть інвентарний номер: ";
             cin >> inventoryNumber;
             manager.InventoryFilter(inventoryNumber);
             break;
@@ -238,7 +242,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 2: {
             int auditoriumNumber;
-            cout << "Enter auditorium number: ";
+            cout << "Введіть номер аудиторії: ";
             cin >> auditoriumNumber;
             manager.AuditoriumFilter(auditoriumNumber);
             break;
@@ -246,7 +250,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 3: {
             int sizeOfRom;
-            cout << "Enter size of ROM: ";
+            cout << "Введіть обсяг ПЗП: ";
             cin >> sizeOfRom;
             manager.SizeOfRomFilter(sizeOfRom);
             break;
@@ -254,7 +258,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 4: {
             bool hasCdRom;
-            cout << "Has CD-ROM (1 for yes, 0 for no): ";
+            cout << "Чи є CD-ROM (1 — так, 0 — ні): ";
             cin >> hasCdRom;
             manager.HasCdRomFilter(hasCdRom);
             break;
@@ -262,7 +266,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 5: {
             bool hasFloppyDisk;
-            cout << "Has Floppy Disk (1 for yes, 0 for no): ";
+            cout << "Чи є дисковод (1 — так, 0 — ні): ";
             cin >> hasFloppyDisk;
             manager.HasFloppyDiskFilter(hasFloppyDisk);
             break;
@@ -270,7 +274,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 6: {
             string keyboard;
-            cout << "Enter keyboard type: ";
+            cout << "Введіть тип клавіатури: ";
             cin >> keyboard;
             manager.KeyboardFilter(keyboard);
             break;
@@ -278,7 +282,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 7: {
             string monitor;
-            cout << "Enter monitor type: ";
+            cout << "Введіть тип монітора: ";
             cin >> monitor;
             manager.MonitorFilter(monitor);
             break;
@@ -286,7 +290,7 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 8: {
             string gpu;
-            cout << "Enter GPU type: ";
+            cout << "Введіть тип GPU: ";
             cin >> gpu;
             manager.GpuFilter(gpu);
             break;
@@ -294,25 +298,26 @@ void DefaultUser::FilterMenu(Manager& manager)
 
         case 9: {
             string cpu;
-            cout << "Enter CPU type: ";
+            cout << "Введіть тип CPU: ";
             cin >> cpu;
             manager.CpuFilter(cpu);
             break;
         }
 
         default:
-            cout << "Invalid choice. Please try again." << endl;
+            throw Exeption("Неправильне введення");
     };
 }
 
 void DefaultUser::SortMenu(Manager& manager)
 {
     int sortOption;
-    cout << "Sort computers by: " << endl;
-    cout << "1. Inventory Number" << endl;
-    cout << "2. Auditorium Number" << endl;
-    cout << "Enter your choice: ";
+    cout << "Відсортувати комп’ютери за: " << endl;
+    cout << "1. Інвентарним номером" << endl;
+    cout << "2. Номером аудиторії" << endl;
+    cout << "Ваш вибір: ";
     cin >> sortOption;
+
     if (sortOption == 1)
     {
         manager.SortByInventoryNumber();
@@ -323,11 +328,11 @@ void DefaultUser::SortMenu(Manager& manager)
     }
     else
     {
-        cout << "Invalid choice. Please try again." << endl;
+        throw Exeption("Неправильне введення");
     };
 };
 
 DefaultUser::~DefaultUser()
 {
-    cout << "DefaultUser destructor called" << endl;
+    cout << "Викликано деструктор DefaultUser" << endl;
 };

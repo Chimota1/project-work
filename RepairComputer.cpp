@@ -15,9 +15,8 @@ RepairComputer::RepairComputer() :
     m_repairCost{0},
     m_serviceCostRepair{0},
     Computer()
-    {
-    };
-
+{
+};
 RepairComputer::RepairComputer(const RepairComputer &other)
 {
      this->m_dateOfRepair = other.m_dateOfRepair;
@@ -57,18 +56,18 @@ RepairComputer::RepairComputer(
 
 void RepairComputer::SetDate(string date)
 {
-    if (date.empty()) throw Exeption("Date is empty");
+    if (date.empty()) throw Exeption("Дата порожня");
     m_dateOfRepair = date;
 };
 
 void RepairComputer::SetDescribe(string describe)
 {
-    if (describe.empty()) throw Exeption("Describe is empty");
+    if (describe.empty()) throw Exeption("Опис порожній");
     m_describeOfProblem = describe;
 };
 void RepairComputer::SetCause(string cause)
 {
-    if (cause.empty()) throw Exeption("Cause is empty");
+    if (cause.empty()) throw Exeption("Причина порожня");
     m_cause = cause;
 };
 
@@ -110,29 +109,29 @@ string RepairComputer::GetRepairStatus() const
 void RepairComputer::ShowFullInfo()
 {
       cout << GetComputerFull() << endl;
-      cout << " " << m_cause << endl;
-      cout << " " << m_describeOfProblem << endl;
-      cout << " " << m_dateOfRepair << endl;
+      cout << " Причина: " << m_cause << endl;
+      cout << " Опис: " << m_describeOfProblem << endl;
+      cout << " Дата ремонту: " << m_dateOfRepair << endl;
 };
 
 void RepairComputer::UpdateRepairStatus()
 {
   	int k;
-    cout << "Press key: 1 if waiting diagnostic, 2 if in procces, 3 if ready," << endl;
+    cout << "Оберіть статус ремонту: 1 — очікує діагностику, 2 — у процесі, 3 — готовий" << endl;
     cin >> k;
 	switch(k)
     {
     	case 1:
-        m_repairStatus = "waiting diagnostic";
+        m_repairStatus = "очікує діагностику";
         break;
         case 2:
-        m_repairStatus = "in procces";
+        m_repairStatus = "у процесі";
         break;
         case 3:
-        m_repairStatus = "ready";
+        m_repairStatus = "готовий";
         break;
         default:
-        throw Exeption("Wrong number");
+        throw Exeption("Невірне число");
         break;
 	};
 };
@@ -140,7 +139,7 @@ void RepairComputer::UpdateRepairStatus()
 int RepairComputer::RepairCost(int cost)
 {
     m_repairCost = cost;
-    if (cost < 0) throw Exeption("Repair cost must be 0 or positive");
+    if (cost < 0) throw Exeption("Вартість ремонту повинна бути невід’ємною");
     return m_repairCost;
 };
 
@@ -148,30 +147,30 @@ int RepairComputer::RepairCost(int cost)
 
 void RepairComputer::NeedsSpareParts(bool needNewParts)
 {
-	cout << "Computer need new Parts? \"1 if yes \\ 2 if no\"" << endl;
+	cout << "Чи потрібні комп’ютеру нові запчастини? (1 — так, 2 — ні)" << endl;
     cin >> needNewParts;
     if (needNewParts != 0 && needNewParts != 1)
     {
-        throw Exeption("Input must be 0 or 1");
+        throw Exeption("Ввід повинен бути 0 або 1");
     };
     m_needNewParts = needNewParts;
 };
 
 void RepairComputer::ShowInfoAboutRepair() const
 {
-	cout << GetInventoryNumber() << "in repair of" << GetDate() << "because" << GetCause();
+	cout << GetInventoryNumber() << " у ремонті з " << GetDate() << " через " << GetCause();
 };
 
 void RepairComputer::ShowStatus()
 {
-    cout << "Status: " << m_repairStatus << endl;
+    cout << "Статус: " << m_repairStatus << endl;
 };
 
 void RepairComputer::ServiceCost(int serviceCost)
 {
-    if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
+    if (serviceCost < 0) throw Exeption("Вартість обслуговування повинна бути невід’ємною");
     m_serviceCostRepair = serviceCost;
-    cout << "Total cost (service + repair): "
+    cout << "Загальна вартість (ремонт + обслуговування): "
          << m_serviceCostRepair + m_repairCost << endl;
 };
 
@@ -182,5 +181,5 @@ bool RepairComputer::GetNeedNewParts() const
 
 RepairComputer::~RepairComputer()
 {
-    cout << "Destructor of Repair class" << endl;
+    cout << "Викликано деструктор класу RepairComputer" << endl;
 };

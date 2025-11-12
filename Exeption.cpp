@@ -10,7 +10,7 @@
 using namespace std;
 
 Exeption::Exeption():
-    m_message{"Unknown exeption"}
+    m_message{"Невідома помилка"}
 {
 };
 
@@ -36,5 +36,5 @@ const char* Exeption::what() const noexcept
 
 Exeption::~Exeption()
 {
-    cout << "Destructor of Exception class" <<endl;
+    cout << "Деструктор класу винятків" <<endl;
 };

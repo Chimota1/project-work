@@ -52,13 +52,13 @@ WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 
 void WorkedComputer::ShowStatus()
 {
-    cout <<"Status of Worked PC: " << m_statusOfWork << endl;
+    cout <<"Статус робочого комп’ютера: " << m_statusOfWork << endl;
 };
 
 void WorkedComputer::UpdateStatus()
 {
     int k;
-    cout << "set status PC \"1 if Freely \\ 2 if Busy\"" << endl;
+    cout << "Встановіть статус комп’ютера (1 — Freely, 2 — Busy): " << endl;
     cin >> k;
     switch (k)
     {
@@ -71,28 +71,29 @@ void WorkedComputer::UpdateStatus()
          break;
 
          default:
-           throw Exeption("Wrong number");
+           throw Exeption("Неправильний номер");
     };
 };
 
 void WorkedComputer::SetCountUsers(int users)
 {
-    if (users < 0) throw Exeption("Count of users must 0 or positive");
+    if (users < 0) throw Exeption("Кількість користувачів повинна бути невід’ємною");
     m_countUsers = users;
 }
 
 void WorkedComputer::SetDays(int days)
 {
-    if (days < 0) throw Exeption("Days without repair must be 0 or positive");
+    if (days < 0) throw Exeption("Кількість днів без ремонту повинна бути невід’ємною");
     m_daysWithoutRepair = days;
 };
 
 void WorkedComputer::SetEmploymentStatus(const string& status)
 {
     if (status != "Freely" && status != "Busy")
-        throw Exeption("Invalid employment status in JSON file");
+        throw Exeption("Невірний статус зайнятості у JSON файлі");
     m_employmentStatus = status;
 };
+
 
 int WorkedComputer::GetDays() const
 {
@@ -117,7 +118,7 @@ string WorkedComputer::GetEmploymentStatus() const
 
 void WorkedComputer::ServiceCost(int serviceCost)
 {
-    if (serviceCost < 0) throw Exeption("Service cost must be 0 or positive");
+    if (serviceCost < 0) throw Exeption("Вартість обслуговування повинна бути невід’ємною");
     m_serviceCostWorked = serviceCost;
 };
 
@@ -138,7 +139,7 @@ bool WorkedComputer::IsWorking()
         return true;
     }
     else
-    {;
+    {
         return false;
     }
 }
@@ -146,5 +147,5 @@ bool WorkedComputer::IsWorking()
 
 WorkedComputer::~WorkedComputer()
 {
-    cout << "Destructor of Worked class" << endl;
+    cout << "Викликано деструктор класу WorkedComputer" << endl;
 };
