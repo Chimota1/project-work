@@ -95,115 +95,131 @@ void Admin::MainMenu(Manager& manager)
     int choice;
     bool inMenu = true;
     manager.LoadFromJson("database.json");
-    try
-    {
-        do
-        {
-            cout << "\nГоловне меню адміністратора\n";
-            cout << "1. Переглянути всіх користувачів\n";
-            cout << "2. Додати користувача\n";
-            cout << "3. Видалити користувача\n";
-            cout << "4. Додати новий комп'ютер\n";
-            cout << "5. Подивитися мій ID\n";
-            cout << "6. Фільтрувати комп'ютери \n";
-            cout << "7. Сортувати комп'ютери за: \n";
-            cout << "8. Очистити всі комп'ютери\n";
-            cout << "9. Підрахувати комп'ютери\n";
-            cout << "10. Меню робочого комп'ютера\n";
-            cout << "11. Меню комп'ютера в ремонті\n";
-            cout << "12. Видалити комп'ютер\n";
-            cout << "13. Меню зміни атрибутів комп'ютера\n";
-            cout << "14. Допомога\n";
-            cout << "15. Вийти з системи\n";
-            cout << "Введіть ваш вибір: ";
-            cin >> choice;
-
-            switch (choice)
+        do {
+            try
             {
-                case 1:
-                    cout << "Перегляд усіх користувачів..." << endl;
-                manager.ViewAllUsers();
-                break;
+                cout << "\nГоловне меню адміністратора\n";
+                cout << "1. Переглянути всіх користувачів\n";
+                cout << "2. Додати користувача\n";
+                cout << "3. Видалити користувача\n";
+                cout << "4. Додати новий комп'ютер\n";
+                cout << "5. Подивитися мій ID\n";
+                cout << "6. Фільтрувати комп'ютери \n";
+                cout << "7. Сортувати комп'ютери \n";
+                cout << "8. Пошук комп'ютера за атрибутами \n";
+                cout << "9. Очистити всі комп'ютери\n";
+                cout << "10. Підрахувати комп'ютери\n";
+                cout << "11. Меню робочого комп'ютера\n";
+                cout << "12. Меню комп'ютера в ремонті\n";
+                cout << "13. Видалити комп'ютер\n";
+                cout << "14. Меню зміни атрибутів комп'ютера\n";
+                cout << "15. Допомога\n";
+                cout << "16. Вийти з системи\n";
+                cout << "Введіть ваш вибір: ";
 
-                case 2:
-                    cout << "Додавання користувача..." << endl;
-                manager.AddUser();
-                break;
-
-                case 3:
-                    cout << "Видалення користувача..." << endl;
-                manager.RemoveUser();
-                break;
-
-                case 4:
-                    cout << "Додавання нового комп'ютера..." << endl;
-                manager.InitComputer();
-                break;
-
-                case 5:
-                    cout << "Ваш ID: " << GetID() << endl;
-                break;
-
-                case 6:
-                    FilterMenu(manager);
-                break;
-
-                case 7:
-                    SortMenu(manager);
-                break;
-
-                case 8:
-                    cout << "Очищення всіх комп'ютерів..." << endl;
-                manager.ClearAll();
-                break;
-
-                case 9:
-                    cout << "Підрахунок усіх комп'ютерів..." << endl;
-                manager.GetCount();
-                break;
-
-                case 10:
-                    WorkedMenu(manager);
-                break;
-
-                case 11:
-                    RepairMenu(manager);
-                break;
-
-                case 12:
-                    cout << "Видалення комп'ютера..." << endl;
+                cin >> choice;
+                if (cin.fail())
                 {
-                    int inventoryNumber;
-                    cout << "Введіть інвентарний номер комп'ютера для видалення: ";
-                    cin >> inventoryNumber;
-                    manager.RemoveComputer(inventoryNumber);
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
                 }
-                break;
 
-                case 13:
-                    ChangesMenu(manager);
-                break;
+                switch (choice)
+                {
+                    case 1:
+                        cout << "Перегляд усіх користувачів..." << endl;
+                    manager.ViewAllUsers();
+                    break;
 
-                case 14:
-                    HelpMenu();
-                break;
+                    case 2:
+                        cout << "Додавання користувача..." << endl;
+                    manager.AddUser();
+                    break;
 
-                case 15:
-                    cout << "Вихід із системи..." << endl;
-                    inMenu = false;
-                break;
+                    case 3:
+                        cout << "Видалення користувача..." << endl;
+                    manager.RemoveUser();
+                    break;
 
-                default:
-                    throw Exeption("Невірне введення");
-                    continue;
+                    case 4:
+                        cout << "Додавання нового комп'ютера..." << endl;
+                    manager.InitComputer();
+                    break;
+
+                    case 5:
+                        cout << "Ваш ID: " << GetID() << endl;
+                    break;
+
+                    case 6:
+                        FilterMenu(manager);
+                    break;
+
+                    case 7:
+                        SortMenu(manager);
+                    break;
+
+                    case 8:
+                        SearchMenu(manager);
+                    break;
+
+                    case 9:
+                        cout << "Очищення всіх комп'ютерів..." << endl;
+                    manager.ClearAll();
+                    break;
+
+                    case 10:
+                        cout << "Підрахунок усіх комп'ютерів..." << endl;
+                    manager.GetCount();
+                    break;
+
+                    case 11:
+                        WorkedMenu(manager);
+                    break;
+
+                    case 12:
+                        RepairMenu(manager);
+                    break;
+
+                    case 13:
+                        cout << "Видалення комп'ютера..." << endl;
+                    {
+                        int inventoryNumber;
+                        cout << "Введіть інвентарний номер комп'ютера для видалення: ";
+                        cin >> inventoryNumber;
+                        if (cin.fail())
+                        {
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            throw Exeption("Невірний тип введення. Очікувалось число.");
+                        }
+                        manager.RemoveComputer(inventoryNumber);
+                    }
+                    break;
+
+                    case 14:
+                        ChangesMenu(manager);
+                    break;
+
+                    case 15:
+                        HelpMenu();
+                    break;
+
+                    case 16:
+                        cout << "Вихід із системи..." << endl;
+                        inMenu = false;
+                    break;
+
+                    default:
+                        throw Exeption("Невірне введення");
+                }
+                manager.SaveToJson("database.json");
             }
-            manager.SaveToJson("database.json");
-        } while (choice != 15 && inMenu);
-    }
-    catch (Exeption e)
-    {
-        cerr << "Помилка: " << e.what() << endl;
-    }
+            catch (Exeption& e)
+            {
+                cerr << "Помилка: " << e.what() << endl;
+            }
+        } while (inMenu);
 };
 
 int Admin::GetID() const
@@ -279,85 +295,126 @@ void Admin::FilterMenu(Manager& manager)
     cout << "9. Процесор" << endl;
     cout << "Введіть ваш вибір: ";
     cin >> filterChoice;
-    switch (filterChoice)
+
+    try
     {
-        case 1: {
-            int inventoryNumber;
-            cout << "Введіть інвентарний номер: ";
-            cin >> inventoryNumber;
-            manager.InventoryFilter(inventoryNumber);
-            break;
-        }
+        switch (filterChoice)
+        {
+            case 1: {
+                int inventoryNumber;
+                cout << "Введіть інвентарний номер: ";
+                cin >> inventoryNumber;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.InventoryFilter(inventoryNumber);
+                break;
+            }
 
-        case 2: {
-            int auditoriumNumber;
-            cout << "Введіть номер аудиторії: ";
-            cin >> auditoriumNumber;
-            manager.AuditoriumFilter(auditoriumNumber);
-            break;
-        }
+            case 2: {
+                int auditoriumNumber;
+                cout << "Введіть номер аудиторії: ";
+                cin >> auditoriumNumber;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.AuditoriumFilter(auditoriumNumber);
+                break;
+            }
 
-        case 3: {
-            int sizeOfRom;
-            cout << "Введіть розмір ПЗП: ";
-            cin >> sizeOfRom;
-            manager.SizeOfRomFilter(sizeOfRom);
-            break;
-        }
+            case 3: {
+                int sizeOfRom;
+                cout << "Введіть розмір диску: ";
+                cin >> sizeOfRom;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SizeOfRomFilter(sizeOfRom);
+                break;
+            }
 
-        case 4: {
-            bool hasCdRom;
-            cout << "Має CD-ROM (1 - так, 0 - ні): ";
-            cin >> hasCdRom;
-            manager.HasCdRomFilter(hasCdRom);
-            break;
-        }
+            case 4: {
+                bool hasCdRom;
+                cout << "Має CD-ROM (1 - так, 0 - ні): ";
+                cin >> hasCdRom;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.HasCdRomFilter(hasCdRom);
+                break;
+            }
 
-        case 5: {
-            bool hasFloppyDisk;
-            cout << "Має дискету (1 - так, 0 - ні): ";
-            cin >> hasFloppyDisk;
-            manager.HasFloppyDiskFilter(hasFloppyDisk);
-            break;
-        }
+            case 5: {
+                bool hasFloppyDisk;
+                cout << "Має дискету (1 - так, 0 - ні): ";
+                cin >> hasFloppyDisk;
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.HasFloppyDiskFilter(hasFloppyDisk);
+                break;
+            }
 
-        case 6: {
-            string keyboard;
-            cout << "Введіть тип клавіатури: ";
-            cin >> keyboard;
-            manager.KeyboardFilter(keyboard);
-            break;
-        }
+            case 6: {
+                string keyboard;
+                cout << "Введіть тип клавіатури: ";
+                cin >> keyboard;
+                if (keyboard.empty())
+                    throw Exeption("Рядок клавіатури порожній");
+                manager.KeyboardFilter(keyboard);
+                break;
+            }
 
-        case 7: {
-            string monitor;
-            cout << "Введіть тип монітора: ";
-            cin >> monitor;
-            manager.MonitorFilter(monitor);
-            break;
-        }
+            case 7: {
+                string monitor;
+                cout << "Введіть тип монітора: ";
+                cin >> monitor;
+                if (monitor.empty())
+                    throw Exeption("Рядок монітора порожній");
+                manager.MonitorFilter(monitor);
+                break;
+            }
 
-        case 8: {
-            string gpu;
-            cout << "Введіть тип відеокарти: ";
-            cin >> gpu;
-            manager.GpuFilter(gpu);
-            break;
-        }
+            case 8: {
+                string gpu;
+                cout << "Введіть тип відеокарти: ";
+                cin >> gpu;
+                if (gpu.empty())
+                    throw Exeption("Рядок GPU порожній");
+                manager.GpuFilter(gpu);
+                break;
+            }
 
-        case 9: {
-            string cpu;
-            cout << "Введіть тип процесора: ";
-            cin >> cpu;
-            manager.CpuFilter(cpu);
-            break;
-        }
+            case 9: {
+                string cpu;
+                cout << "Введіть тип процесора: ";
+                cin >> cpu;
+                if (cpu.empty())
+                    throw Exeption("Рядок CPU порожній");
+                manager.CpuFilter(cpu);
+                break;
+            }
 
-        default:
-            throw Exeption("Невірне введення");
-        break;
+            default:
+                throw Exeption("Невірне введення — виберіть від 1 до 9.");
+        }
+    }
+    catch (Exeption& e)
+    {
+        cerr << "Помилка: " << e.what() << endl;
     }
 }
+
 
 void Admin::SortMenu(Manager& manager)
 {
@@ -367,23 +424,189 @@ void Admin::SortMenu(Manager& manager)
     cout << "2. Номер аудиторії" << endl;
     cout << "Введіть ваш вибір: ";
     cin >> sortOption;
-    if (sortOption == 1)
+    if (cin.fail())
     {
-        manager.SortByInventoryNumber();
-        manager.ViewAllComputer();
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Очікувалось число.");
     }
-    else if (sortOption == 2)
-    {
-        manager.SortByAuditoriumNumber();
-        manager.ViewAllComputer();
+    try {
+        if (sortOption == 1)
+        {
+            manager.SortByInventoryNumber();
+            manager.ViewAllComputer();
+        }
+        else if (sortOption == 2)
+        {
+            manager.SortByAuditoriumNumber();
+            manager.ViewAllComputer();
+        }
+        else
+        {
+            throw Exeption("Невірне введення");
+        };
     }
-    else
+    catch (Exeption e)
     {
-        throw Exeption("Невірне введення");
-    };
+        cerr << "Помилка: " << e.what() << endl;
+    }
 };
 
-void Admin::WorkedMenu(Manager& manager) {
+void Admin::SearchMenu(Manager& manager)
+{
+    int searchOption;
+    cout << "Пошук комп'ютера за: " << endl;
+    cout << "1. Інвентарним номером" << endl;
+    cout << "2. Номером аудиторії" << endl;
+    cout << "3. Процесором" << endl;
+    cout << "4. Відеокартою" << endl;
+    cout << "5. Монітором" << endl;
+    cout << "6. Клавіатурою" << endl;
+    cout << "7. Розміром диску" << endl;
+    cout << "8. Наявністю CD-ROM" << endl;
+    cout << "9. Наявністю дискети" << endl;
+    cout << "Введіть ваш вибір: ";
+    cin >> searchOption;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Очікувалось число.");
+    }
+    try
+    {
+        switch (searchOption)
+        {
+            case 1:
+                {
+                int inventoryNumber;
+                cout << "Введіть інвентарний номер: ";
+                cin >> inventoryNumber;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchByInventoryNumber(inventoryNumber);
+                break;
+                }
+            case 2:
+            {
+                int auditoriumNumber;
+                cout << "Введіть номер аудиторії: ";
+                cin >> auditoriumNumber;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchByAuditoriumNumber(auditoriumNumber);
+                break;
+            }
+
+            case 3:
+            {
+                string cpu;
+                cout << "Введіть тип процесора: ";
+                cin >> cpu;
+                if (cpu.empty())
+                    throw Exeption("Рядок CPU порожній");
+                manager.SearchByCpu(cpu);
+                break;
+            }
+
+            case 4:
+            {
+                string gpu;
+                cout << "Введіть тип відеокарти: ";
+                cin >> gpu;
+                if (gpu.empty())
+                    throw Exeption("Рядок GPU порожній");
+                manager.SearchByGpu(gpu);
+                break;
+            }
+
+            case 5:
+            {
+                string monitor;
+                cout << "Введіть тип монітора: ";
+                cin >> monitor;
+                if (monitor.empty())
+                    throw Exeption("Рядок монітора порожній");
+                manager.SearchByMonitor(monitor);
+                break;
+            }
+
+            case 6:
+            {
+                string keyboard;
+                cout << "Введіть тип клавіатури: ";
+                cin >> keyboard;
+                if (keyboard.empty())
+                    throw Exeption("Рядок клавіатури порожній");
+                manager.SearchByKeyboard(keyboard);
+                break;
+            }
+
+            case 7:
+            {
+                int sizeOfRom;
+                cout << "Введіть розмір диску: ";
+                cin >> sizeOfRom;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchBySizeOfRom(sizeOfRom);
+                break;
+            }
+
+            case 8:
+            {
+                bool hasCdRom;
+                cout << "Має CD-ROM (1 - так, 0 - ні): ";
+                cin >> hasCdRom;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.SearchByHasCdRom(hasCdRom);
+                break;
+            }
+
+            case 9:
+            {
+                bool hasFloppyDisk;
+                cout << "Має дискету (1 - так, 0 - ні): ";
+                cin >> hasFloppyDisk;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.SearchByHasFloppyDisk(hasFloppyDisk);
+                break;
+            }
+
+            default:
+                throw Exeption("Невірне введення");
+        }
+    }
+    catch (Exeption& e)
+    {
+        cerr << "Помилка: " << e.what() << endl;
+    }
+}
+
+void Admin::WorkedMenu(Manager& manager)
+{
     int inventoryNumber;
     cout << "Введіть інвентарний номер робочого комп'ютера: ";
     cin >> inventoryNumber;
@@ -392,8 +615,7 @@ void Admin::WorkedMenu(Manager& manager) {
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Помилка: Невірне введення. Інвентарний номер має бути додатним числом.\n";
-        return;
+        throw Exeption("Невірне введення. Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -406,7 +628,13 @@ void Admin::WorkedMenu(Manager& manager) {
         {
             found = true;
             int choice;
-
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "Помилка: Невірне введення. Будь ласка, введіть число.\n";
+                continue;
+            }
             do
             {
                 cout << "\n--- Меню робочого комп'ютера ---\n";
@@ -539,7 +767,7 @@ void Admin::WorkedMenu(Manager& manager) {
                 }
                 catch (const Exeption& e)
                 {
-                    cout << "Помилка: " << e.what() << endl;
+                    cerr << "Помилка: " << e.what() << endl;
                 }
 
             } while (choice != 0);
@@ -565,8 +793,7 @@ void Admin::RepairMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Помилка: Невірне введення. Інвентарний номер має бути додатним числом.\n";
-        return;
+        throw Exeption("Невірне введення. Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -806,6 +1033,12 @@ void Admin::ChangesMenu(Manager& manager)
                             int newAuditorium;
                             cout << "Введіть новий номер аудиторії: ";
                             cin >> newAuditorium;
+                            if (cin.fail() || newAuditorium <= 0)
+                            {
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                throw Exeption("Невірне введення. Номер аудиторії має бути додатним числом.");
+                            }
                             comp->MoveAuditorium(newAuditorium);
                             break;
                         }
@@ -815,6 +1048,12 @@ void Admin::ChangesMenu(Manager& manager)
                             int newRom;
                             cout << "Введіть новий розмір ПЗП (ГБ): ";
                             cin >> newRom;
+                            if (cin.fail() || newRom <= 0)
+                            {
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                throw Exeption("Невірне введення. Розмір ПЗП має бути додатним числом.");
+                            }
                             comp->SetSizeOfRom(newRom);
                             break;
                         }
@@ -824,6 +1063,12 @@ void Admin::ChangesMenu(Manager& manager)
                             bool newCdRom;
                             cout << "Має CD-ROM (1 - так, 0 - ні): ";
                             cin >> newCdRom;
+                            if (cin.fail() || (newCdRom != 0 && newCdRom != 1))
+                            {
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                throw Exeption("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                            }
                             comp->HasCdRomUpdate(newCdRom);
                             break;
                         }
@@ -833,6 +1078,12 @@ void Admin::ChangesMenu(Manager& manager)
                             bool newFloppy;
                             cout << "Має дискету (1 - так, 0 - ні): ";
                             cin >> newFloppy;
+                            if (cin.fail() || (newFloppy != 0 && newFloppy != 1))
+                            {
+                                cin.clear();
+                                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                throw Exeption("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                            }
                             comp->HasFloppyDisk(newFloppy);
                             break;
                         }

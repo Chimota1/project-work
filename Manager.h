@@ -90,6 +90,16 @@ public:
 	void SortByInventoryNumber();
 	void SortByAuditoriumNumber();
 
+	void SearchByInventoryNumber(int inventoryNumber) const;
+	void SearchByAuditoriumNumber(int auditoriumNumber) const;
+	void SearchByCpu(string cpu) const;
+	void SearchByGpu(string gpu) const;
+	void SearchByMonitor(string monitor) const;
+	void SearchByKeyboard(string keyboard) const;
+	void SearchBySizeOfRom(int sizeOfRom) const;
+	void SearchByHasCdRom(bool hasCdRom) const;
+	void SearchByHasFloppyDisk(bool hasFloppyDisk) const;
+
 	// Зміна статусу
 	void ChangeToBroken(int inventoryNumber);
 	void ChangeToWorking(int inventoryNumber);

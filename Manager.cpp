@@ -52,7 +52,7 @@ void Manager::ViewAllUsers() const
     {
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw Exeption("Не вдається відкрити файл users.json.");
+            throw Exeption("Не вдається відкрити файл users.txt.");
         string line;
         while (getline(userFile, line))
         {
@@ -77,7 +77,7 @@ void Manager::AddUser()
         cin >> password;
         cout << "Введіть роль (admin/user): ";
         cin >> role;
-        if (role != "admin || role != user") throw Exeption ("неправильна роль");
+        if (role != "admin" && role != "user") throw Exeption ("неправильна роль");
         ofstream userFile("users.txt", ios::app);
         GenerateID(newID);
         if (!userFile.is_open())
@@ -474,6 +474,10 @@ void Manager::RemoveComputer(int inventoryNumber)
             m_thisComputer.erase(it);
             break;
         }
+        else
+        {
+            throw Exeption("Комп'ютер з таким інвентарним номером не знайдено");
+        }
     }
 };
 
@@ -536,6 +540,91 @@ void Manager::SortByAuditoriumNumber()
              return first->GetAuditoriumNumber() < last->GetAuditoriumNumber();
          });
     SaveToJson("database.json");
+};
+
+void Manager::SearchByInventoryNumber(int inventoryNumber) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetInventoryNumber() == inventoryNumber)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким інвентарним номером не знайдено");
+};
+
+void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким номером аудиторії не знайдено");
+};
+
+void Manager::SearchByCpu(string cpu) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetCpu() == cpu)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким процесором не знайдено");
+};
+
+void Manager::SearchByGpu(string gpu) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetGpu() == gpu)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким графічним процесором не знайдено");
+};
+
+void Manager::SearchByMonitor(string monitor) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetMonitor() == monitor)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким монітором не знайдено");
+};
+
+void Manager::SearchByKeyboard(string keyboard) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetKeyboard() == keyboard)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з такою клавіатурою не знайдено");
 };
 
 void Manager::ChangeToBroken(int inventoryNumber)

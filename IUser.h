@@ -16,7 +16,7 @@ class IUser
      virtual void HelpMenu() const = 0;
      virtual ~IUser()
      {
-           cout << "IUser destructor called" << endl;
+           cout << "Викликано IUser деструктор" << endl;
      };
 };
 

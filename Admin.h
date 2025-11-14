@@ -20,6 +20,7 @@ class Admin : public IUser
     void HelpMenu() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
+    void SearchMenu(Manager& manager);
     void WorkedMenu(Manager& manager);
     void RepairMenu(Manager& manager);
     void ChangesMenu(Manager& manager);
