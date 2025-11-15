@@ -1,3 +1,8 @@
+#define NOMINMAX
+#define byte win_byte_override
+#include <windows.h>
+#undef byte
+
 #include <iostream>
 #include "Manager.h"
 #include "IUser.h"
@@ -6,7 +11,6 @@
 #include "DefaultUser.h"
 #include "json.hpp"
 #include <fstream>
-#include <locale>
 
 
 using json = nlohmann::json;
@@ -14,6 +18,8 @@ using namespace std;
 
 int main()
 {
+    SetConsoleCP(65001);
+    SetConsoleOutputCP(65001);
     IUser* user = nullptr;
     Manager manager;
     bool isRunning = true;
