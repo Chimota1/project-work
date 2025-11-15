@@ -66,11 +66,11 @@ void WorkedComputer::UpdateStatus()
            m_employmentStatus = "Freely";
         break;
 
-         case 2:
+        case 2:
            m_employmentStatus = "Busy";
-         break;
+        break;
 
-         default:
+        default:
            throw Exeption("Неправильний номер");
     };
 };
@@ -143,6 +143,18 @@ bool WorkedComputer::IsWorking()
         return false;
     }
 }
+
+void WorkedComputer::NeedsMaintenance() const
+{
+    if (m_daysWithoutRepair > 180 || m_countUsers > 50)
+    {
+        cout << "Комп’ютеру потрібне технічне обслуговування!" << endl;
+    }
+    else
+    {
+        cout << "Комп’ютер не потребує технічного обслуговування." << endl;
+    }
+};
 
 
 WorkedComputer::~WorkedComputer()

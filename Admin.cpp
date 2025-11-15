@@ -104,17 +104,18 @@ void Admin::MainMenu(Manager& manager)
                 cout << "3. Видалити користувача\n";
                 cout << "4. Додати новий комп'ютер\n";
                 cout << "5. Подивитися мій ID\n";
-                cout << "6. Фільтрувати комп'ютери \n";
-                cout << "7. Сортувати комп'ютери \n";
-                cout << "8. Пошук комп'ютера за атрибутами \n";
-                cout << "9. Очистити всі комп'ютери\n";
-                cout << "10. Підрахувати комп'ютери\n";
-                cout << "11. Меню робочого комп'ютера\n";
-                cout << "12. Меню комп'ютера в ремонті\n";
-                cout << "13. Видалити комп'ютер\n";
-                cout << "14. Меню зміни атрибутів комп'ютера\n";
-                cout << "15. Допомога\n";
-                cout << "16. Вийти з системи\n";
+                cout << "6. Подивитись мій статус\n";
+                cout << "7. Фільтрувати комп'ютери \n";
+                cout << "8. Сортувати комп'ютери \n";
+                cout << "9. Пошук комп'ютера за атрибутами \n";
+                cout << "10. Очистити всі комп'ютери\n";
+                cout << "11. Підрахувати всі комп'ютери\n";
+                cout << "12. Меню робочого комп'ютера\n";
+                cout << "13. Меню комп'ютера в ремонті\n";
+                cout << "14. Видалити комп'ютер\n";
+                cout << "15. Меню зміни атрибутів комп'ютера\n";
+                cout << "16. Допомога\n";
+                cout << "17. Вийти з системи\n";
                 cout << "Введіть ваш вибір: ";
 
                 cin >> choice;
@@ -152,60 +153,64 @@ void Admin::MainMenu(Manager& manager)
                     break;
 
                     case 6:
-                        FilterMenu(manager);
+                        cout << "Ваш статус: " << GetStatus() << endl;
                     break;
 
                     case 7:
-                        SortMenu(manager);
+                        FilterMenu(manager);
                     break;
 
                     case 8:
-                        SearchMenu(manager);
+                        SortMenu(manager);
                     break;
 
                     case 9:
+                        SearchMenu(manager);
+                    break;
+
+                    case 10:
                         cout << "Очищення всіх комп'ютерів..." << endl;
                     manager.ClearAll();
                     break;
 
-                    case 10:
+                    case 11:
                         cout << "Підрахунок усіх комп'ютерів..." << endl;
                     manager.GetCount();
                     break;
 
-                    case 11:
+                    case 12:
                         WorkedMenu(manager);
                     break;
 
-                    case 12:
+                    case 13:
                         RepairMenu(manager);
                     break;
 
-                    case 13:
+                    case 14:
                         cout << "Видалення комп'ютера..." << endl;
                     {
                         int inventoryNumber;
                         cout << "Введіть інвентарний номер комп'ютера для видалення: ";
                         cin >> inventoryNumber;
-                        if (cin.fail())
+                        if (cin.fail() || inventoryNumber < 0)
                         {
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            throw Exeption("Невірний тип введення. Очікувалось число.");
+                            throw Exeption("Невірний тип введення. Очікувалось додатнє число.");
                         }
                         manager.RemoveComputer(inventoryNumber);
                     }
                     break;
 
-                    case 14:
+                    case 15:
                         ChangesMenu(manager);
                     break;
 
-                    case 15:
+                    case 16:
                         HelpMenu();
                     break;
 
-                    case 16:
+                    case 17:
                         cout << "Вихід із системи..." << endl;
                         inMenu = false;
                     break;
@@ -231,7 +236,7 @@ int Admin::GetID() const
 void Admin::HelpMenu() const
     {
         cout << "\n==================== МЕНЮ ДОПОМОГИ ====================\n";
-        cout << "Ласкаво просимо до Системи Управління Комп'ютерами (СУК)\n";
+        cout << "Ласкаво просимо до Бази даних \"Облік\" \n";
         cout << "Ця програма дозволяє адміністраторам керувати комп'ютерами та користувачами.\n";
         cout << "Ви можете додавати, видаляти, редагувати та переглядати комп'ютери, а також керувати обліковими записами користувачів.\n";
         cout << "----------------------------------------------------\n";
@@ -271,7 +276,7 @@ void Admin::HelpMenu() const
 
         cout << "\nДОДАТКОВІ ПРИМІТКИ:\n";
         cout << " - Якщо ви отримуєте помилки 'Exeption', перевірте введені значення.\n";
-        cout << " - Ви завжди можете повернутися до головного меню за допомогою опції 0.\n";
+        cout << " - Ви завжди можете повернутися до головного меню за допомогою опції 0 або 16.\n";
         cout << " - Після кожної сесії дані надійно зберігаються у файлах.\n";
         cout << "----------------------------------------------------\n";
 
@@ -632,7 +637,7 @@ void Admin::WorkedMenu(Manager& manager)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Помилка: Невірне введення. Будь ласка, введіть число.\n";
+                throw Exeption ("Помилка: Невірне введення. Будь ласка, введіть число.");
                 continue;
             }
             do
@@ -651,6 +656,7 @@ void Admin::WorkedMenu(Manager& manager)
                 cout << "11. Показати днів без ремонту\n";
                 cout << "12. Показати кількість користувачів\n";
                 cout << "13. Показати вартість обслуговування\n";
+                cout << "14. Показати чи потрібне технічне обслуговування\n";
                 cout << "0. Повернутися до меню адміністратора\n";
                 cout << "Ваш вибір: ";
 
@@ -660,7 +666,7 @@ void Admin::WorkedMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Помилка: Невірне введення. Будь ласка, введіть число.\n";
+                    throw Exeption ("Помилка: Невірне введення. Будь ласка, введіть число.");
                     continue;
                 }
 
@@ -756,6 +762,11 @@ void Admin::WorkedMenu(Manager& manager)
                         case 13:
                             cout << "Вартість обслуговування: " << worked->GetServiceCost() << endl;
                             break;
+
+                        case 14:
+                            cout << "Потрібне технічне обслуговування: ";
+                            worked->NeedsMaintenance();
+                            cout << endl;
 
                         case 0:
                             cout << "Повернення до меню адміністратора...\n";
@@ -1004,15 +1015,15 @@ void Admin::ChangesMenu(Manager& manager)
             do
             {
                 cout << "\n--- Меню зміни полів комп'ютера ---\n";
-                cout << "1. Змінити номер аудиторії\n";
-                cout << "2. Змінити розмір ПЗП\n";
-                cout << "3. Змінити наявність CD-ROM\n";
-                cout << "4. Змінити наявність дискети\n";
-                cout << "5. Змінити клавіатуру\n";
-                cout << "6. Змінити монітор\n";
-                cout << "7. Змінити відеокарту\n";
-                cout << "8. Змінити процесор\n";
-                cout << "9. Повернутися до меню адміністратора\n";
+                    cout << "1. Змінити номер аудиторії\n";
+                    cout << "2. Змінити розмір жорсткого диску\n";
+                    cout << "3. Змінити наявність CD-ROM\n";
+                    cout << "4. Змінити наявність дискети\n";
+                    cout << "5. Змінити клавіатуру\n";
+                    cout << "6. Змінити монітор\n";
+                    cout << "7. Змінити відеокарту\n";
+                    cout << "8. Змінити процесор\n";
+                    cout << "9. Повернутися до меню адміністратора\n";
                 cout << "Введіть ваш вибір: ";
                 cin >> choice;
 
@@ -1052,7 +1063,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Розмір ПЗП має бути додатним числом.");
+                                throw Exeption("Невірне введення. Розмір жорсткого диску має бути додатним числом.");
                             }
                             comp->SetSizeOfRom(newRom);
                             break;

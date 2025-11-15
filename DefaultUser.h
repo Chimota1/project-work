@@ -18,6 +18,7 @@ public:
     void HelpMenu() const override;
     void FilterMenu(Manager& manager);
     void SortMenu(Manager& manager);
+    void SearchMenu(Manager& manager);
     virtual ~DefaultUser();
 private:
     int m_id;

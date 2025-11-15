@@ -7,7 +7,7 @@ using namespace std;
 
 /**
  * @brief абстрактний клас
- * 
+ * @details містить інформацію про комп'ютер
  */
 class Computer
 {
@@ -47,13 +47,11 @@ public:
 
 	/**
 	 * @brief чисто віртуальна функція, яка виводить інформацію про статус ПК
-	 * 
 	 */
 	virtual void ShowStatus() = 0;
 	
 	/**
 	 * @brief чисто віртуальна функція, яка виводить вартість обслуговування пк
-	 * 
 	 * @param serviceCost 
 	 */
 
@@ -61,21 +59,18 @@ public:
 
 	/**
 	 * @brief змінює номер авдиторії пк
-	 * 
 	 * @param number 
 	 */
     void MoveAuditorium(int number);
 
 	/**
 	 * @brief оновлює інформацію про наявність CD-ROM
-	 * 
 	 * @param hasCdRom 
 	 */
 	void HasCdRomUpdate(bool hasCdRom);
 
 	/**
 	 * @brief оновлює інформацію про наявність Floppy-Disk
-	 * 
 	 * @param hasFloppyDisk 
 	 */
 	void HasFloppyDisk(bool hasFloppyDisk);

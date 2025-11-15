@@ -51,7 +51,6 @@ public:
 
 	/**
 	 * @brief генерує ID користувача
-	 * 
 	 * @param id 
 	 * @return int 
 	 */
@@ -64,13 +63,11 @@ public:
 
 	/**
 	 * @brief очищує весь JSON
-	 * 
 	 */
 	void ClearAll();
 
 	/**
 	 * @brief дає кількість комп'ютерів
-	 * 
 	 */
 	void GetCount() const;
 
@@ -82,7 +79,6 @@ public:
 
 	/**
 	 * @brief виводить кількість робочих комп'ютерів
-	 * 
 	 */
     void CountWorkingComputers() const;
 
@@ -90,6 +86,7 @@ public:
 	void SortByInventoryNumber();
 	void SortByAuditoriumNumber();
 
+	// Пошук
 	void SearchByInventoryNumber(int inventoryNumber) const;
 	void SearchByAuditoriumNumber(int auditoriumNumber) const;
 	void SearchByCpu(string cpu) const;
@@ -106,14 +103,12 @@ public:
 
 	/**
 	 * @brief зберігає всі данні в JSON
-	 * 
 	 * @param filename 
 	 */
 	void SaveToJson(const string& filename) const;
 
 	/**
 	 * @brief завантажує данні з JSON
-	 * 
 	 * @param filename 
 	 */
 	void LoadFromJson(const string& filename);

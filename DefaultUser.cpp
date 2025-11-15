@@ -9,7 +9,7 @@
 using namespace std;
 
 DefaultUser::DefaultUser()
-    : m_id(0), m_username(""), m_password(""), m_status("користувач")
+    : m_id(0), m_username(""), m_password(""), m_status("user")
 {
 };
 
@@ -79,6 +79,7 @@ void DefaultUser::Login()
 void DefaultUser::MainMenu(Manager& manager)
 {
     int choice;
+    bool inMenu = true;
     manager.LoadFromJson("database.json");
     try {
         do
@@ -86,12 +87,14 @@ void DefaultUser::MainMenu(Manager& manager)
             cout << "\nГоловне меню користувача" << endl;
             cout << "1. Переглянути всі комп’ютери" << endl;
             cout << "2. Переглянути мій ID" << endl;
-            cout << "3. Відфільтрувати комп’ютери" << endl;
-            cout << "4. Відсортувати комп’ютери за:" << endl;
-            cout << "5. Підрахувати кількість комп’ютерів" << endl;
-            cout << "6. Підрахувати кількість зламаних комп’ютерів" << endl;
-            cout << "7. Підрахувати кількість робочих комп’ютерів" << endl;
-            cout << "8. Довідка" << endl;
+            cout << "3. Переглянути мій статус" << endl;
+            cout << "4. Відфільтрувати комп’ютери" << endl;
+            cout << "5. Відсортувати комп’ютери за" << endl;
+            cout << "6. Пошук Комп'ютера меню" << endl;
+            cout << "7. Підрахувати кількість комп’ютерів" << endl;
+            cout << "8. Підрахувати кількість зламаних комп’ютерів" << endl;
+            cout << "9. Підрахувати кількість робочих комп’ютерів" << endl;
+            cout << "10. Довідка" << endl;
             cout << "0. Вийти з системи" << endl;
             cout << "Ваш вибір: ";
             cin >> choice;
@@ -101,53 +104,63 @@ void DefaultUser::MainMenu(Manager& manager)
                 case 1:
                     cout << "Перегляд усіх комп’ютерів..." << endl;
                     manager.ViewAllComputer();
-                    break;
+                break;
 
                 case 2:
                     cout << "Ваш ID: " << GetID() << endl;
-                    break;
+                break;
 
                 case 3:
-                    cout << "Фільтрація комп’ютерів..." << endl;
-                    FilterMenu(manager);
-                    break;
+                    cout << "Ваш статус: " << GetStatus() << endl;
+                break;
 
                 case 4:
-                    cout << "Сортування комп’ютерів..." << endl;
-                    SortMenu(manager);
-                    break;
+                    cout << "Фільтрація комп’ютерів..." << endl;
+                    FilterMenu(manager);
+                break;
 
                 case 5:
+                    cout << "Сортування комп’ютерів..." << endl;
+                    SortMenu(manager);
+                break;
+
+                case 6:
+                    cout << "Пошук комп’ютера..." << endl;
+                    SearchMenu(manager);
+                break;
+
+                case 7:
                     cout << "Загальна кількість комп’ютерів: ";
                     manager.GetCount();
                     cout << endl;
                     break;
 
-                case 6:
+                case 8:
                     cout << "Кількість зламаних комп’ютерів: ";
                     manager.CountBrokenComputers();
                     cout << endl;
-                    break;
+                break;
 
-                case 7:
+                case 9:
                     cout << "Кількість робочих комп’ютерів: ";
                     manager.CountWorkingComputers();
                     cout << endl;
-                    break;
+                break;
 
-                case 8:
+                case 10:
                     HelpMenu();
-                    break;
+                break;
 
                 case 0:
                     cout << "Вихід із системи..." << endl;
+                    inMenu = false;
                     break;
 
                 default:
                     throw Exeption("Неправильне введення");
             }
             manager.SaveToJson("database.json");
-        } while (choice != 0);
+        } while (inMenu);
     }
     catch (Exeption e)
     {
@@ -312,25 +325,191 @@ void DefaultUser::FilterMenu(Manager& manager)
 void DefaultUser::SortMenu(Manager& manager)
 {
     int sortOption;
-    cout << "Відсортувати комп’ютери за: " << endl;
+    cout << "Сортувати комп'ютери за: " << endl;
+    cout << "1. Інвентарний номер" << endl;
+    cout << "2. Номер аудиторії" << endl;
+    cout << "Введіть ваш вибір: ";
+    cin >> sortOption;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Очікувалось число.");
+    }
+    try {
+        if (sortOption == 1)
+        {
+            manager.SortByInventoryNumber();
+            manager.ViewAllComputer();
+        }
+        else if (sortOption == 2)
+        {
+            manager.SortByAuditoriumNumber();
+            manager.ViewAllComputer();
+        }
+        else
+        {
+            throw Exeption("Невірне введення");
+        };
+    }
+    catch (Exeption e)
+    {
+        cerr << "Помилка: " << e.what() << endl;
+    }
+};
+
+void DefaultUser::SearchMenu(Manager& manager)
+{
+    int searchOption;
+    cout << "Пошук комп'ютера за: " << endl;
     cout << "1. Інвентарним номером" << endl;
     cout << "2. Номером аудиторії" << endl;
-    cout << "Ваш вибір: ";
-    cin >> sortOption;
+    cout << "3. Процесором" << endl;
+    cout << "4. Відеокартою" << endl;
+    cout << "5. Монітором" << endl;
+    cout << "6. Клавіатурою" << endl;
+    cout << "7. Розміром диску" << endl;
+    cout << "8. Наявністю CD-ROM" << endl;
+    cout << "9. Наявністю дискети" << endl;
+    cout << "Введіть ваш вибір: ";
+    cin >> searchOption;
+    if (cin.fail())
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Очікувалось число.");
+    }
+    try
+    {
+        switch (searchOption)
+        {
+            case 1:
+                {
+                int inventoryNumber;
+                cout << "Введіть інвентарний номер: ";
+                cin >> inventoryNumber;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchByInventoryNumber(inventoryNumber);
+                break;
+                }
+            case 2:
+            {
+                int auditoriumNumber;
+                cout << "Введіть номер аудиторії: ";
+                cin >> auditoriumNumber;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchByAuditoriumNumber(auditoriumNumber);
+                break;
+            }
 
-    if (sortOption == 1)
-    {
-        manager.SortByInventoryNumber();
+            case 3:
+            {
+                string cpu;
+                cout << "Введіть тип процесора: ";
+                cin >> cpu;
+                if (cpu.empty())
+                    throw Exeption("Рядок CPU порожній");
+                manager.SearchByCpu(cpu);
+                break;
+            }
+
+            case 4:
+            {
+                string gpu;
+                cout << "Введіть тип відеокарти: ";
+                cin >> gpu;
+                if (gpu.empty())
+                    throw Exeption("Рядок GPU порожній");
+                manager.SearchByGpu(gpu);
+                break;
+            }
+
+            case 5:
+            {
+                string monitor;
+                cout << "Введіть тип монітора: ";
+                cin >> monitor;
+                if (monitor.empty())
+                    throw Exeption("Рядок монітора порожній");
+                manager.SearchByMonitor(monitor);
+                break;
+            }
+
+            case 6:
+            {
+                string keyboard;
+                cout << "Введіть тип клавіатури: ";
+                cin >> keyboard;
+                if (keyboard.empty())
+                    throw Exeption("Рядок клавіатури порожній");
+                manager.SearchByKeyboard(keyboard);
+                break;
+            }
+
+            case 7:
+            {
+                int sizeOfRom;
+                cout << "Введіть розмір диску: ";
+                cin >> sizeOfRom;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                }
+                manager.SearchBySizeOfRom(sizeOfRom);
+                break;
+            }
+
+            case 8:
+            {
+                bool hasCdRom;
+                cout << "Має CD-ROM (1 - так, 0 - ні): ";
+                cin >> hasCdRom;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.SearchByHasCdRom(hasCdRom);
+                break;
+            }
+
+            case 9:
+            {
+                bool hasFloppyDisk;
+                cout << "Має дискету (1 - так, 0 - ні): ";
+                cin >> hasFloppyDisk;
+                if (cin.fail())
+                {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                }
+                manager.SearchByHasFloppyDisk(hasFloppyDisk);
+                break;
+            }
+
+            default:
+                throw Exeption("Невірне введення");
+        }
     }
-    else if (sortOption == 2)
+    catch (Exeption& e)
     {
-        manager.SortByAuditoriumNumber();
+        cerr << "Помилка: " << e.what() << endl;
     }
-    else
-    {
-        throw Exeption("Неправильне введення");
-    };
-};
+}
 
 DefaultUser::~DefaultUser()
 {

@@ -21,7 +21,6 @@ class Exeption : public exception{
      * @brief перезавантаження виводу помилки 
      * @details Перевантажує метод what() базового класу std::exception, 
      * повертаючи повідомлення про помилку, збережене в цьому об'єкті винятку.
-     *
      * @return const char* 
      */
     const char* what() const noexcept override;

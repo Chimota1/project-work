@@ -70,5 +70,23 @@
         "sizeOfRom": 512,
         "status": "working",
         "statusOfWork": "Turned on"
+    },
+    {
+        "auditoriumNumber": 25,
+        "countUsers": 15,
+        "cpu": "t",
+        "daysWithoutRepair": 56,
+        "employmentStatus": "Freely",
+        "gpu": "we",
+        "hasCdRom": true,
+        "hasFloppyDisk": true,
+        "inventoryNumber": 199,
+        "isWorking": false,
+        "keyboard": "rey",
+        "monitor": "utr",
+        "serviceCost": 0,
+        "sizeOfRom": 128,
+        "status": "working",
+        "statusOfWork": "Turned off"
     }
 ]

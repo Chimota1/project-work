@@ -281,7 +281,7 @@ void Manager::InitComputer()
     int choice;
     cout << "Виберіть тип комп'ютера, який потрібно додати:" << endl;
     cout << "1. Справний комп'ютер" << endl;
-    cout << "2. Несправиний комп'ютер" << endl;
+    cout << "2. Несправний комп'ютер" << endl;
     cout << "Введіть свій вибір: ";
     cin >> choice;
 
@@ -455,7 +455,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірний тип введення. Очікували кількість.");
+                throw Exeption("Невірний тип введення. Очікувалось число.");
             }
             repairComp->RepairCost(repairCost);
         }
@@ -483,13 +483,29 @@ void Manager::RemoveComputer(int inventoryNumber)
 
 void Manager::ClearAll()
 {
-    if (m_thisComputer.empty()) throw Exeption("список порожній, не можливо очистити");
-    m_thisComputer.clear();
+    int choice;
+    cout << "Ви впевнені, що хочете очистити весь список комп'ютерів? (1 - так, 2 - ні): ";
+    cin >> choice;
+    if (cin.fail() || (choice != 1 && choice != 2))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        throw Exeption("Невірне введення. Введіть 1 або 2.");
+    }
+    if (choice == 1) {
+        if (m_thisComputer.empty()) throw Exeption("список порожній, не можливо очистити");
+        m_thisComputer.clear();
+    }
+
+    else if (choice == 2) {
+        cout << "Очищення скасовано." << endl;
+    };
 }
 
 void Manager::GetCount() const
 {
-    cout << "Кількість всіх комп'ютерів" << m_thisComputer.size();
+    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо порахувати");
+    cout << "Кількість всіх комп'ютерів " << m_thisComputer.size();
 }
 
 void Manager::CountBrokenComputers() const
@@ -566,6 +582,7 @@ void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
+            break;
         }
     }
     if (!found) throw Exeption("Комп'ютер з таким номером аудиторії не знайдено");
@@ -580,6 +597,7 @@ void Manager::SearchByCpu(string cpu) const
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
+            break;
         }
     }
     if (!found) throw Exeption("Комп'ютер з таким процесором не знайдено");
@@ -594,6 +612,7 @@ void Manager::SearchByGpu(string gpu) const
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
+            break;
         }
     }
     if (!found) throw Exeption("Комп'ютер з таким графічним процесором не знайдено");
@@ -608,6 +627,7 @@ void Manager::SearchByMonitor(string monitor) const
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
+            break;
         }
     }
     if (!found) throw Exeption("Комп'ютер з таким монітором не знайдено");
@@ -622,10 +642,58 @@ void Manager::SearchByKeyboard(string keyboard) const
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
+            break;
         }
     }
     if (!found) throw Exeption("Комп'ютер з такою клавіатурою не знайдено");
 };
+
+void Manager::SearchBySizeOfRom(int sizeOfRom) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetSizeOfRom() == sizeOfRom)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким розміром ROM не знайдено");
+};
+
+void Manager::SearchByHasCdRom(bool hasCdRom) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetHasCdRom() == hasCdRom)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким параметром CD-ROM не знайдено");
+};
+
+void Manager::SearchByHasFloppyDisk(bool hasFloppyDisk) const
+{
+    bool found = false;
+    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    {
+        if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
+        {
+            cout << (*it)->GetComputerFull() << endl;
+            found = true;
+            break;
+        }
+    }
+    if (!found) throw Exeption("Комп'ютер з таким параметром Floppy-Disk не знайдено");
+};
+
+
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
