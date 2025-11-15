@@ -6,16 +6,14 @@
 #include "DefaultUser.h"
 #include "json.hpp"
 #include <fstream>
-#include <Windows.h>
+#include <locale>
+
 
 using json = nlohmann::json;
 using namespace std;
 
 int main()
 {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
-
     IUser* user = nullptr;
     Manager manager;
     bool isRunning = true;
