@@ -58,10 +58,10 @@ class Admin : public IUser
 
 
     private:
-        int m_id;
-        string m_username;
-        string m_password;
-        string m_status;
+        int id;
+        string username;
+        string password;
+        string status;
     };
 
 #endif //ADMIN_H

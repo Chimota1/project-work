@@ -2,7 +2,8 @@
 #define WORKERCOMPUTER_H
 
 #include "Computer.h"
-#include "string"
+#include <string>
+
 using namespace std;
 
 /**
@@ -14,8 +15,8 @@ class WorkedComputer : public Computer
 public:
 	WorkedComputer();
     WorkedComputer(
-    string statusOfWork,
-    string employmentStatus,
+    const string& statusOfWork,
+    const string& employmentStatus,
     int serviceCostWorked,
     int daysWithoutRepair,
     int countUsers);
@@ -62,11 +63,11 @@ public:
 	void NeedsMaintenance() const;
 	virtual ~WorkedComputer();
 private:
-    string m_statusOfWork;
-	string m_employmentStatus;
-    int m_serviceCostWorked;
-    int m_daysWithoutRepair;
-    int m_countUsers;
+    string statusOfWork;
+	string employmentStatus;
+    int serviceCostWorked;
+    int daysWithoutRepair;
+    int countUsers;
 };
 
 #endif //WORKERCOMPUTER_H

@@ -3,6 +3,7 @@
 
 #include "IUser.h"
 
+using namespace std;
 
 class DefaultUser : public IUser
 {
@@ -21,10 +22,10 @@ public:
     void SearchMenu(Manager& manager);
     virtual ~DefaultUser();
 private:
-    int m_id;
-    string m_username;
-    string m_password;
-    string m_status;
+    int id;
+    string username;
+    string password;
+    string status;
 };
 
 

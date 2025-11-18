@@ -4,37 +4,43 @@
 #include <cstdlib>
 #include <fstream>
 #include "json.hpp"
-#include "Exeption.h"
+#include "MyException.h"
 #include "Manager.h"
 #include <limits>
 
 using json = nlohmann::json;
 using namespace std;
 
-Admin::Admin()
-    : m_id(0), m_username("Anonymus"), m_password("null"), m_status("admin")
+Admin::Admin():
+    id(0),
+    username("Anonymus"),
+    password("null"),
+    status("admin")
 {
 };
 
-Admin::Admin(int id, const string& username, const string& password,const string& status)
-    : m_id(id), m_username(username), m_password(password), m_status(status)
+Admin::Admin(int id, const string& username, const string& password,const string& status):
+    id(id),
+    username(username),
+    password(password),
+    status(status)
 {
 };
 
 Admin::Admin(const Admin& other)
 {
-    this->m_id = other.m_id;
-    this->m_username = other.m_username;
-    this->m_password = other.m_password;
-    this->m_status = other.m_status;
+    this->id = other.id;
+    this->username = other.username;
+    this->password = other.password;
+    this->status = other.status;
 };
 
 Admin::Admin(Admin&& other) noexcept
 {
-    this->m_id = other.m_id;
-    this->m_username = other.m_username;
-    this->m_password = other.m_password;
-    this->m_status = other.m_status;
+    this->id = other.id;
+    this->username = other.username;
+    this->password = other.password;
+    this->status = other.status;
 };
 
 void Admin::Login()
@@ -50,7 +56,7 @@ void Admin::Login()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw Exeption("Неможливо відкрити файл users.txt.");
+        throw MyException("Неможливо відкрити файл users.txt.");
 
     string line;
     while (getline(userFile, line)) {
@@ -65,14 +71,14 @@ void Admin::Login()
                 string filePassword = loginData.substr(colonPos + 1);
                 if (username == fileUsername && password == filePassword && role == "admin") {
                     found = true;
-                    m_username = fileUsername;
-                    m_password = filePassword;
-                    m_id = id;
-                    m_status = role;
+                    username = fileUsername;
+                    password = filePassword;
+                    id = id;
+                    status = role;
                     break;
                 }
                 else {
-                    throw Exeption("Невірні дані для входу або ви не адміністратор");
+                    throw MyException("Невірні дані для входу або ви не адміністратор");
                     break;
                 }
             }
@@ -85,7 +91,7 @@ void Admin::Login()
         MainMenu(manager);
     }
     else {
-        throw Exeption("Невірне ім'я користувача або пароль");
+        throw MyException("Невірне ім'я користувача або пароль");
     }
 }
 
@@ -101,21 +107,22 @@ void Admin::MainMenu(Manager& manager)
                 cout << "\nГоловне меню адміністратора\n";
                 cout << "1. Переглянути всіх користувачів\n";
                 cout << "2. Додати користувача\n";
-                cout << "3. Видалити користувача\n";
-                cout << "4. Додати новий комп'ютер\n";
-                cout << "5. Подивитися мій ID\n";
-                cout << "6. Подивитись мій статус\n";
-                cout << "7. Фільтрувати комп'ютери \n";
-                cout << "8. Сортувати комп'ютери \n";
-                cout << "9. Пошук комп'ютера за атрибутами \n";
-                cout << "10. Очистити всі комп'ютери\n";
-                cout << "11. Підрахувати всі комп'ютери\n";
-                cout << "12. Меню робочого комп'ютера\n";
-                cout << "13. Меню комп'ютера в ремонті\n";
-                cout << "14. Видалити комп'ютер\n";
-                cout << "15. Меню зміни атрибутів комп'ютера\n";
-                cout << "16. Допомога\n";
-                cout << "17. Вийти з системи\n";
+                cout << "3. Переглянути всі комп'ютери\n";
+                cout << "4. Видалити користувача\n";
+                cout << "5. Додати новий комп'ютер\n";
+                cout << "6. Подивитися мій ID\n";
+                cout << "7. Подивитись мій статус\n";
+                cout << "8. Фільтрувати комп'ютери \n";
+                cout << "9. Сортувати комп'ютери \n";
+                cout << "10. Пошук комп'ютера за атрибутами \n";
+                cout << "11. Очистити всі комп'ютери\n";
+                cout << "12. Підрахувати всі комп'ютери\n";
+                cout << "13. Меню робочого комп'ютера\n";
+                cout << "14. Меню комп'ютера в ремонті\n";
+                cout << "15. Видалити комп'ютер\n";
+                cout << "16. Меню зміни атрибутів комп'ютера\n";
+                cout << "17. Допомога\n";
+                cout << "18. Вийти з системи\n";
                 cout << "Введіть ваш вибір: ";
 
                 cin >> choice;
@@ -123,7 +130,7 @@ void Admin::MainMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
 
                 switch (choice)
@@ -139,54 +146,59 @@ void Admin::MainMenu(Manager& manager)
                     break;
 
                     case 3:
+                        cout << "Всі комп'ютери: " << endl;
+                        manager.ViewAllComputer();
+                    break;
+
+                    case 4:
                         cout << "Видалення користувача..." << endl;
                     manager.RemoveUser();
                     break;
 
-                    case 4:
+                    case 5:
                         cout << "Додавання нового комп'ютера..." << endl;
                     manager.InitComputer();
                     break;
 
-                    case 5:
+                    case 6:
                         cout << "Ваш ID: " << GetID() << endl;
                     break;
 
-                    case 6:
+                    case 7:
                         cout << "Ваш статус: " << GetStatus() << endl;
                     break;
 
-                    case 7:
+                    case 8:
                         FilterMenu(manager);
                     break;
 
-                    case 8:
+                    case 9:
                         SortMenu(manager);
                     break;
 
-                    case 9:
+                    case 10:
                         SearchMenu(manager);
                     break;
 
-                    case 10:
+                    case 11:
                         cout << "Очищення всіх комп'ютерів..." << endl;
                     manager.ClearAll();
                     break;
 
-                    case 11:
+                    case 12:
                         cout << "Підрахунок усіх комп'ютерів..." << endl;
                     manager.GetCount();
                     break;
 
-                    case 12:
+                    case 13:
                         WorkedMenu(manager);
                     break;
 
-                    case 13:
+                    case 14:
                         RepairMenu(manager);
                     break;
 
-                    case 14:
+                    case 15:
                         cout << "Видалення комп'ютера..." << endl;
                     {
                         int inventoryNumber;
@@ -196,31 +208,31 @@ void Admin::MainMenu(Manager& manager)
                         {
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                            throw Exeption("Невірний тип введення. Очікувалось додатнє число.");
+                            throw MyException("Невірний тип введення. Очікувалось додатнє число.");
                         }
                         manager.RemoveComputer(inventoryNumber);
                     }
                     break;
 
-                    case 15:
+                    case 16:
                         ChangesMenu(manager);
                     break;
 
-                    case 16:
+                    case 17:
                         HelpMenu();
                     break;
 
-                    case 17:
+                    case 18:
                         cout << "Вихід із системи..." << endl;
                         inMenu = false;
                     break;
 
                     default:
-                        throw Exeption("Невірне введення");
+                        throw MyException("Невірне введення");
                 }
                 manager.SaveToJson("database.json");
             }
-            catch (Exeption& e)
+            catch (MyException& e)
             {
                 cerr << "Помилка: " << e.what() << endl;
             }
@@ -229,7 +241,7 @@ void Admin::MainMenu(Manager& manager)
 
 int Admin::GetID() const
 {
-    return m_id;
+    return id;
 };
 
 
@@ -275,7 +287,7 @@ void Admin::HelpMenu() const
         cout << "----------------------------------------------------\n";
 
         cout << "\nДОДАТКОВІ ПРИМІТКИ:\n";
-        cout << " - Якщо ви отримуєте помилки 'Exeption', перевірте введені значення.\n";
+        cout << " - Якщо ви отримуєте помилки 'MyException', перевірте введені значення.\n";
         cout << " - Ви завжди можете повернутися до головного меню за допомогою опції 0 або 16.\n";
         cout << " - Після кожної сесії дані надійно зберігаються у файлах.\n";
         cout << "----------------------------------------------------\n";
@@ -312,7 +324,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.InventoryFilter(inventoryNumber);
                 break;
@@ -325,7 +337,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.AuditoriumFilter(auditoriumNumber);
                 break;
@@ -338,7 +350,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SizeOfRomFilter(sizeOfRom);
                 break;
@@ -351,7 +363,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.HasCdRomFilter(hasCdRom);
                 break;
@@ -364,7 +376,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.HasFloppyDiskFilter(hasFloppyDisk);
                 break;
@@ -375,7 +387,7 @@ void Admin::FilterMenu(Manager& manager)
                 cout << "Введіть тип клавіатури: ";
                 cin >> keyboard;
                 if (keyboard.empty())
-                    throw Exeption("Рядок клавіатури порожній");
+                    throw MyException("Рядок клавіатури порожній");
                 manager.KeyboardFilter(keyboard);
                 break;
             }
@@ -385,7 +397,7 @@ void Admin::FilterMenu(Manager& manager)
                 cout << "Введіть тип монітора: ";
                 cin >> monitor;
                 if (monitor.empty())
-                    throw Exeption("Рядок монітора порожній");
+                    throw MyException("Рядок монітора порожній");
                 manager.MonitorFilter(monitor);
                 break;
             }
@@ -395,7 +407,7 @@ void Admin::FilterMenu(Manager& manager)
                 cout << "Введіть тип відеокарти: ";
                 cin >> gpu;
                 if (gpu.empty())
-                    throw Exeption("Рядок GPU порожній");
+                    throw MyException("Рядок GPU порожній");
                 manager.GpuFilter(gpu);
                 break;
             }
@@ -405,16 +417,16 @@ void Admin::FilterMenu(Manager& manager)
                 cout << "Введіть тип процесора: ";
                 cin >> cpu;
                 if (cpu.empty())
-                    throw Exeption("Рядок CPU порожній");
+                    throw MyException("Рядок CPU порожній");
                 manager.CpuFilter(cpu);
                 break;
             }
 
             default:
-                throw Exeption("Невірне введення — виберіть від 1 до 9.");
+                throw MyException("Невірне введення — виберіть від 1 до 9.");
         }
     }
-    catch (Exeption& e)
+    catch (MyException& e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }
@@ -433,7 +445,7 @@ void Admin::SortMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Очікувалось число.");
+        throw MyException("Невірне введення. Очікувалось число.");
     }
     try {
         if (sortOption == 1)
@@ -448,10 +460,10 @@ void Admin::SortMenu(Manager& manager)
         }
         else
         {
-            throw Exeption("Невірне введення");
+            throw MyException("Невірне введення");
         };
     }
-    catch (Exeption e)
+    catch (MyException e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }
@@ -476,7 +488,7 @@ void Admin::SearchMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Очікувалось число.");
+        throw MyException("Невірне введення. Очікувалось число.");
     }
     try
     {
@@ -491,7 +503,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchByInventoryNumber(inventoryNumber);
                 break;
@@ -505,7 +517,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchByAuditoriumNumber(auditoriumNumber);
                 break;
@@ -517,7 +529,7 @@ void Admin::SearchMenu(Manager& manager)
                 cout << "Введіть тип процесора: ";
                 cin >> cpu;
                 if (cpu.empty())
-                    throw Exeption("Рядок CPU порожній");
+                    throw MyException("Рядок CPU порожній");
                 manager.SearchByCpu(cpu);
                 break;
             }
@@ -528,7 +540,7 @@ void Admin::SearchMenu(Manager& manager)
                 cout << "Введіть тип відеокарти: ";
                 cin >> gpu;
                 if (gpu.empty())
-                    throw Exeption("Рядок GPU порожній");
+                    throw MyException("Рядок GPU порожній");
                 manager.SearchByGpu(gpu);
                 break;
             }
@@ -539,7 +551,7 @@ void Admin::SearchMenu(Manager& manager)
                 cout << "Введіть тип монітора: ";
                 cin >> monitor;
                 if (monitor.empty())
-                    throw Exeption("Рядок монітора порожній");
+                    throw MyException("Рядок монітора порожній");
                 manager.SearchByMonitor(monitor);
                 break;
             }
@@ -550,7 +562,7 @@ void Admin::SearchMenu(Manager& manager)
                 cout << "Введіть тип клавіатури: ";
                 cin >> keyboard;
                 if (keyboard.empty())
-                    throw Exeption("Рядок клавіатури порожній");
+                    throw MyException("Рядок клавіатури порожній");
                 manager.SearchByKeyboard(keyboard);
                 break;
             }
@@ -564,7 +576,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchBySizeOfRom(sizeOfRom);
                 break;
@@ -579,7 +591,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.SearchByHasCdRom(hasCdRom);
                 break;
@@ -594,17 +606,17 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.SearchByHasFloppyDisk(hasFloppyDisk);
                 break;
             }
 
             default:
-                throw Exeption("Невірне введення");
+                throw MyException("Невірне введення");
         }
     }
-    catch (Exeption& e)
+    catch (MyException& e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }
@@ -620,7 +632,7 @@ void Admin::WorkedMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Інвентарний номер має бути додатним числом.");
+        throw MyException("Невірне введення. Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -637,7 +649,7 @@ void Admin::WorkedMenu(Manager& manager)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption ("Помилка: Невірне введення. Будь ласка, введіть число.");
+                throw MyException ("Помилка: Невірне введення. Будь ласка, введіть число.");
                 continue;
             }
             do
@@ -666,7 +678,7 @@ void Admin::WorkedMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption ("Помилка: Невірне введення. Будь ласка, введіть число.");
+                    throw MyException ("Помилка: Невірне введення. Будь ласка, введіть число.");
                     continue;
                 }
 
@@ -696,7 +708,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Кількість днів має бути 0 або додатним числом.");
+                                throw MyException("Невірне введення. Кількість днів має бути 0 або додатним числом.");
                             }
                             worked->SetDays(days);
                             break;
@@ -716,7 +728,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Кількість користувачів має бути 0 або додатним числом.");
+                                throw MyException("Невірне введення. Кількість користувачів має бути 0 або додатним числом.");
                             }
                             worked->SetCountUsers(users);
                             break;
@@ -731,7 +743,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Вартість обслуговування має бути 0 або додатним числом.");
+                                throw MyException("Невірне введення. Вартість обслуговування має бути 0 або додатним числом.");
                             }
                             worked->ServiceCost(cost);
                             break;
@@ -773,10 +785,10 @@ void Admin::WorkedMenu(Manager& manager)
                             break;
 
                         default:
-                            throw Exeption("Невірний вибір меню. Будь ласка, оберіть від 0 до 13.");
+                            throw MyException("Невірний вибір меню. Будь ласка, оберіть від 0 до 13.");
                     }
                 }
-                catch (const Exeption& e)
+                catch (const MyException& e)
                 {
                     cerr << "Помилка: " << e.what() << endl;
                 }
@@ -804,7 +816,7 @@ void Admin::RepairMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Інвентарний номер має бути додатним числом.");
+        throw MyException("Невірне введення. Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -875,7 +887,7 @@ void Admin::RepairMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірний формат дати. Очікується РРРР-ММ-ДД.");
+                                throw MyException("Невірний формат дати. Очікується РРРР-ММ-ДД.");
                             }
 
                             repair->SetDate(date);
@@ -889,7 +901,7 @@ void Admin::RepairMenu(Manager& manager)
                             cout << "Введіть опис проблеми: ";
                             getline(cin, desc);
                             if (desc.empty())
-                                throw Exeption("Опис не може бути порожнім.");
+                                throw MyException("Опис не може бути порожнім.");
                             repair->SetDescribe(desc);
                             break;
                         }
@@ -901,7 +913,7 @@ void Admin::RepairMenu(Manager& manager)
                             cout << "Введіть причину проблеми: ";
                             getline(cin, cause);
                             if (cause.empty())
-                                throw Exeption("Причина не може бути порожньою.");
+                                throw MyException("Причина не може бути порожньою.");
                             repair->SetCause(cause);
                             break;
                         }
@@ -915,7 +927,7 @@ void Admin::RepairMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Вартість ремонту має бути 0 або додатним числом.");
+                                throw MyException("Невірне введення. Вартість ремонту має бути 0 або додатним числом.");
                             }
                             repair->RepairCost(cost);
                             break;
@@ -930,7 +942,7 @@ void Admin::RepairMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
                             repair->NeedsSpareParts(val);
                             break;
@@ -975,10 +987,10 @@ void Admin::RepairMenu(Manager& manager)
                             break;
 
                         default:
-                            throw Exeption("Невірний вибір меню. Будь ласка, оберіть від 0 до 16.");
+                            throw MyException("Невірний вибір меню. Будь ласка, оберіть від 0 до 16.");
                     }
                 }
-                catch (const Exeption& e)
+                catch (const MyException& e)
                 {
                     cout << "Помилка: " << e.what() << endl;
                 }
@@ -1048,7 +1060,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Номер аудиторії має бути додатним числом.");
+                                throw MyException("Невірне введення. Номер аудиторії має бути додатним числом.");
                             }
                             comp->MoveAuditorium(newAuditorium);
                             break;
@@ -1063,7 +1075,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Розмір жорсткого диску має бути додатним числом.");
+                                throw MyException("Невірне введення. Розмір жорсткого диску має бути додатним числом.");
                             }
                             comp->SetSizeOfRom(newRom);
                             break;
@@ -1078,7 +1090,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
                             comp->HasCdRomUpdate(newCdRom);
                             break;
@@ -1093,9 +1105,9 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw Exeption("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
-                            comp->HasFloppyDisk(newFloppy);
+                            comp->HasFloppyDiskUpdate(newFloppy);
                             break;
                         }
 
@@ -1141,12 +1153,12 @@ void Admin::ChangesMenu(Manager& manager)
                             break;
 
                         default:
-                            throw Exeption("Невірне введення");
+                            throw MyException("Невірне введення");
                             break;
                     }
                     manager.SaveToJson("database.json");
                 }
-                catch (const Exeption& e)
+                catch (const MyException& e)
                 {
                     cout << "Помилка: " << e.what() << endl;
                 }
@@ -1166,7 +1178,7 @@ void Admin::ChangesMenu(Manager& manager)
 
 string Admin::GetStatus() const
 {
-    return m_status;
+    return status;
 }
 
 Admin::~Admin()

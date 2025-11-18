@@ -14,10 +14,10 @@ class Computer
 public:
 	Computer();
     Computer(
-    	string cpu,
-        string gpu,
-        string monitor,
-        string keyboard,
+    	const string& cpu,
+        const string& gpu,
+        const string& monitor,
+        const string& keyboard,
         bool hasCdRom,
         bool hasFloppyDisk,
         int sizeOfRom,
@@ -73,19 +73,19 @@ public:
 	 * @brief оновлює інформацію про наявність Floppy-Disk
 	 * @param hasFloppyDisk 
 	 */
-	void HasFloppyDisk(bool hasFloppyDisk);
+	void HasFloppyDiskUpdate(bool hasFloppyDisk);
 
 	virtual ~Computer();
 
 private:
-	string m_cpu;
-	string m_gpu;
-	string m_monitor;
-	string m_keyboard;
-    bool m_hasCdRom;
-    bool m_hasFloppyDisk;
-	int m_sizeOfRom;
-    int m_inventoryNumber;
-    int m_auditoriumNumber;
+	string cpu;
+	string gpu;
+	string monitor;
+	string keyboard;
+    bool hasCdRom;
+    bool hasFloppyDisk;
+	int sizeOfRom;
+    int inventoryNumber;
+    int auditoriumNumber;
 };
 #endif // COMPUTER_H

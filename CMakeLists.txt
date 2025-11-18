@@ -10,7 +10,7 @@ add_executable(project-work
         Manager.cpp
         RepairComputer.cpp
         WorkedComputer.cpp
-        Exeption.cpp
+        MyException.cpp
         Admin.cpp
         DefaultUser.cpp
 )

@@ -1,5 +1,5 @@
-#ifndef EXEPTION_H
-#define EXEPTION_H
+#ifndef MYEXCEPTION_H
+#define MYECXEPTION_H
 
 #include <string>
 #include <exception>
@@ -10,25 +10,25 @@ using namespace std;
  * @brief Клас для перезавантаженння виводу винятків
  * 
  */
-class Exeption : public exception{
+class MyException : public exception{
     public:
-    Exeption();
-    Exeption(string message);
-    Exeption(const Exeption &other);
-    Exeption(Exeption &&other) noexcept;
+    MyException();
+    MyException(string message);
+    MyException(const MyException &other);
+    MyException(MyException &&other) noexcept;
 
     /**
      * @brief перезавантаження виводу помилки 
-     * @details Перевантажує метод what() базового класу std::exception, 
+     * @details Перевантажує метод what() базового класу exception, 
      * повертаючи повідомлення про помилку, збережене в цьому об'єкті винятку.
      * @return const char* 
      */
     const char* what() const noexcept override;
-    virtual ~Exeption();
+    virtual ~MyException();
     private:
-    string m_message;
+    string message;
 };
 
 
 
-#endif //EXEPTION_H
+#endif //MYEXCEPTION_H

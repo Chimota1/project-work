@@ -4,27 +4,30 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "Exeption.h"
+#include "MyException.h"
 
 using namespace std;
 
-DefaultUser::DefaultUser()
-    : m_id(0), m_username(""), m_password(""), m_status("user")
+DefaultUser::DefaultUser():
+    id(0),
+    username(""),
+    password(""),
+    status("user")
 {
 };
 
 DefaultUser::DefaultUser(int id, const string& username, const string& password, const string status)
-    : m_id(id), m_username(username), m_password(password), m_status(status)
+    : id(id), username(username), password(password), status(status)
 {
 };
 
 DefaultUser::DefaultUser(const DefaultUser& other)
-    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
+    : id(other.id), username(other.username), password(other.password), status(other.status)
 {
 };
 
 DefaultUser::DefaultUser(DefaultUser&& other) noexcept
-    : m_id(other.m_id), m_username(other.m_username), m_password(other.m_password), m_status(other.m_status)
+    : id(other.id), username(other.username), password(other.password), status(other.status)
 {
 }
 
@@ -41,7 +44,7 @@ void DefaultUser::Login()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw Exeption("Не вдалося відкрити файл users.txt.");
+        throw MyException("Не вдалося відкрити файл users.txt.");
 
     string line;
     while (getline(userFile, line)) {
@@ -57,10 +60,10 @@ void DefaultUser::Login()
 
                 if (username == fileUsername && password == filePassword && role == "user") {
                     found = true;
-                    m_username = fileUsername;
-                    m_password = filePassword;
-                    m_id = id;
-           			m_status = role;
+                    username = fileUsername;
+                    password = filePassword;
+                    id = id;
+           			status = role;
                     MainMenu(manager);
                     break;
                 }
@@ -73,7 +76,7 @@ void DefaultUser::Login()
     if (found)
         cout << "Вхід успішний!" << endl;
     else
-        throw Exeption("Невірне ім'я користувача або пароль");
+        throw MyException("Невірне ім'я користувача або пароль");
 }
 
 void DefaultUser::MainMenu(Manager& manager)
@@ -89,12 +92,13 @@ void DefaultUser::MainMenu(Manager& manager)
             cout << "2. Переглянути мій ID" << endl;
             cout << "3. Переглянути мій статус" << endl;
             cout << "4. Відфільтрувати комп’ютери" << endl;
-            cout << "5. Відсортувати комп’ютери за" << endl;
-            cout << "6. Пошук Комп'ютера меню" << endl;
-            cout << "7. Підрахувати кількість комп’ютерів" << endl;
-            cout << "8. Підрахувати кількість зламаних комп’ютерів" << endl;
-            cout << "9. Підрахувати кількість робочих комп’ютерів" << endl;
-            cout << "10. Довідка" << endl;
+            cout << "5. Переглянути всі комп'ютери" << endl;
+            cout << "6. Відсортувати комп’ютери за" << endl;
+            cout << "7. Пошук Комп'ютера меню" << endl;
+            cout << "8. Підрахувати кількість комп’ютерів" << endl;
+            cout << "9. Підрахувати кількість зламаних комп’ютерів" << endl;
+            cout << "10. Підрахувати кількість робочих комп’ютерів" << endl;
+            cout << "11. Довідка" << endl;
             cout << "0. Вийти з системи" << endl;
             cout << "Ваш вибір: ";
             cin >> choice;
@@ -120,34 +124,39 @@ void DefaultUser::MainMenu(Manager& manager)
                 break;
 
                 case 5:
+                    cout << "Всі комп'ютери: " << endl;
+                    manager.ViewAllComputer();
+                break;
+
+                case 6:
                     cout << "Сортування комп’ютерів..." << endl;
                     SortMenu(manager);
                 break;
 
-                case 6:
+                case 7:
                     cout << "Пошук комп’ютера..." << endl;
                     SearchMenu(manager);
                 break;
 
-                case 7:
+                case 8:
                     cout << "Загальна кількість комп’ютерів: ";
                     manager.GetCount();
                     cout << endl;
                     break;
 
-                case 8:
+                case 9:
                     cout << "Кількість зламаних комп’ютерів: ";
                     manager.CountBrokenComputers();
                     cout << endl;
                 break;
 
-                case 9:
+                case 10:
                     cout << "Кількість робочих комп’ютерів: ";
                     manager.CountWorkingComputers();
                     cout << endl;
                 break;
 
-                case 10:
+                case 11:
                     HelpMenu();
                 break;
 
@@ -157,12 +166,12 @@ void DefaultUser::MainMenu(Manager& manager)
                     break;
 
                 default:
-                    throw Exeption("Неправильне введення");
+                    throw MyException("Неправильне введення");
             }
             manager.SaveToJson("database.json");
         } while (inMenu);
     }
-    catch (Exeption e)
+    catch (MyException e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }
@@ -170,7 +179,7 @@ void DefaultUser::MainMenu(Manager& manager)
 
 int DefaultUser::GetID() const
 {
-    return m_id;
+    return id;
 };
 
 void DefaultUser::HelpMenu() const
@@ -223,7 +232,7 @@ void DefaultUser::HelpMenu() const
 
 string DefaultUser::GetStatus() const
 {
-	return m_status;
+	return status;
 }
 
 void DefaultUser::FilterMenu(Manager& manager)
@@ -318,7 +327,7 @@ void DefaultUser::FilterMenu(Manager& manager)
         }
 
         default:
-            throw Exeption("Неправильне введення");
+            throw MyException("Неправильне введення");
     };
 }
 
@@ -334,7 +343,7 @@ void DefaultUser::SortMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Очікувалось число.");
+        throw MyException("Невірне введення. Очікувалось число.");
     }
     try {
         if (sortOption == 1)
@@ -349,10 +358,10 @@ void DefaultUser::SortMenu(Manager& manager)
         }
         else
         {
-            throw Exeption("Невірне введення");
+            throw MyException("Невірне введення");
         };
     }
-    catch (Exeption e)
+    catch (MyException e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }
@@ -377,7 +386,7 @@ void DefaultUser::SearchMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Очікувалось число.");
+        throw MyException("Невірне введення. Очікувалось число.");
     }
     try
     {
@@ -392,7 +401,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchByInventoryNumber(inventoryNumber);
                 break;
@@ -406,7 +415,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchByAuditoriumNumber(auditoriumNumber);
                 break;
@@ -418,7 +427,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 cout << "Введіть тип процесора: ";
                 cin >> cpu;
                 if (cpu.empty())
-                    throw Exeption("Рядок CPU порожній");
+                    throw MyException("Рядок CPU порожній");
                 manager.SearchByCpu(cpu);
                 break;
             }
@@ -429,7 +438,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 cout << "Введіть тип відеокарти: ";
                 cin >> gpu;
                 if (gpu.empty())
-                    throw Exeption("Рядок GPU порожній");
+                    throw MyException("Рядок GPU порожній");
                 manager.SearchByGpu(gpu);
                 break;
             }
@@ -440,7 +449,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 cout << "Введіть тип монітора: ";
                 cin >> monitor;
                 if (monitor.empty())
-                    throw Exeption("Рядок монітора порожній");
+                    throw MyException("Рядок монітора порожній");
                 manager.SearchByMonitor(monitor);
                 break;
             }
@@ -451,7 +460,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 cout << "Введіть тип клавіатури: ";
                 cin >> keyboard;
                 if (keyboard.empty())
-                    throw Exeption("Рядок клавіатури порожній");
+                    throw MyException("Рядок клавіатури порожній");
                 manager.SearchByKeyboard(keyboard);
                 break;
             }
@@ -465,7 +474,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірний тип введення. Очікувалось число.");
+                    throw MyException("Невірний тип введення. Очікувалось число.");
                 }
                 manager.SearchBySizeOfRom(sizeOfRom);
                 break;
@@ -480,7 +489,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.SearchByHasCdRom(hasCdRom);
                 break;
@@ -495,17 +504,17 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw Exeption("Невірне введення. Введіть 1 або 0.");
+                    throw MyException("Невірне введення. Введіть 1 або 0.");
                 }
                 manager.SearchByHasFloppyDisk(hasFloppyDisk);
                 break;
             }
 
             default:
-                throw Exeption("Невірне введення");
+                throw MyException("Невірне введення");
         }
     }
-    catch (Exeption& e)
+    catch (MyException& e)
     {
         cerr << "Помилка: " << e.what() << endl;
     }

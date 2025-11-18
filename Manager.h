@@ -114,8 +114,8 @@ public:
 	void LoadFromJson(const string& filename);
 	virtual ~Manager();
 private:
-	vector<shared_ptr<Computer>> m_thisComputer;
-	int m_lastID;
+	vector<shared_ptr<Computer>> thisComputer;
+	int lastID;
 };
 
 #endif //MANAGER_H

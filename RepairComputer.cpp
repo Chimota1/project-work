@@ -2,116 +2,116 @@
 #include "Computer.h"
 #include <iostream>
 #include <string>
-#include "Exeption.h"
+#include "MyException.h"
 #include <vector>
 
 using namespace std;
 
 RepairComputer::RepairComputer() :
-    m_dateOfRepair{"Unknown Date"},
-    m_describeOfProblem{"Unknown"},
-    m_cause{"Unknown"},
-    m_repairStatus{"Unknown"},
-    m_repairCost{0},
-    m_serviceCostRepair{0},
+    dateOfRepair{"Unknown Date"},
+    describeOfProblem{"Unknown"},
+    cause{"Unknown"},
+    repairStatus{"Unknown"},
+    repairCost{0},
+    serviceCostRepair{0},
     Computer()
 {
 };
 RepairComputer::RepairComputer(const RepairComputer &other)
 {
-     this->m_dateOfRepair = other.m_dateOfRepair;
-     this->m_describeOfProblem = other.m_describeOfProblem;
-     this->m_cause = other.m_cause;
-     this->m_repairStatus = other.m_repairStatus;
-     this->m_repairCost = other.m_repairCost;
-     this->m_serviceCostRepair = other.m_serviceCostRepair;
+     this->dateOfRepair = other.dateOfRepair;
+     this->describeOfProblem = other.describeOfProblem;
+     this->cause = other.cause;
+     this->repairStatus = other.repairStatus;
+     this->repairCost = other.repairCost;
+     this->serviceCostRepair = other.serviceCostRepair;
 };
 
 RepairComputer::RepairComputer(RepairComputer &&other) noexcept
 {
-     this->m_dateOfRepair = other.m_dateOfRepair;
-     this->m_describeOfProblem = other.m_describeOfProblem;
-     this->m_cause = other.m_cause;
-     this->m_repairStatus = other.m_repairStatus;
-     this->m_repairCost = other.m_repairCost;
-     this->m_serviceCostRepair = other.m_serviceCostRepair;
+     this->dateOfRepair = other.dateOfRepair;
+     this->describeOfProblem = other.describeOfProblem;
+     this->cause = other.cause;
+     this->repairStatus = other.repairStatus;
+     this->repairCost = other.repairCost;
+     this->serviceCostRepair = other.serviceCostRepair;
 };
 
 RepairComputer::RepairComputer(
-    string dateOfRepair,
-    string describeOfProblem,
-    string cause,
-    string repairStatus,
+    const string& dateOfRepair,
+    const string& describeOfProblem,
+    const string& cause,
+    const string& repairStatus,
     int repairCost,
     int serviceCost
     ):
-    m_dateOfRepair{dateOfRepair},
-    m_describeOfProblem{describeOfProblem},
-    m_cause{cause},
-    m_repairStatus(repairStatus),
-    m_repairCost{repairCost},
-    m_serviceCostRepair{serviceCost}
+    dateOfRepair{dateOfRepair},
+    describeOfProblem{describeOfProblem},
+    cause{cause},
+    repairStatus(repairStatus),
+    repairCost{repairCost},
+    serviceCostRepair{serviceCost}
 {
 };
 
 void RepairComputer::SetDate(string date)
 {
-    if (date.empty()) throw Exeption("Дата порожня");
-    m_dateOfRepair = date;
+    if (date.empty()) throw MyException("Дата порожня");
+    dateOfRepair = date;
 };
 
 void RepairComputer::SetDescribe(string describe)
 {
-    if (describe.empty()) throw Exeption("Опис порожній");
-    m_describeOfProblem = describe;
+    if (describe.empty()) throw MyException("Опис порожній");
+    describeOfProblem = describe;
 };
 void RepairComputer::SetCause(string cause)
 {
-    if (cause.empty()) throw Exeption("Причина порожня");
-    m_cause = cause;
+    if (cause.empty()) throw MyException("Причина порожня");
+    this->cause = cause;
 };
 
 void RepairComputer::SetNeedParts(bool needNewParts)
 {
-    m_needNewParts = needNewParts;
+    this->needNewParts = needNewParts;
 };
 
 void RepairComputer::SetRepairStatus(string repairStatus)
 {
-    m_repairStatus = repairStatus;
+    this->repairStatus = repairStatus;
 }
 
 string RepairComputer::GetDate() const
 {
-    return m_dateOfRepair;
+    return dateOfRepair;
 };
 
 string RepairComputer::GetDescribe() const
 {
-    return m_describeOfProblem;
+    return describeOfProblem;
 };
 
 string RepairComputer::GetCause() const
 {
-    return m_cause;
+    return cause;
 };
 
 int RepairComputer::GetRepairCost() const
 {
-    return m_repairCost;
+    return repairCost;
 };
 
 string RepairComputer::GetRepairStatus() const
 {
-    return m_repairStatus;
+    return repairStatus;
 };
 
 void RepairComputer::ShowFullInfo()
 {
       cout << GetComputerFull() << endl;
-      cout << " Причина: " << m_cause << endl;
-      cout << " Опис: " << m_describeOfProblem << endl;
-      cout << " Дата ремонту: " << m_dateOfRepair << endl;
+      cout << " Причина: " << cause << endl;
+      cout << " Опис: " << describeOfProblem << endl;
+      cout << " Дата ремонту: " << dateOfRepair << endl;
 };
 
 void RepairComputer::UpdateRepairStatus()
@@ -122,25 +122,27 @@ void RepairComputer::UpdateRepairStatus()
 	switch(k)
     {
     	case 1:
-        m_repairStatus = "очікує діагностику";
+        repairStatus = "очікує діагностику";
         break;
+
         case 2:
-        m_repairStatus = "у процесі";
+        repairStatus = "у процесі";
         break;
+
         case 3:
-        m_repairStatus = "готовий";
+        repairStatus = "готовий";
         break;
+
         default:
-        throw Exeption("Невірне число");
-        break;
+        throw MyException("Невірне число");
 	};
 };
 
 int RepairComputer::RepairCost(int cost)
 {
-    m_repairCost = cost;
-    if (cost < 0) throw Exeption("Вартість ремонту повинна бути невід’ємною");
-    return m_repairCost;
+    repairCost = cost;
+    if (cost < 0) throw MyException("Вартість ремонту повинна бути невід’ємною");
+    return repairCost;
 };
 
 
@@ -151,9 +153,9 @@ void RepairComputer::NeedsSpareParts(bool needNewParts)
     cin >> needNewParts;
     if (needNewParts != 0 && needNewParts != 1)
     {
-        throw Exeption("Ввід повинен бути 0 або 1");
+        throw MyException("Ввід повинен бути 0 або 1");
     };
-    m_needNewParts = needNewParts;
+    this->needNewParts = needNewParts;
 };
 
 void RepairComputer::ShowInfoAboutRepair() const
@@ -163,20 +165,20 @@ void RepairComputer::ShowInfoAboutRepair() const
 
 void RepairComputer::ShowStatus()
 {
-    cout << "Статус: " << m_repairStatus << endl;
+    cout << "Статус: " << repairStatus << endl;
 };
 
 void RepairComputer::ServiceCost(int serviceCost)
 {
-    if (serviceCost < 0) throw Exeption("Вартість обслуговування повинна бути невід’ємною");
-    m_serviceCostRepair = serviceCost;
+    if (serviceCost < 0) throw MyException("Вартість обслуговування повинна бути невід’ємною");
+    serviceCostRepair = serviceCost;
     cout << "Загальна вартість (ремонт + обслуговування): "
-         << m_serviceCostRepair + m_repairCost << endl;
+         << serviceCostRepair + repairCost << endl;
 };
 
 bool RepairComputer::GetNeedNewParts() const
 {
-    return m_needNewParts;
+    return needNewParts;
 }
 
 RepairComputer::~RepairComputer()

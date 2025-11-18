@@ -1,6 +1,6 @@
 #include "WorkedComputer.h"
 #include "Computer.h"
-#include "Exeption.h"
+#include "MyException.h"
 #include <string>
 #include <iostream>
 
@@ -8,51 +8,51 @@ using namespace std;
 
 WorkedComputer::WorkedComputer():
     Computer(),
-	m_statusOfWork{"Unknown"},
-	m_serviceCostWorked{0},
-    m_daysWithoutRepair{0},
-    m_countUsers{0},
-    m_employmentStatus{"Freely"}
+	statusOfWork{"Unknown"},
+	serviceCostWorked{0},
+    daysWithoutRepair{0},
+    countUsers{0},
+    employmentStatus{"Freely"}
 {
 };
 
 WorkedComputer::WorkedComputer(
-    string statusOfWork,
-    string employmentStatus,
+    const string& statusOfWork,
+    const string& employmentStatus,
     int serviceCostWorked,
     int daysWithoutRepair,
     int countUsers
     ):
     Computer(),
-	m_statusOfWork{statusOfWork},
-    m_employmentStatus{employmentStatus},
-	m_serviceCostWorked{serviceCostWorked},
-    m_daysWithoutRepair{daysWithoutRepair},
-    m_countUsers{countUsers}
+	statusOfWork{statusOfWork},
+    employmentStatus{employmentStatus},
+	serviceCostWorked{serviceCostWorked},
+    daysWithoutRepair{daysWithoutRepair},
+    countUsers{countUsers}
 {
 };
 
 WorkedComputer::WorkedComputer(const WorkedComputer &other)
 {
-	this->m_statusOfWork = other.m_statusOfWork;
-    this->m_employmentStatus = other.m_employmentStatus;
-    this->m_serviceCostWorked = other.m_serviceCostWorked;
-    this->m_daysWithoutRepair = other.m_daysWithoutRepair;
-    this->m_countUsers = other.m_countUsers;
+	this->statusOfWork = other.statusOfWork;
+    this->employmentStatus = other.employmentStatus;
+    this->serviceCostWorked = other.serviceCostWorked;
+    this->daysWithoutRepair = other.daysWithoutRepair;
+    this->countUsers = other.countUsers;
 };
 
 WorkedComputer::WorkedComputer(WorkedComputer &&other) noexcept
 {
-    this->m_statusOfWork = other.m_statusOfWork;
-    this->m_employmentStatus = other.m_employmentStatus;
-    this->m_serviceCostWorked = other.m_serviceCostWorked;
-    this->m_daysWithoutRepair = other.m_daysWithoutRepair;
-    this->m_countUsers = other.m_countUsers;
+    this->statusOfWork = other.statusOfWork;
+    this->employmentStatus = other.employmentStatus;
+    this->serviceCostWorked = other.serviceCostWorked;
+    this->daysWithoutRepair = other.daysWithoutRepair;
+    this->countUsers = other.countUsers;
 }
 
 void WorkedComputer::ShowStatus()
 {
-    cout <<"Статус робочого комп’ютера: " << m_statusOfWork << endl;
+    cout <<"Статус робочого комп’ютера: " << statusOfWork << endl;
 };
 
 void WorkedComputer::UpdateStatus()
@@ -63,78 +63,78 @@ void WorkedComputer::UpdateStatus()
     switch (k)
     {
         case 1:
-           m_employmentStatus = "Freely";
+           employmentStatus = "Freely";
         break;
 
         case 2:
-           m_employmentStatus = "Busy";
+           employmentStatus = "Busy";
         break;
 
         default:
-           throw Exeption("Неправильний номер");
+           throw MyException("Неправильний номер");
     };
 };
 
 void WorkedComputer::SetCountUsers(int users)
 {
-    if (users < 0) throw Exeption("Кількість користувачів повинна бути невід’ємною");
-    m_countUsers = users;
+    if (users < 0) throw MyException("Кількість користувачів повинна бути невід’ємною");
+    countUsers = users;
 }
 
 void WorkedComputer::SetDays(int days)
 {
-    if (days < 0) throw Exeption("Кількість днів без ремонту повинна бути невід’ємною");
-    m_daysWithoutRepair = days;
+    if (days < 0) throw MyException("Кількість днів без ремонту повинна бути невід’ємною");
+    daysWithoutRepair = days;
 };
 
 void WorkedComputer::SetEmploymentStatus(const string& status)
 {
     if (status != "Freely" && status != "Busy")
-        throw Exeption("Невірний статус зайнятості у JSON файлі");
-    m_employmentStatus = status;
+        throw MyException("Невірний статус зайнятості у JSON файлі");
+    employmentStatus = status;
 };
 
 
 int WorkedComputer::GetDays() const
 {
-	return m_daysWithoutRepair;
+	return daysWithoutRepair;
 };
 
 
 int WorkedComputer::GetCountUsers() const
 {
-    return m_countUsers;
+    return countUsers;
 }
 
 int WorkedComputer::GetServiceCost() const
 {
-    return m_serviceCostWorked;
+    return serviceCostWorked;
 }
 
 string WorkedComputer::GetEmploymentStatus() const
 {
-    return m_employmentStatus;
+    return employmentStatus;
 }
 
 void WorkedComputer::ServiceCost(int serviceCost)
 {
-    if (serviceCost < 0) throw Exeption("Вартість обслуговування повинна бути невід’ємною");
-    m_serviceCostWorked = serviceCost;
+    if (serviceCost < 0) throw MyException("Вартість обслуговування повинна бути невід’ємною");
+    serviceCostWorked = serviceCost;
 };
 
 void WorkedComputer::TurnOn()
 {
-    m_statusOfWork = "Turned on";
+    statusOfWork = "Turned on";
 }
 
 void WorkedComputer::TurnOff()
 {
-    m_statusOfWork = "Turned off";
+    statusOfWork = "Turned off";
 }
 
 bool WorkedComputer::IsWorking()
 {
-    if (m_statusOfWork == "Turned on")
+    if (statusOfWork == "Turned on")
     {
         return true;
     }
@@ -146,7 +146,7 @@ bool WorkedComputer::IsWorking()
 
 void WorkedComputer::NeedsMaintenance() const
 {
-    if (m_daysWithoutRepair > 180 || m_countUsers > 50)
+    if (daysWithoutRepair > 180 || countUsers > 50)
     {
         cout << "Комп’ютеру потрібне технічне обслуговування!" << endl;
     }

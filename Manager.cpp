@@ -6,7 +6,7 @@
 #include <algorithm>
 #include "WorkedComputer.h"
 #include "RepairComputer.h"
-#include "Exeption.h"
+#include "MyException.h"
 #include "json.hpp"
 #include <fstream>
 #include <memory>
@@ -17,33 +17,33 @@ using namespace std;
 using json = nlohmann::json;
 
 Manager::Manager() :
-m_thisComputer{}
+thisComputer{}
 {
 };
 
 Manager::Manager(vector<shared_ptr<Computer>> thisComputer):
-    m_thisComputer{thisComputer}
+    thisComputer{thisComputer}
 {
 };
 
 Manager::Manager(const Manager &other)
 {
-    this->m_thisComputer = other.m_thisComputer;
+    this->thisComputer = other.thisComputer;
 };
 
 Manager::Manager(Manager &&other) noexcept
 {
-    this->m_thisComputer = other.m_thisComputer;
+    this->thisComputer = other.thisComputer;
 };
 
 vector<shared_ptr<Computer>>& Manager::GetManager()
 {
-    return m_thisComputer;
+    return thisComputer;
 };
 
 void Manager::SetManager(shared_ptr<Computer> thisComputer)
 {
-    m_thisComputer.push_back(thisComputer);
+    this->thisComputer.push_back(thisComputer);
 };
 
 void Manager::ViewAllUsers() const
@@ -52,7 +52,7 @@ void Manager::ViewAllUsers() const
     {
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw Exeption("Не вдається відкрити файл users.txt.");
+            throw MyException("Не вдається відкрити файл users.txt.");
         string line;
         while (getline(userFile, line))
         {
@@ -60,9 +60,9 @@ void Manager::ViewAllUsers() const
         }
         userFile.close();
     }
-    catch (const Exeption& e)
+    catch (const MyException& e)
     {
-        throw Exeption("Помилка зчитування users.json: " + string(e.what()));
+        throw MyException("Помилка зчитування users.json: " + string(e.what()));
     }
 };
 
@@ -77,18 +77,18 @@ void Manager::AddUser()
         cin >> password;
         cout << "Введіть роль (admin/user): ";
         cin >> role;
-        if (role != "admin" && role != "user") throw Exeption ("неправильна роль");
+        if (role != "admin" && role != "user") throw MyException ("неправильна роль");
         ofstream userFile("users.txt", ios::app);
         GenerateID(newID);
         if (!userFile.is_open())
-            throw Exeption("Не вдається відкрити users.txt файл.");
+            throw MyException("Не вдається відкрити users.txt файл.");
         userFile << newID << " " << username << ":" << password << " " << role << endl;
         userFile.close();
         cout << "Користувач успішно доданий!" << endl;
         cout << "Присвоєно ID: " << newID << endl;
-        m_lastID = newID;
+        lastID = newID;
     }
-    catch (const Exeption& e)
+    catch (const MyException& e)
     {
         cerr << "Помилка при додаванні користувача: " << e.what() << endl;
     }
@@ -102,7 +102,7 @@ void Manager::RemoveUser() {
 
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw Exeption("Не вдається відкрити файл users.txt.");
+            throw MyException("Не вдається відкрити файл users.txt.");
 
         string line;
         vector<string> lines;
@@ -117,7 +117,7 @@ void Manager::RemoveUser() {
         userFile.close();
 
         if (!found) {
-            throw Exeption ("Користувача з таким ID не існує");
+            throw MyException ("Користувача з таким ID не існує");
         }
 
         ofstream outFile("users.txt");
@@ -128,33 +128,33 @@ void Manager::RemoveUser() {
 
         cout << "Користувач успішно видалений!" << endl;
     }
-    catch (const Exeption& e) {
+    catch (const MyException& e) {
         cerr << "Помилка при видаленні користувача: " << e.what() << endl;
     }
 }
 
 int Manager::GetLastID() const
 {
-    return m_lastID;
+    return lastID;
 }
 
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetAuditoriumNumber() == auditoriumNumber) {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::InventoryFilter(int inventoryNumber) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -162,25 +162,25 @@ void Manager::InventoryFilter(int inventoryNumber) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it) {
         if ((*it)->GetSizeOfRom() == sizeOfRom){
             cout << (*it)->GetComputerFull() << endl;
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::HasCdRomFilter(bool hasCdRom) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetHasCdRom() == hasCdRom)
         {
@@ -188,13 +188,13 @@ void Manager::HasCdRomFilter(bool hasCdRom) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
         {
@@ -202,13 +202,13 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::KeyboardFilter(string keyboard) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetKeyboard() == keyboard)
         {
@@ -216,13 +216,13 @@ void Manager::KeyboardFilter(string keyboard) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::MonitorFilter(string monitor) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
         {
@@ -230,13 +230,13 @@ void Manager::MonitorFilter(string monitor) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::GpuFilter(string gpu) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
         {
@@ -244,20 +244,20 @@ void Manager::GpuFilter(string gpu) const
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 void Manager::CpuFilter(string cpu) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it) {
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it) {
         if ((*it)->GetCpu() == cpu)
         {
             cout << (*it)->GetComputerFull() << endl;
             found = true;
         };
     };
-    if (!found) throw Exeption ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
 };
 
 int Manager::GenerateID(int& id)
@@ -269,7 +269,7 @@ int Manager::GenerateID(int& id)
 
 void Manager::ViewAllComputer() const
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         cout << (*it)->GetComputerFull() << endl;
     }
@@ -289,7 +289,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Введіть 1 або 2.");
+        throw MyException("Невірне введення. Введіть 1 або 2.");
     }
 
     shared_ptr<Computer> newComputer;
@@ -309,7 +309,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірний тип введення. Очікувалось число.");
+        throw MyException("Невірний тип введення. Очікувалось число.");
     }
     newComputer->SetInventoryNumber(inventoryNumber);
 
@@ -319,7 +319,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірний тип введення. Очікувалось число.");
+        throw MyException("Невірний тип введення. Очікувалось число.");
     }
     newComputer->SetAuditoriumNumber(auditoriumNumber);
 
@@ -329,7 +329,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірний тип введення. Очікувалось число.");
+        throw MyException("Невірний тип введення. Очікувалось число.");
     }
     newComputer->SetSizeOfRom(sizeOfRom);
 
@@ -339,7 +339,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Введіть 1 або 0.");
+        throw MyException("Невірне введення. Введіть 1 або 0.");
     }
     newComputer->SetHasCdRom(hasCdRom);
 
@@ -349,7 +349,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Введіть 1 або 0.");
+        throw MyException("Невірне введення. Введіть 1 або 0.");
     }
     newComputer->SetHasFloppyDisk(hasFloppyDisk);
 
@@ -384,7 +384,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірний тип введення. Очікувалось число.");
+                throw MyException("Невірний тип введення. Очікувалось число.");
             }
             workedComp->SetDays(daysWithoutRepair);
 
@@ -394,7 +394,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірний тип введення. Очікувалось число.");
+                throw MyException("Невірний тип введення. Очікувалось число.");
             }
             workedComp->SetCountUsers(countUsers);
 
@@ -404,7 +404,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірне введення. Введіть 1 або 2.");
+                throw MyException("Невірне введення. Введіть 1 або 2.");
             }
 
             if (statusOfWork == 1) workedComp->TurnOn();
@@ -416,7 +416,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірний тип введення. Очікувалось число.");
+                throw MyException("Невірний тип введення. Очікувалось число.");
             }
             workedComp->ServiceCost(serviceCost);
         }
@@ -436,7 +436,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Неприпустимий формат дати. Очікуваний YYYY-MM-DD.");
+                throw MyException("Неприпустимий формат дати. Очікуваний YYYY-MM-DD.");
             }
             repairComp->SetDate(dateOfRepair);
 
@@ -455,28 +455,28 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw Exeption("Невірний тип введення. Очікувалось число.");
+                throw MyException("Невірний тип введення. Очікувалось число.");
             }
             repairComp->RepairCost(repairCost);
         }
     }
 
-    m_thisComputer.push_back(newComputer);
+    thisComputer.push_back(newComputer);
     SaveToJson("database.json");
 }
 
 void Manager::RemoveComputer(int inventoryNumber)
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber()  == inventoryNumber)
         {
-            m_thisComputer.erase(it);
+            thisComputer.erase(it);
             break;
         }
         else
         {
-            throw Exeption("Комп'ютер з таким інвентарним номером не знайдено");
+            throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
         }
     }
 };
@@ -490,11 +490,11 @@ void Manager::ClearAll()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw Exeption("Невірне введення. Введіть 1 або 2.");
+        throw MyException("Невірне введення. Введіть 1 або 2.");
     }
     if (choice == 1) {
-        if (m_thisComputer.empty()) throw Exeption("список порожній, не можливо очистити");
-        m_thisComputer.clear();
+        if (thisComputer.empty()) throw MyException("список порожній, не можливо очистити");
+        thisComputer.clear();
     }
 
     else if (choice == 2) {
@@ -504,20 +504,20 @@ void Manager::ClearAll()
 
 void Manager::GetCount() const
 {
-    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо порахувати");
-    cout << "Кількість всіх комп'ютерів " << m_thisComputer.size();
+    if (thisComputer.empty()) throw MyException("масив порожній, не можливо порахувати");
+    cout << "Кількість всіх комп'ютерів " << thisComputer.size();
 }
 
 void Manager::CountBrokenComputers() const
 {
     int count = 0;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if (dynamic_cast<RepairComputer*>(it->get()) != nullptr)
         {
             count++;
         }
-        if (count == 0) throw Exeption("У базі даних не знайдено зламаних комп'ютерів!");
+        if (count == 0) throw MyException("У базі даних не знайдено зламаних комп'ютерів!");
     }
     cout << "Кількість зламаних комп'ютерів: " << count << endl;
 }
@@ -525,21 +525,21 @@ void Manager::CountBrokenComputers() const
 void Manager::CountWorkingComputers() const
 {
     int count = 0;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if (dynamic_cast<WorkedComputer*>(it->get()) != nullptr)
         {
             count++;
         }
-        if (count == 0) throw Exeption("У базі даних не знайдено робочих комп'ютерів!");
+        if (count == 0) throw MyException("У базі даних не знайдено робочих комп'ютерів!");
     }
     cout << "Кількість робочих комп'ютерів: " << count << endl;
 }
 
 void Manager::SortByInventoryNumber()
 {
-    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо відсортувати");
-    sort(m_thisComputer.begin(), m_thisComputer.end(),
+    if (thisComputer.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    sort(thisComputer.begin(), thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
              return first->GetInventoryNumber() < last->GetInventoryNumber();
@@ -549,8 +549,8 @@ void Manager::SortByInventoryNumber()
 
 void Manager::SortByAuditoriumNumber()
 {
-    if (m_thisComputer.empty()) throw Exeption("масив порожній, не можливо відсортувати");
-    sort(m_thisComputer.begin(), m_thisComputer.end(),
+    if (thisComputer.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    sort(thisComputer.begin(), thisComputer.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
              return first->GetAuditoriumNumber() < last->GetAuditoriumNumber();
@@ -561,7 +561,7 @@ void Manager::SortByAuditoriumNumber()
 void Manager::SearchByInventoryNumber(int inventoryNumber) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -570,13 +570,13 @@ void Manager::SearchByInventoryNumber(int inventoryNumber) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким інвентарним номером не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
 };
 
 void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
         {
@@ -585,13 +585,13 @@ void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким номером аудиторії не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким номером аудиторії не знайдено");
 };
 
 void Manager::SearchByCpu(string cpu) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetCpu() == cpu)
         {
@@ -600,13 +600,13 @@ void Manager::SearchByCpu(string cpu) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким процесором не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким процесором не знайдено");
 };
 
 void Manager::SearchByGpu(string gpu) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
         {
@@ -615,13 +615,13 @@ void Manager::SearchByGpu(string gpu) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким графічним процесором не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким графічним процесором не знайдено");
 };
 
 void Manager::SearchByMonitor(string monitor) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
         {
@@ -630,13 +630,13 @@ void Manager::SearchByMonitor(string monitor) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким монітором не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким монітором не знайдено");
 };
 
 void Manager::SearchByKeyboard(string keyboard) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetKeyboard() == keyboard)
         {
@@ -645,13 +645,13 @@ void Manager::SearchByKeyboard(string keyboard) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з такою клавіатурою не знайдено");
+    if (!found) throw MyException("Комп'ютер з такою клавіатурою не знайдено");
 };
 
 void Manager::SearchBySizeOfRom(int sizeOfRom) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetSizeOfRom() == sizeOfRom)
         {
@@ -660,13 +660,13 @@ void Manager::SearchBySizeOfRom(int sizeOfRom) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким розміром ROM не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким розміром ROM не знайдено");
 };
 
 void Manager::SearchByHasCdRom(bool hasCdRom) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetHasCdRom() == hasCdRom)
         {
@@ -675,13 +675,13 @@ void Manager::SearchByHasCdRom(bool hasCdRom) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким параметром CD-ROM не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким параметром CD-ROM не знайдено");
 };
 
 void Manager::SearchByHasFloppyDisk(bool hasFloppyDisk) const
 {
     bool found = false;
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
         {
@@ -690,14 +690,14 @@ void Manager::SearchByHasFloppyDisk(bool hasFloppyDisk) const
             break;
         }
     }
-    if (!found) throw Exeption("Комп'ютер з таким параметром Floppy-Disk не знайдено");
+    if (!found) throw MyException("Комп'ютер з таким параметром Floppy-Disk не знайдено");
 };
 
 
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -748,7 +748,7 @@ void Manager::ChangeToBroken(int inventoryNumber)
 
 void Manager::ChangeToWorking(int inventoryNumber)
 {
-    for (auto it = m_thisComputer.begin(); it != m_thisComputer.end(); ++it)
+    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -795,7 +795,7 @@ void Manager::ChangeToWorking(int inventoryNumber)
 void Manager::SaveToJson(const string& filename) const
 {
     json j;
-    for (const auto& computer : m_thisComputer)
+    for (const auto& computer : thisComputer)
     {
         json compJson;
         compJson["inventoryNumber"] = computer->GetInventoryNumber();
@@ -836,7 +836,7 @@ void Manager::SaveToJson(const string& filename) const
     ofstream outFile(filename);
     if (!outFile.is_open())
     {
-        throw Exeption("Не вдалося відкрити файл для запису: " + filename);
+        throw MyException("Не вдалося відкрити файл для запису: " + filename);
     }
     outFile << setw(4) << j << endl;
     outFile.close();
@@ -847,14 +847,14 @@ void Manager::LoadFromJson(const string& filename)
     ifstream inFile(filename);
     if (!inFile.is_open())
     {
-        throw Exeption("Не вдалося відкрити файл для читання: " + filename);
+        throw MyException("Не вдалося відкрити файл для читання: " + filename);
     }
 
     json j;
     inFile >> j;
     inFile.close();
 
-    m_thisComputer.clear();
+    thisComputer.clear();
 
     for (const auto& compJson : j)
     {
@@ -885,7 +885,7 @@ void Manager::LoadFromJson(const string& filename)
         }
         else
         {
-            throw Exeption("Невідомий статус комп'ютера в JSON");
+            throw MyException("Невідомий статус комп'ютера в JSON");
         }
 
         computer->SetInventoryNumber(compJson.value("inventoryNumber", 0));
@@ -898,7 +898,7 @@ void Manager::LoadFromJson(const string& filename)
         computer->SetGpu(compJson.value("gpu", ""));
         computer->SetCpu(compJson.value("cpu", ""));
 
-        m_thisComputer.push_back(computer);
+        thisComputer.push_back(computer);
     }
 }
 

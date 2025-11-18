@@ -16,10 +16,10 @@ class RepairComputer : public Computer
 public:
 	RepairComputer();
 	RepairComputer(
-		string dateOfRepair,
-		string describeOfProblem,
-		string cause,
-		string repairStatus,
+		const string& dateOfRepair,
+		const string& describeOfProblem,
+		const string& cause,
+		const string& repairStatus,
 		int repairCost,
 		int serviceCost
 	);
@@ -60,13 +60,13 @@ public:
 	void ServiceCost(int serviceCost) override;
 	virtual ~RepairComputer();
 private:
-	string m_dateOfRepair;
-	string m_describeOfProblem;
-	string m_cause;
-	string m_repairStatus;
-	int m_repairCost;
-	int m_serviceCostRepair;
-	bool m_needNewParts;
+	string dateOfRepair;
+	string describeOfProblem;
+	string cause;
+	string repairStatus;
+	int repairCost;
+	int serviceCostRepair;
+	bool needNewParts;
 };
 
 #endif //REPAIRCOMPUTER_H

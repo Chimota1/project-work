@@ -1,135 +1,135 @@
 #include "Computer.h"
 #include <iostream>
-#include "Exeption.h"
+#include "MyException.h"
 #include <string>
 
 using namespace std;
 
 Computer::Computer():
-	m_cpu{"unknown"},
-	m_gpu{"unknown"},
-	m_monitor{"unknown"},
-	m_keyboard{"unknown"},
-	m_hasCdRom{false},
-	m_hasFloppyDisk{false},
-	m_sizeOfRom{0},
-	m_inventoryNumber{0},
-	m_auditoriumNumber{0}
+	cpu{"unknown"},
+	gpu{"unknown"},
+	monitor{"unknown"},
+	keyboard{"unknown"},
+	hasCdRom{false},
+	hasFloppyDisk{false},
+	sizeOfRom{0},
+	inventoryNumber{0},
+	auditoriumNumber{0}
 {
 };
 
 //Конструктор з параметрами
 Computer::Computer(
-    string cpu,
-    string gpu,
-    string monitor,
-    string keyboard,
+    const string& cpu,
+    const string& gpu,
+    const string& monitor,
+    const string& keyboard,
     bool hasCdRom,
     bool hasFloppyDisk,
     int sizeOfRom,
     int inventoryNumber,
     int auditoriumNumber):
-		m_cpu{cpu},
-		m_gpu{gpu},
-		m_monitor{monitor},
-		m_keyboard{keyboard},
-		m_hasCdRom{hasCdRom},
-		m_hasFloppyDisk{hasFloppyDisk},
-		m_sizeOfRom{sizeOfRom},
-		m_inventoryNumber{inventoryNumber},
-		m_auditoriumNumber{auditoriumNumber}
+		cpu{cpu},
+		gpu{gpu},
+		monitor{monitor},
+		keyboard{keyboard},
+		hasCdRom{hasCdRom},
+		hasFloppyDisk{hasFloppyDisk},
+		sizeOfRom{sizeOfRom},
+		inventoryNumber{inventoryNumber},
+		auditoriumNumber{auditoriumNumber}
 {
 };
 
 void Computer::SetCpu(string cpu) {
-	if (cpu.empty()) throw Exeption("Рядок CPU порожній");
-	m_cpu = cpu;
+	if (cpu.empty()) throw MyException("Рядок CPU порожній");
+	this->cpu = cpu;
 };
 
 void Computer::SetGpu(string gpu) {
-	if (gpu.empty()) throw Exeption("Рядок GPU порожній");
-	m_gpu = gpu;
+	if (gpu.empty()) throw MyException("Рядок GPU порожній");
+	this->gpu = gpu;
 };
 
 void Computer::SetMonitor(string monitor) {
-	if (monitor.empty()) throw Exeption("Рядок монітора порожній");
-	m_monitor = monitor;
+	if (monitor.empty()) throw MyException("Рядок монітора порожній");
+	this->monitor = monitor;
 };
 
 void Computer::SetKeyboard(string keyboard) {
-	if (keyboard.empty()) throw Exeption("Рядок клавіатури порожній");
-	m_keyboard = keyboard;
+	if (keyboard.empty()) throw MyException("Рядок клавіатури порожній");
+	this->keyboard = keyboard;
 };
 
 void Computer::SetHasCdRom(bool hasCdRom) {
-	if (hasCdRom != 0 && hasCdRom != 1) throw Exeption("Значення CD-ROM має бути 0 або 1");
-	m_hasCdRom = hasCdRom;
+	if (hasCdRom != 0 && hasCdRom != 1) throw MyException("Значення CD-ROM має бути 0 або 1");
+	this->hasCdRom = hasCdRom;
 };
 
 void Computer::SetHasFloppyDisk(bool hasFloppyDisk) {
-	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("Значення FloppyDisk має бути 0 або 1");
-	m_hasFloppyDisk = hasFloppyDisk;
+	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw MyException("Значення FloppyDisk має бути 0 або 1");
+	this->hasFloppyDisk = hasFloppyDisk;
 };
 
 void Computer::SetSizeOfRom(int sizeOfRom) {
-	if (sizeOfRom <= 0) throw Exeption("Обсяг ROM має бути додатнім числом");
-	m_sizeOfRom = sizeOfRom;
+	if (sizeOfRom <= 0) throw MyException("Обсяг ROM має бути додатнім числом");
+	this->sizeOfRom = sizeOfRom;
 };
 
 void Computer::SetInventoryNumber(int inventoryNumber) {
-	if (inventoryNumber <= 0) throw Exeption("Інвентарний номер має бути більшим за 0");
-	m_inventoryNumber = inventoryNumber;
+	if (inventoryNumber <= 0) throw MyException("Інвентарний номер має бути більшим за 0");
+	this->inventoryNumber = inventoryNumber;
 };
 
 void Computer::SetAuditoriumNumber(int auditoriumNumber) {
-	if (auditoriumNumber <= 0) throw Exeption("Номер аудиторії має бути більшим за 0");
-	m_auditoriumNumber = auditoriumNumber;
+	if (auditoriumNumber <= 0) throw MyException("Номер аудиторії має бути більшим за 0");
+	this->auditoriumNumber = auditoriumNumber;
 };
 
 
 string Computer::GetCpu() const
 {
-	return m_cpu;
+	return cpu;
 };
 
 string Computer::GetGpu() const
 {
-	return m_gpu;
+	return gpu;
 };
 
 string Computer::GetMonitor() const
 {
-	return m_monitor;
+	return monitor;
 };
 
 string Computer::GetKeyboard() const
 {
-	return m_keyboard;
+	return keyboard;
 };
 
 bool Computer::GetHasCdRom() const
 {
-	return m_hasCdRom;
+	return hasCdRom;
 };
 
 bool Computer::GetHasFloppyDisk() const
 {
-	return m_hasFloppyDisk;
+	return hasFloppyDisk;
 };
 
 int Computer::GetSizeOfRom() const
 {
-	return m_sizeOfRom;
+	return sizeOfRom;
 };
 
 int Computer::GetInventoryNumber() const
 {
-	return m_inventoryNumber;
+	return inventoryNumber;
 };
 
 int Computer::GetAuditoriumNumber() const
 {
-	return m_auditoriumNumber;
+	return auditoriumNumber;
 }
 
 
@@ -137,60 +137,60 @@ int Computer::GetAuditoriumNumber() const
 string Computer::GetComputerFull() const
 {
 	return
-	 "Процесор: " + m_cpu +
-	 " Відеокарта: " + m_gpu +
-	 " Монітор: " + m_monitor +
-	 " Клавіатура: " + m_keyboard +
-	 " Наявність CD-ROM: " + (m_hasCdRom ? "Так" : "Ні") +
-	 " Наявність дискети: " + (m_hasFloppyDisk ? "Так" : "Ні") +
-	 " Обсяг ROM: " + to_string(m_sizeOfRom) +
-	 " Інвентарний номер: " + to_string(m_inventoryNumber) +
-	 " Номер аудиторії: " + to_string(m_auditoriumNumber);
+	 "Процесор: " + cpu +
+	 " Відеокарта: " + gpu +
+	 " Монітор: " + monitor +
+	 " Клавіатура: " + keyboard +
+	 " Наявність CD-ROM: " + (hasCdRom ? "Так" : "Ні") +
+	 " Наявність дискети: " + (hasFloppyDisk ? "Так" : "Ні") +
+	 " Обсяг ROM: " + to_string(sizeOfRom) +
+	 " Інвентарний номер: " + to_string(inventoryNumber) +
+	 " Номер аудиторії: " + to_string(auditoriumNumber);
 };
 //Копіювальний конструктор
 Computer::Computer(const Computer &other)
 {
-	this->m_cpu = other.m_cpu;
-	this->m_gpu = other.m_gpu;
-	this->m_keyboard = other.m_keyboard;
-	this->m_monitor = other.m_monitor;
-	this->m_auditoriumNumber = other.m_auditoriumNumber;
-	this->m_inventoryNumber = other.m_inventoryNumber;
-	this->m_hasCdRom = other.m_hasCdRom;
-	this->m_hasFloppyDisk = other.m_hasFloppyDisk;
-	this->m_sizeOfRom = other.m_sizeOfRom;
+	this->cpu = other.cpu;
+	this->gpu = other.gpu;
+	this->keyboard = other.keyboard;
+	this->monitor = other.monitor;
+	this->auditoriumNumber = other.auditoriumNumber;
+	this->inventoryNumber = other.inventoryNumber;
+	this->hasCdRom = other.hasCdRom;
+	this->hasFloppyDisk = other.hasFloppyDisk;
+	this->sizeOfRom = other.sizeOfRom;
 };
 
 //Конструктор переміщення
 Computer::Computer(Computer &&other) noexcept
 {
-	this->m_cpu = other.m_cpu;
-	this->m_gpu = other.m_gpu;
-	this->m_keyboard = other.m_keyboard;
-	this->m_monitor = other.m_monitor;
-	this->m_auditoriumNumber = other.m_auditoriumNumber;
-	this->m_inventoryNumber = other.m_inventoryNumber;
-	this->m_hasCdRom = other.m_hasCdRom;
-	this->m_hasFloppyDisk = other.m_hasFloppyDisk;
-	this->m_sizeOfRom = other.m_sizeOfRom;
+	this->cpu = other.cpu;
+	this->gpu = other.gpu;
+	this->keyboard = other.keyboard;
+	this->monitor = other.monitor;
+	this->auditoriumNumber = other.auditoriumNumber;
+	this->inventoryNumber = other.inventoryNumber;
+	this->hasCdRom = other.hasCdRom;
+	this->hasFloppyDisk = other.hasFloppyDisk;
+	this->sizeOfRom = other.sizeOfRom;
 };
 
 void Computer::MoveAuditorium(int number)
 {
 	if (number <= 0)
-		throw Exeption("Номер має бути більшим за 0");
-	m_auditoriumNumber = number;
+		throw MyException("Номер має бути більшим за 0");
+	auditoriumNumber = number;
 };
 
 void Computer::HasCdRomUpdate(bool hasCdRom)
 {
-	m_hasCdRom = hasCdRom;
+	this->hasCdRom = hasCdRom;
 };
 
-void Computer::HasFloppyDisk(bool hasFloppyDisk)
+void Computer::HasFloppyDiskUpdate(bool hasFloppyDisk)
 {
-	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw Exeption("Значення FloppyDisk має бути 0 або 1");
-	m_hasFloppyDisk = hasFloppyDisk;
+	if (hasFloppyDisk != 0 && hasFloppyDisk != 1) throw MyException("Значення FloppyDisk має бути 0 або 1");
+	this->hasFloppyDisk = hasFloppyDisk;
 };
 
 //Деструктор

@@ -1,17 +1,12 @@
-#define NOMINMAX
-#define byte win_byte_override
 #include <windows.h>
-#undef byte
-
 #include <iostream>
 #include "Manager.h"
 #include "IUser.h"
 #include "Admin.h"
-#include "Exeption.h"
+#include "MyException.h"
 #include "DefaultUser.h"
 #include "json.hpp"
 #include <fstream>
-
 
 using json = nlohmann::json;
 using namespace std;
@@ -27,7 +22,7 @@ int main()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw Exeption("Не вдається відкрити users.txt файл.");
+        throw MyException("Не вдається відкрити users.txt файл.");
     userFile.seekg(0, ios::end);
     if (userFile.tellg() == 0)
     {
@@ -50,9 +45,9 @@ int main()
                 cout << "Ви адміністратор? (1. ТАК, 2. НІ, 3. ВИХІД) \n";
                 cin >> adminChoice;
                 if (adminChoice != 1 && adminChoice != 2 && adminChoice != 3)
-                    throw Exeption("Неправильне введення");
+                    throw MyException("Неправильне введення");
             }
-            catch (const Exeption& e) {
+            catch (const MyException& e) {
                 cerr << "Помилка: " << e.what() << endl;
                 continue;
             }
@@ -63,7 +58,7 @@ int main()
                 try {
                     admin->Login();
                 }
-                catch (const Exeption& e) {
+                catch (const MyException& e) {
                     cerr << "Помилка: " << e.what() << endl;
                 }
                 delete admin;
@@ -74,7 +69,7 @@ int main()
                 try {
                     userDefault->Login();
                 }
-                catch (const Exeption& e) {
+                catch (const MyException& e) {
                     cerr << "Помилка: " << e.what() << endl;
                 }
                 delete userDefault;
