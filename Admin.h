@@ -54,6 +54,7 @@ class Admin : public IUser
      */
     void ChangesMenu(Manager& manager);
     string GetStatus() const override;
+
     virtual ~Admin();
 
 
