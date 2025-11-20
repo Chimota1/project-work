@@ -1,94 +1,129 @@
 #include <windows.h>
 #include <iostream>
+#include <fstream>
 #include "Manager.h"
 #include "IUser.h"
 #include "Admin.h"
-#include "MyException.h"
 #include "DefaultUser.h"
+#include "MyException.h"
 #include "json.hpp"
-#include <fstream>
 
 using json = nlohmann::json;
 using namespace std;
 
 int main()
 {
-    SetConsoleCP(65001);
-    SetConsoleOutputCP(65001);
-    IUser* user = nullptr;
-    Manager manager;
+    SetConsoleCP(CP_UTF8);
+    SetConsoleOutputCP(CP_UTF8);
+
     bool isRunning = true;
     int choiceInMenu;
 
+    Manager manager;
+
+    // Перевірка існування users.txt
     ifstream userFile("users.txt");
     if (!userFile.is_open())
         throw MyException("Не вдається відкрити users.txt файл.");
+
     userFile.seekg(0, ios::end);
     if (userFile.tellg() == 0)
     {
-        cout << "Користувачів не знайдено. Будь ласка, створіть обліковий запис адміністратора." << endl;
+        cout << "Користувачів не знайдено. Створіть обліковий запис адміністратора." << endl;
         manager.AddUser();
     }
     userFile.close();
 
-    do
+
+    while (isRunning)
     {
-        cout << "\n1. Почати \n";
-        cout << "2. Закрити програму \n";
-        cout << "Введіть свій вибір: ";
-        cin >> choiceInMenu;
-
-        if (choiceInMenu == 1)
+        try
         {
-            int adminChoice;
-            try {
-                cout << "Ви адміністратор? (1. ТАК, 2. НІ, 3. ВИХІД) \n";
+            cout << "\n1. Почати" << endl;
+            cout << "2. Закрити програму" << endl;
+            cout << "Введіть свій вибір: ";
+            cin >> choiceInMenu;
+
+            cin.peek();
+
+            if (cin.fail())
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw MyException("Невірне введення. Введіть число.");
+            }
+
+            if (choiceInMenu == 1)
+            {
+                int adminChoice;
+
+                cout << "Ви адміністратор? (1. ТАК, 2. ЗВИЧАЙНИЙ КОРИСТУВАЧ, 3. ВИХІД)\n";
                 cin >> adminChoice;
-                if (adminChoice != 1 && adminChoice != 2 && adminChoice != 3)
-                    throw MyException("Неправильне введення");
-            }
-            catch (const MyException& e) {
-                cerr << "Помилка: " << e.what() << endl;
-                continue;
+                cin.peek();
+                if (cin.fail()) {
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    throw MyException("Невірне введення.");
+                }
+
+                if (adminChoice == 1)
+                {
+
+                    IUser* admin = new Admin();
+
+                    try
+                    {
+                        admin->Login();
+                    }
+                    catch (const MyException& e)
+                    {
+                        cout << "\nПомилка: " << e.what() << endl;
+                        delete admin;
+                        continue;
+                    }
+
+                    delete admin;
+                }
+                else if (adminChoice == 2)
+                {
+
+                    IUser* u = new DefaultUser();
+
+                    try {
+                        u->Login();
+                    }
+                    catch (const MyException& e)
+                    {
+                        cout << "\nПомилка: " << e.what() << endl;
+                        delete u;
+                        continue;
+                    }
+
+                    delete u;
+                }
+                else if (adminChoice == 3)
+                {
+                    continue;
+                }
+                else {
+                    throw MyException("Невірний вибір.");
+                }
             }
 
-            if (adminChoice == 1)
+            else if (choiceInMenu == 2)
             {
-                Admin* admin = new Admin();
-                try {
-                    admin->Login();
-                }
-                catch (const MyException& e) {
-                    cerr << "Помилка: " << e.what() << endl;
-                }
-                delete admin;
+                isRunning = false;
             }
-            else if (adminChoice == 2)
+            else
             {
-                DefaultUser* userDefault = new DefaultUser();
-                try {
-                    userDefault->Login();
-                }
-                catch (const MyException& e) {
-                    cerr << "Помилка: " << e.what() << endl;
-                }
-                delete userDefault;
-            }
-            else if (adminChoice == 3)
-            {
-                continue;
+                throw MyException("Невірний пункт меню.");
             }
         }
-        else if (choiceInMenu == 2)
+        catch (const MyException& e)
         {
-            isRunning = false;
+            cout << "\nПомилка: " << e.what() << endl;
         }
-        else
-        {
-            cout << "Невірний вибір меню. Спробуй ще раз.\n";
-        }
-
-    } while (isRunning);
+    }
 
     return 0;
 }

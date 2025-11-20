@@ -159,5 +159,5 @@ void WorkedComputer::NeedsMaintenance() const
 
 WorkedComputer::~WorkedComputer()
 {
-    cout << "Викликано деструктор класу WorkedComputer" << endl;
+    cout << "\nВикликано деструктор класу WorkedComputer\n";
 };

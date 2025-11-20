@@ -183,5 +183,5 @@ bool RepairComputer::GetNeedNewParts() const
 
 RepairComputer::~RepairComputer()
 {
-    cout << "Викликано деструктор класу RepairComputer" << endl;
+    cout << "\nВикликано деструктор класу RepairComputer\n";
 };

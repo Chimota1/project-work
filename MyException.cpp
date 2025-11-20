@@ -36,5 +36,5 @@ const char* MyException::what() const noexcept
 
 MyException::~MyException()
 {
-    cout << "Деструктор класу винятків" <<endl;
+    cout << "\nДеструктор класу винятків\n";
 };

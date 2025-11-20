@@ -33,51 +33,60 @@ DefaultUser::DefaultUser(DefaultUser&& other) noexcept
 
 void DefaultUser::Login()
 {
-    Manager manager;
-    string username, password;
-    cout << "Введіть ім'я користувача: ";
-    cin >> username;
-    cout << "Введіть пароль: ";
-    cin >> password;
+    try {
+        Manager manager;
+        string username, password;
 
-    bool found = false;
+        cout << "Введіть ім'я користувача: ";
+        cin >> username;
+        cout << "Введіть пароль: ";
+        cin >> password;
 
-    ifstream userFile("users.txt");
-    if (!userFile.is_open())
-        throw MyException("Не вдалося відкрити файл users.txt.");
+        bool found = false;
 
-    string line;
-    while (getline(userFile, line)) {
-        istringstream iss(line);
-        int id;
-        string loginData, role;
+        ifstream userFile("users.txt");
+        if (!userFile.is_open())
+            throw MyException("Не вдалося відкрити файл users.txt.");
 
-        if (iss >> id >> loginData >> role) {
-            size_t colonPos = loginData.find(':');
-            if (colonPos != string::npos) {
-                string fileUsername = loginData.substr(0, colonPos);
-                string filePassword = loginData.substr(colonPos + 1);
+        string line;
+        while (getline(userFile, line)) {
+            istringstream iss(line);
+            int id;
+            string loginData, role;
 
-                if (username == fileUsername && password == filePassword && role == "user") {
-                    found = true;
-                    username = fileUsername;
-                    password = filePassword;
-                    id = id;
-           			status = role;
-                    MainMenu(manager);
-                    break;
+            if (iss >> id >> loginData >> role) {
+
+                size_t colonPos = loginData.find(':');
+                if (colonPos != string::npos) {
+
+                    string fileUsername = loginData.substr(0, colonPos);
+                    string filePassword = loginData.substr(colonPos + 1);
+
+                    if (username == fileUsername &&
+                        password == filePassword &&
+                        role == "user")
+                    {
+                        found = true;
+                        status = role;
+                        break;
+                    }
                 }
             }
         }
-    }
+        userFile.close();
 
-    userFile.close();
+        if (!found)
+            throw MyException("Невірне ім'я користувача або пароль");
 
-    if (found)
         cout << "Вхід успішний!" << endl;
-    else
-        throw MyException("Невірне ім'я користувача або пароль");
+        MainMenu(manager);
+    }
+    catch (const MyException& e) {
+        cerr << "\nПомилка: " << e.what() << endl;
+        return;
+    }
 }
+
 
 void DefaultUser::MainMenu(Manager& manager)
 {
@@ -522,5 +531,5 @@ void DefaultUser::SearchMenu(Manager& manager)
 
 DefaultUser::~DefaultUser()
 {
-    cout << "Викликано деструктор DefaultUser" << endl;
+    cout << "\nВикликано деструктор DefaultUser\n";
 };

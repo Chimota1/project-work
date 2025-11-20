@@ -196,5 +196,5 @@ void Computer::HasFloppyDiskUpdate(bool hasFloppyDisk)
 //Деструктор
 Computer::~Computer()
 {
-	cout << "Викликано деструктор абстрактного класу" << endl;
+	cout << "\nВикликано деструктор абстрактного класу\n";
 };

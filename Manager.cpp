@@ -68,31 +68,82 @@ void Manager::ViewAllUsers() const
 
 void Manager::AddUser()
 {
-    try {
-        string username, password, role;
-        int newID;
-        cout << "Введіть нове ім'я користувача:";
-        cin >> username;
-        cout << "Введіть новий пароль: ";
-        cin >> password;
-        cout << "Введіть роль (admin/user): ";
-        cin >> role;
-        if (role != "admin" && role != "user") throw MyException ("неправильна роль");
-        ofstream userFile("users.txt", ios::app);
-        GenerateID(newID);
-        if (!userFile.is_open())
-            throw MyException("Не вдається відкрити users.txt файл.");
-        userFile << newID << " " << username << ":" << password << " " << role << endl;
-        userFile.close();
-        cout << "Користувач успішно доданий!" << endl;
-        cout << "Присвоєно ID: " << newID << endl;
-        lastID = newID;
-    }
-    catch (const MyException& e)
+    ifstream checkFile("users.txt");
+    bool fileIsEmpty = false;
+
+    checkFile.seekg(0, ios::end);
+    if (checkFile.tellg() == 0)
+        fileIsEmpty = true;
+    checkFile.close();
+
+    bool accountCreated = false;
+
+    while (!accountCreated)
     {
-        cerr << "Помилка при додаванні користувача: " << e.what() << endl;
+        try {
+            string username, password, role;
+            int newID;
+
+            cout << "Введіть нове ім'я користувача: ";
+            cin >> username;
+
+            cout << "Введіть новий пароль: ";
+            cin >> password;
+
+            cout << "Введіть роль (admin/user): ";
+            cin >> role;
+
+            if (role != "admin" && role != "user")
+                throw MyException("Неправильна роль. Доступні: admin або user.");
+
+            ifstream userFileCheck("users.txt");
+            if (!userFileCheck.is_open())
+                throw MyException("Не вдається відкрити users.txt файл.");
+
+            bool adminExists = false;
+            string line;
+
+            while (getline(userFileCheck, line))
+            {
+                if (line.find(" admin") != string::npos)
+                {
+                    adminExists = true;
+                    break;
+                }
+            }
+            userFileCheck.close();
+
+            if (!adminExists && role == "user")
+                throw MyException("Неможливо створити простого користувача, поки не існує жодного адміністратора.");
+
+            ofstream userFile("users.txt", ios::app);
+            if (!userFile.is_open())
+                throw MyException("Не вдається відкрити users.txt файл.");
+
+            GenerateID(newID);
+
+            userFile << newID << " " << username << ":" << password << " " << role << endl;
+            userFile.close();
+
+            cout << "Користувач успішно доданий!" << endl;
+            cout << "Присвоєно ID: " << newID << endl;
+
+            lastID = newID;
+            accountCreated = true;
+
+            break;
+        }
+        catch (const MyException& e)
+        {
+            cout << "Помилка при додаванні користувача: " << e.what() << endl;
+            if (!fileIsEmpty)
+                break;
+        }
     }
 }
+
+
+
 
 void Manager::RemoveUser() {
     try {
@@ -129,7 +180,7 @@ void Manager::RemoveUser() {
         cout << "Користувач успішно видалений!" << endl;
     }
     catch (const MyException& e) {
-        cerr << "Помилка при видаленні користувача: " << e.what() << endl;
+        cout << "Помилка при видаленні користувача: " << e.what() << endl;
     }
 }
 
@@ -269,6 +320,8 @@ int Manager::GenerateID(int& id)
 
 void Manager::ViewAllComputer() const
 {
+    if (thisComputer.empty())
+        throw MyException("Список комп'ютерів пустий");
     for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
     {
         cout << (*it)->GetComputerFull() << endl;
@@ -471,14 +524,12 @@ void Manager::RemoveComputer(int inventoryNumber)
     {
         if ((*it)->GetInventoryNumber()  == inventoryNumber)
         {
+            cout << "Видалення успішне!" << endl;
             thisComputer.erase(it);
-            break;
-        }
-        else
-        {
-            throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
+            return;
         }
     }
+    throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
 };
 
 void Manager::ClearAll()
@@ -904,5 +955,5 @@ void Manager::LoadFromJson(const string& filename)
 
 Manager::~Manager()
 {
-    cout << "Деструктор класу менеджер" << endl;
+    cout << "\nДеструктор класу менеджер\n";
 };

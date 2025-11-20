@@ -45,55 +45,59 @@ Admin::Admin(Admin&& other) noexcept
 
 void Admin::Login()
 {
-    Manager manager;
     string username, password;
+
     cout << "Введіть ім'я користувача: ";
     cin >> username;
+
     cout << "Введіть пароль: ";
     cin >> password;
-
-    bool found = false;
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
         throw MyException("Неможливо відкрити файл users.txt.");
 
+    bool found = false;
     string line;
-    while (getline(userFile, line)) {
+
+    while (getline(userFile, line))
+    {
         istringstream iss(line);
+
         int id;
         string loginData, role;
 
-        if (iss >> id >> loginData >> role) {
-            size_t colonPos = loginData.find(':');
-            if (colonPos != string::npos) {
-                string fileUsername = loginData.substr(0, colonPos);
-                string filePassword = loginData.substr(colonPos + 1);
-                if (username == fileUsername && password == filePassword && role == "admin") {
-                    found = true;
-                    username = fileUsername;
-                    password = filePassword;
-                    id = id;
-                    status = role;
-                    break;
-                }
-                else {
-                    throw MyException("Невірні дані для входу або ви не адміністратор");
-                    break;
-                }
-            }
+        if (!(iss >> id >> loginData >> role))
+            continue;
+
+        size_t colonPos = loginData.find(':');
+        if (colonPos == string::npos)
+            continue;
+
+        string fileUsername = loginData.substr(0, colonPos);
+        string filePassword = loginData.substr(colonPos + 1);
+
+        if (username == fileUsername &&
+            password == filePassword &&
+            role == "admin")
+        {
+            found = true;
+            status = "admin";
+            break;
         }
     }
-    userFile.close();
 
-    if (found) {
-        cout << "Вхід успішний!" << endl;
-        MainMenu(manager);
-    }
-    else {
-        throw MyException("Невірне ім'я користувача або пароль");
-    }
+    if (!found)
+        throw MyException("Невірні дані для входу або ви не адміністратор");
+
+    cout << "Вхід успішний!" << endl;
+
+    Manager manager;
+    MainMenu(manager);
 }
+
+
+
 
 
 void Admin::MainMenu(Manager& manager)
@@ -234,7 +238,7 @@ void Admin::MainMenu(Manager& manager)
             }
             catch (MyException& e)
             {
-                cerr << "Помилка: " << e.what() << endl;
+                cout << "\nПОМИЛКА: " << e.what() << endl;
             }
         } while (inMenu);
 };
@@ -428,7 +432,7 @@ void Admin::FilterMenu(Manager& manager)
     }
     catch (MyException& e)
     {
-        cerr << "Помилка: " << e.what() << endl;
+        cout << "ПОМИЛКА: " << e.what() << endl;
     }
 }
 
@@ -465,7 +469,7 @@ void Admin::SortMenu(Manager& manager)
     }
     catch (MyException e)
     {
-        cerr << "Помилка: " << e.what() << endl;
+        cout << "ПОМИЛКА: " << e.what() << endl;
     }
 };
 
@@ -618,7 +622,7 @@ void Admin::SearchMenu(Manager& manager)
     }
     catch (MyException& e)
     {
-        cerr << "Помилка: " << e.what() << endl;
+        cout << "ПОМИЛКА: " << e.what() << endl;
     }
 }
 
@@ -649,7 +653,7 @@ void Admin::WorkedMenu(Manager& manager)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException ("Помилка: Невірне введення. Будь ласка, введіть число.");
+                throw MyException ("ПОМИЛКА: Невірне введення. Будь ласка, введіть число.");
                 continue;
             }
             do
@@ -678,7 +682,7 @@ void Admin::WorkedMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException ("Помилка: Невірне введення. Будь ласка, введіть число.");
+                    throw MyException ("ПОМИЛКА: Невірне введення. Будь ласка, введіть число.");
                     continue;
                 }
 
@@ -790,7 +794,7 @@ void Admin::WorkedMenu(Manager& manager)
                 }
                 catch (const MyException& e)
                 {
-                    cerr << "Помилка: " << e.what() << endl;
+                    cout << "ПОМИЛКА: " << e.what() << endl;
                 }
 
             } while (choice != 0);
@@ -856,7 +860,7 @@ void Admin::RepairMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Помилка: Невірне введення. Будь ласка, введіть число.\n";
+                    cout << "ПОМИЛКА: Невірне введення. Будь ласка, введіть число.\n";
                     continue;
                 }
 
@@ -992,7 +996,7 @@ void Admin::RepairMenu(Manager& manager)
                 }
                 catch (const MyException& e)
                 {
-                    cout << "Помилка: " << e.what() << endl;
+                    cout << "ПОМИЛКА: " << e.what() << endl;
                 }
 
             } while (choice != 0);
@@ -1043,7 +1047,7 @@ void Admin::ChangesMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    cout << "Помилка: Невірне введення.\n";
+                    cout << "ПОМИЛКА: Невірне введення.\n";
                     continue;
                 }
 
@@ -1160,7 +1164,7 @@ void Admin::ChangesMenu(Manager& manager)
                 }
                 catch (const MyException& e)
                 {
-                    cout << "Помилка: " << e.what() << endl;
+                    cout << "ПОМИЛКА: " << e.what() << endl;
                 }
 
             } while (choice != 9);
@@ -1183,5 +1187,5 @@ string Admin::GetStatus() const
 
 Admin::~Admin()
 {
-    cout << "Деструктор класу Admin" << endl;
+    cout << "\nДеструктор класу Admin\n";
 };
