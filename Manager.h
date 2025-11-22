@@ -14,17 +14,16 @@ using namespace std;
 
 /**
  * @brief Клас-менеджер для керування колекцією об'єктів Computer.
- * 
  */
 class Manager
 {
 public:
 	Manager();
-	Manager(vector<shared_ptr<Computer>> thisComputer);
+	Manager(vector<shared_ptr<Computer>> computers);
 	Manager (const Manager &other);
 	Manager (Manager &&other) noexcept;
 	vector<shared_ptr<Computer>>& GetManager();
-	void SetManager(shared_ptr<Computer> thisComputer);
+	void SetManager(shared_ptr<Computer> computers);
 
 	// методи для роботи з користувачами
 	void ViewAllUsers() const;
@@ -33,7 +32,6 @@ public:
 
 	/**
 	 * @brief Дає ID останнього користувача
-	 * 
 	 * @return int 
 	 */
 	int GetLastID() const;
@@ -114,7 +112,7 @@ public:
 	void LoadFromJson(const string& filename);
 	virtual ~Manager();
 private:
-	vector<shared_ptr<Computer>> thisComputer;
+	vector<shared_ptr<Computer>> computers;
 	int lastID;
 };
 

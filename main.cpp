@@ -21,7 +21,6 @@ int main()
 
     Manager manager;
 
-    // Перевірка існування users.txt
     ifstream userFile("users.txt");
     if (!userFile.is_open())
         throw MyException("Не вдається відкрити users.txt файл.");

@@ -17,33 +17,33 @@ using namespace std;
 using json = nlohmann::json;
 
 Manager::Manager() :
-thisComputer{}
+computers{}
 {
 };
 
-Manager::Manager(vector<shared_ptr<Computer>> thisComputer):
-    thisComputer{thisComputer}
+Manager::Manager(vector<shared_ptr<Computer>> computers):
+    computers{computers}
 {
 };
 
 Manager::Manager(const Manager &other)
 {
-    this->thisComputer = other.thisComputer;
+    this->computers = other.computers;
 };
 
 Manager::Manager(Manager &&other) noexcept
 {
-    this->thisComputer = other.thisComputer;
+    this->computers = other.computers;
 };
 
 vector<shared_ptr<Computer>>& Manager::GetManager()
 {
-    return thisComputer;
+    return computers;
 };
 
-void Manager::SetManager(shared_ptr<Computer> thisComputer)
+void Manager::SetManager(shared_ptr<Computer> computers)
 {
-    this->thisComputer.push_back(thisComputer);
+    this->computers.push_back(computers);
 };
 
 void Manager::ViewAllUsers() const
@@ -192,7 +192,7 @@ int Manager::GetLastID() const
 void Manager::AuditoriumFilter(int auditoriumNumber) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetAuditoriumNumber() == auditoriumNumber) {
             cout << (*it)->GetComputerFull() << endl;
@@ -205,7 +205,7 @@ void Manager::AuditoriumFilter(int auditoriumNumber) const
 void Manager::InventoryFilter(int inventoryNumber) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -219,7 +219,7 @@ void Manager::InventoryFilter(int inventoryNumber) const
 void Manager::SizeOfRomFilter(int sizeOfRom) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it) {
+    for (auto it = computers.begin(); it != computers.end(); ++it) {
         if ((*it)->GetSizeOfRom() == sizeOfRom){
             cout << (*it)->GetComputerFull() << endl;
             found = true;
@@ -231,7 +231,7 @@ void Manager::SizeOfRomFilter(int sizeOfRom) const
 void Manager::HasCdRomFilter(bool hasCdRom) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetHasCdRom() == hasCdRom)
         {
@@ -245,7 +245,7 @@ void Manager::HasCdRomFilter(bool hasCdRom) const
 void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
         {
@@ -259,7 +259,7 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
 void Manager::KeyboardFilter(string keyboard) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetKeyboard() == keyboard)
         {
@@ -273,7 +273,7 @@ void Manager::KeyboardFilter(string keyboard) const
 void Manager::MonitorFilter(string monitor) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
         {
@@ -287,7 +287,7 @@ void Manager::MonitorFilter(string monitor) const
 void Manager::GpuFilter(string gpu) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
         {
@@ -301,7 +301,7 @@ void Manager::GpuFilter(string gpu) const
 void Manager::CpuFilter(string cpu) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it) {
+    for (auto it = computers.begin(); it != computers.end(); ++it) {
         if ((*it)->GetCpu() == cpu)
         {
             cout << (*it)->GetComputerFull() << endl;
@@ -320,9 +320,9 @@ int Manager::GenerateID(int& id)
 
 void Manager::ViewAllComputer() const
 {
-    if (thisComputer.empty())
+    if (computers.empty())
         throw MyException("Список комп'ютерів пустий");
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         cout << (*it)->GetComputerFull() << endl;
     }
@@ -514,18 +514,18 @@ void Manager::InitComputer()
         }
     }
 
-    thisComputer.push_back(newComputer);
+    computers.push_back(newComputer);
     SaveToJson("database.json");
 }
 
 void Manager::RemoveComputer(int inventoryNumber)
 {
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetInventoryNumber()  == inventoryNumber)
         {
             cout << "Видалення успішне!" << endl;
-            thisComputer.erase(it);
+            computers.erase(it);
             return;
         }
     }
@@ -544,8 +544,8 @@ void Manager::ClearAll()
         throw MyException("Невірне введення. Введіть 1 або 2.");
     }
     if (choice == 1) {
-        if (thisComputer.empty()) throw MyException("список порожній, не можливо очистити");
-        thisComputer.clear();
+        if (computers.empty()) throw MyException("список порожній, не можливо очистити");
+        computers.clear();
     }
 
     else if (choice == 2) {
@@ -555,14 +555,14 @@ void Manager::ClearAll()
 
 void Manager::GetCount() const
 {
-    if (thisComputer.empty()) throw MyException("масив порожній, не можливо порахувати");
-    cout << "Кількість всіх комп'ютерів " << thisComputer.size();
+    if (computers.empty()) throw MyException("масив порожній, не можливо порахувати");
+    cout << "Кількість всіх комп'ютерів " << computers.size();
 }
 
 void Manager::CountBrokenComputers() const
 {
     int count = 0;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if (dynamic_cast<RepairComputer*>(it->get()) != nullptr)
         {
@@ -576,7 +576,7 @@ void Manager::CountBrokenComputers() const
 void Manager::CountWorkingComputers() const
 {
     int count = 0;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if (dynamic_cast<WorkedComputer*>(it->get()) != nullptr)
         {
@@ -589,8 +589,8 @@ void Manager::CountWorkingComputers() const
 
 void Manager::SortByInventoryNumber()
 {
-    if (thisComputer.empty()) throw MyException("масив порожній, не можливо відсортувати");
-    sort(thisComputer.begin(), thisComputer.end(),
+    if (computers.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    sort(computers.begin(), computers.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
              return first->GetInventoryNumber() < last->GetInventoryNumber();
@@ -600,8 +600,8 @@ void Manager::SortByInventoryNumber()
 
 void Manager::SortByAuditoriumNumber()
 {
-    if (thisComputer.empty()) throw MyException("масив порожній, не можливо відсортувати");
-    sort(thisComputer.begin(), thisComputer.end(),
+    if (computers.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    sort(computers.begin(), computers.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
              return first->GetAuditoriumNumber() < last->GetAuditoriumNumber();
@@ -612,7 +612,7 @@ void Manager::SortByAuditoriumNumber()
 void Manager::SearchByInventoryNumber(int inventoryNumber) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -627,7 +627,7 @@ void Manager::SearchByInventoryNumber(int inventoryNumber) const
 void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetAuditoriumNumber() == auditoriumNumber)
         {
@@ -642,7 +642,7 @@ void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
 void Manager::SearchByCpu(string cpu) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetCpu() == cpu)
         {
@@ -657,7 +657,7 @@ void Manager::SearchByCpu(string cpu) const
 void Manager::SearchByGpu(string gpu) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetGpu() == gpu)
         {
@@ -672,7 +672,7 @@ void Manager::SearchByGpu(string gpu) const
 void Manager::SearchByMonitor(string monitor) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetMonitor() == monitor)
         {
@@ -687,7 +687,7 @@ void Manager::SearchByMonitor(string monitor) const
 void Manager::SearchByKeyboard(string keyboard) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetKeyboard() == keyboard)
         {
@@ -702,7 +702,7 @@ void Manager::SearchByKeyboard(string keyboard) const
 void Manager::SearchBySizeOfRom(int sizeOfRom) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetSizeOfRom() == sizeOfRom)
         {
@@ -717,7 +717,7 @@ void Manager::SearchBySizeOfRom(int sizeOfRom) const
 void Manager::SearchByHasCdRom(bool hasCdRom) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetHasCdRom() == hasCdRom)
         {
@@ -732,7 +732,7 @@ void Manager::SearchByHasCdRom(bool hasCdRom) const
 void Manager::SearchByHasFloppyDisk(bool hasFloppyDisk) const
 {
     bool found = false;
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetHasFloppyDisk() == hasFloppyDisk)
         {
@@ -748,7 +748,7 @@ void Manager::SearchByHasFloppyDisk(bool hasFloppyDisk) const
 
 void Manager::ChangeToBroken(int inventoryNumber)
 {
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -799,7 +799,7 @@ void Manager::ChangeToBroken(int inventoryNumber)
 
 void Manager::ChangeToWorking(int inventoryNumber)
 {
-    for (auto it = thisComputer.begin(); it != thisComputer.end(); ++it)
+    for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         if ((*it)->GetInventoryNumber() == inventoryNumber)
         {
@@ -846,7 +846,7 @@ void Manager::ChangeToWorking(int inventoryNumber)
 void Manager::SaveToJson(const string& filename) const
 {
     json j;
-    for (const auto& computer : thisComputer)
+    for (const auto& computer : computers)
     {
         json compJson;
         compJson["inventoryNumber"] = computer->GetInventoryNumber();
@@ -905,7 +905,7 @@ void Manager::LoadFromJson(const string& filename)
     inFile >> j;
     inFile.close();
 
-    thisComputer.clear();
+    computers.clear();
 
     for (const auto& compJson : j)
     {
@@ -949,7 +949,7 @@ void Manager::LoadFromJson(const string& filename)
         computer->SetGpu(compJson.value("gpu", ""));
         computer->SetCpu(compJson.value("cpu", ""));
 
-        thisComputer.push_back(computer);
+        computers.push_back(computer);
     }
 }
 
