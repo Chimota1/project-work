@@ -18,7 +18,6 @@ Computer::Computer():
 {
 };
 
-//Конструктор з параметрами
 Computer::Computer(
     const string& cpu,
     const string& gpu,
@@ -132,8 +131,6 @@ int Computer::GetAuditoriumNumber() const
 	return auditoriumNumber;
 }
 
-
-//Get-метод
 string Computer::GetComputerFull() const
 {
 	return
@@ -147,7 +144,7 @@ string Computer::GetComputerFull() const
 	 " Інвентарний номер: " + to_string(inventoryNumber) +
 	 " Номер аудиторії: " + to_string(auditoriumNumber);
 };
-//Копіювальний конструктор
+
 Computer::Computer(const Computer &other)
 {
 	this->cpu = other.cpu;
@@ -161,7 +158,6 @@ Computer::Computer(const Computer &other)
 	this->sizeOfRom = other.sizeOfRom;
 };
 
-//Конструктор переміщення
 Computer::Computer(Computer &&other) noexcept
 {
 	this->cpu = other.cpu;
@@ -193,7 +189,6 @@ void Computer::HasFloppyDiskUpdate(bool hasFloppyDisk)
 	this->hasFloppyDisk = hasFloppyDisk;
 };
 
-//Деструктор
 Computer::~Computer()
 {
 	cout << "\nВикликано деструктор абстрактного класу\n";
