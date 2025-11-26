@@ -5,6 +5,7 @@
 #include <fstream>
 #include "json.hpp"
 #include "MyException.h"
+#include "ErrorMessage.h"
 #include "Manager.h"
 #include <limits>
 
@@ -55,7 +56,7 @@ void Admin::Login()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw MyException("Неможливо відкрити файл users.txt.");
+        throw MyException(ERR::FILE_OPEN_FAIL);
 
     bool found = false;
     string line;
@@ -88,7 +89,7 @@ void Admin::Login()
     }
 
     if (!found)
-        throw MyException("Невірні дані для входу або ви не адміністратор");
+        throw MyException(ERR::ADMIN_LOGIN_FAIL);
 
     cout << "Вхід успішний!" << endl;
 
@@ -134,7 +135,7 @@ void Admin::MainMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
 
                 switch (choice)
@@ -232,7 +233,7 @@ void Admin::MainMenu(Manager& manager)
                     break;
 
                     default:
-                        throw MyException("Невірне введення");
+                        throw MyException(ERR::INVALID_INPUT);
                 }
                 manager.SaveToJson("database.json");
             }
@@ -328,7 +329,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.InventoryFilter(inventoryNumber);
                 break;
@@ -341,7 +342,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.AuditoriumFilter(auditoriumNumber);
                 break;
@@ -354,7 +355,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SizeOfRomFilter(sizeOfRom);
                 break;
@@ -367,7 +368,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
                 }
                 manager.HasCdRomFilter(hasCdRom);
                 break;
@@ -380,7 +381,7 @@ void Admin::FilterMenu(Manager& manager)
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
                 }
                 manager.HasFloppyDiskFilter(hasFloppyDisk);
                 break;
@@ -427,7 +428,7 @@ void Admin::FilterMenu(Manager& manager)
             }
 
             default:
-                throw MyException("Невірне введення — виберіть від 1 до 9.");
+                throw MyException(ERR::INVALID_INPUT + "виберіть від 1 до 9.");
         }
     }
     catch (MyException& e)
@@ -449,7 +450,7 @@ void Admin::SortMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     try {
         if (sortOption == 1)
@@ -464,7 +465,7 @@ void Admin::SortMenu(Manager& manager)
         }
         else
         {
-            throw MyException("Невірне введення");
+            throw MyException(ERR::INVALID_INPUT);
         };
     }
     catch (MyException e)
@@ -492,7 +493,7 @@ void Admin::SearchMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_INPUT + "Очікувалось число.");
     }
     try
     {
@@ -507,7 +508,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchByInventoryNumber(inventoryNumber);
                 break;
@@ -521,7 +522,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchByAuditoriumNumber(auditoriumNumber);
                 break;
@@ -580,7 +581,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchBySizeOfRom(sizeOfRom);
                 break;
@@ -595,7 +596,7 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
                 }
                 manager.SearchByHasCdRom(hasCdRom);
                 break;
@@ -610,14 +611,14 @@ void Admin::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
                 }
                 manager.SearchByHasFloppyDisk(hasFloppyDisk);
                 break;
             }
 
             default:
-                throw MyException("Невірне введення");
+                throw MyException(ERR::INVALID_INPUT);
         }
     }
     catch (MyException& e)
@@ -636,7 +637,7 @@ void Admin::WorkedMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Інвентарний номер має бути додатним числом.");
+        throw MyException(ERR::INVALID_INPUT + "Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -653,7 +654,7 @@ void Admin::WorkedMenu(Manager& manager)
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException ("ПОМИЛКА: Невірне введення. Будь ласка, введіть число.");
+                throw MyException (ERR::INVALID_TYPE);
                 continue;
             }
             do
@@ -682,7 +683,7 @@ void Admin::WorkedMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException ("ПОМИЛКА: Невірне введення. Будь ласка, введіть число.");
+                    throw MyException (ERR::INVALID_TYPE);
                     continue;
                 }
 
@@ -712,7 +713,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Кількість днів має бути 0 або додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Кількість днів має бути 0 або додатним числом.");
                             }
                             worked->SetDays(days);
                             break;
@@ -732,7 +733,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Кількість користувачів має бути 0 або додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Кількість користувачів має бути 0 або додатним числом.");
                             }
                             worked->SetCountUsers(users);
                             break;
@@ -747,7 +748,7 @@ void Admin::WorkedMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Вартість обслуговування має бути 0 або додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Вартість обслуговування має бути 0 або додатним числом.");
                             }
                             worked->ServiceCost(cost);
                             break;
@@ -820,7 +821,7 @@ void Admin::RepairMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Інвентарний номер має бути додатним числом.");
+        throw MyException(ERR::INVALID_INPUT + "Інвентарний номер має бути додатним числом.");
     }
 
     bool found = false;
@@ -931,7 +932,7 @@ void Admin::RepairMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Вартість ремонту має бути 0 або додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Вартість ремонту має бути 0 або додатним числом.");
                             }
                             repair->RepairCost(cost);
                             break;
@@ -946,7 +947,7 @@ void Admin::RepairMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException(ERR::INVALID_INPUT + "Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
                             repair->NeedsSpareParts(val);
                             break;
@@ -1064,7 +1065,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Номер аудиторії має бути додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Номер аудиторії має бути додатним числом.");
                             }
                             comp->MoveAuditorium(newAuditorium);
                             break;
@@ -1073,13 +1074,13 @@ void Admin::ChangesMenu(Manager& manager)
                         case 2:
                         {
                             int newRom;
-                            cout << "Введіть новий розмір ПЗП (ГБ): ";
+                            cout << "Введіть новий розмір ROM (ГБ): ";
                             cin >> newRom;
                             if (cin.fail() || newRom <= 0)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Розмір жорсткого диску має бути додатним числом.");
+                                throw MyException(ERR::INVALID_INPUT + "Розмір жорсткого диску має бути додатним числом.");
                             }
                             comp->SetSizeOfRom(newRom);
                             break;
@@ -1094,7 +1095,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException(ERR::INVALID_INPUT + "Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
                             comp->HasCdRomUpdate(newCdRom);
                             break;
@@ -1109,7 +1110,7 @@ void Admin::ChangesMenu(Manager& manager)
                             {
                                 cin.clear();
                                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                                throw MyException("Невірне введення. Введіть 1 для 'Так' або 0 для 'Ні'.");
+                                throw MyException(ERR::INVALID_INPUT + "Введіть 1 для 'Так' або 0 для 'Ні'.");
                             }
                             comp->HasFloppyDiskUpdate(newFloppy);
                             break;
@@ -1157,7 +1158,7 @@ void Admin::ChangesMenu(Manager& manager)
                             break;
 
                         default:
-                            throw MyException("Невірне введення");
+                            throw MyException(ERR::INVALID_INPUT);
                             break;
                     }
                     manager.SaveToJson("database.json");

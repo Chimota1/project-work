@@ -6,6 +6,7 @@
 #include "Admin.h"
 #include "DefaultUser.h"
 #include "MyException.h"
+#include "ErrorMessage.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -23,7 +24,7 @@ int main()
 
     ifstream userFile("users.txt");
     if (!userFile.is_open())
-        throw MyException("Не вдається відкрити users.txt файл.");
+        throw MyException(ERR::FILE_OPEN_FAIL);
 
     userFile.seekg(0, ios::end);
     if (userFile.tellg() == 0)
@@ -49,7 +50,7 @@ int main()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірне введення. Введіть число.");
+                throw MyException(ERR::INVALID_TYPE);
             }
 
             if (choiceInMenu == 1)
@@ -62,7 +63,7 @@ int main()
                 if (cin.fail()) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення.");
+                    throw MyException(ERR::INVALID_INPUT);
                 }
 
                 if (adminChoice == 1)

@@ -1,8 +1,8 @@
 #include "DefaultUser.h"
-#include "IUser.h"
 #include "Manager.h"
 #include <iostream>
 #include <string>
+#include "ErrorMessage.h"
 #include <fstream>
 #include "MyException.h"
 
@@ -46,7 +46,7 @@ void DefaultUser::Login()
 
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw MyException("Не вдалося відкрити файл users.txt.");
+            throw MyException(ERR::FILE_OPEN_FAIL);
 
         string line;
         while (getline(userFile, line)) {
@@ -175,7 +175,7 @@ void DefaultUser::MainMenu(Manager& manager)
                     break;
 
                 default:
-                    throw MyException("Неправильне введення");
+                    throw MyException(ERR::INVALID_INPUT);
             }
             manager.SaveToJson("database.json");
         } while (inMenu);
@@ -336,7 +336,7 @@ void DefaultUser::FilterMenu(Manager& manager)
         }
 
         default:
-            throw MyException("Неправильне введення");
+            throw MyException(ERR::INVALID_INPUT);
     };
 }
 
@@ -352,7 +352,7 @@ void DefaultUser::SortMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     try {
         if (sortOption == 1)
@@ -367,7 +367,7 @@ void DefaultUser::SortMenu(Manager& manager)
         }
         else
         {
-            throw MyException("Невірне введення");
+            throw MyException(ERR::INVALID_INPUT);
         };
     }
     catch (MyException e)
@@ -395,7 +395,7 @@ void DefaultUser::SearchMenu(Manager& manager)
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     try
     {
@@ -410,7 +410,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchByInventoryNumber(inventoryNumber);
                 break;
@@ -424,7 +424,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchByAuditoriumNumber(auditoriumNumber);
                 break;
@@ -483,7 +483,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірний тип введення. Очікувалось число.");
+                    throw MyException(ERR::INVALID_TYPE);
                 }
                 manager.SearchBySizeOfRom(sizeOfRom);
                 break;
@@ -498,7 +498,7 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
                 }
                 manager.SearchByHasCdRom(hasCdRom);
                 break;
@@ -513,14 +513,14 @@ void DefaultUser::SearchMenu(Manager& manager)
                 {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                    throw MyException("Невірне введення. Введіть 1 або 0.");
+                    throw MyException(ERR::INVALID_TYPE + "Введіть 1 або 0.");
                 }
                 manager.SearchByHasFloppyDisk(hasFloppyDisk);
                 break;
             }
 
             default:
-                throw MyException("Невірне введення");
+                throw MyException(ERR::INVALID_TYPE);
         }
     }
     catch (MyException& e)

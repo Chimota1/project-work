@@ -1,12 +1,13 @@
 #include "Manager.h"
 #include "Computer.h"
+#include "WorkedComputer.h"
+#include "RepairComputer.h"
+#include "MyException.h"
+#include "ErrorMessage.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "WorkedComputer.h"
-#include "RepairComputer.h"
-#include "MyException.h"
 #include "json.hpp"
 #include <fstream>
 #include <memory>
@@ -52,7 +53,7 @@ void Manager::ViewAllUsers() const
     {
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw MyException("Не вдається відкрити файл users.txt.");
+            throw MyException(ERR::FILE_OPEN_FAIL);
         string line;
         while (getline(userFile, line))
         {
@@ -62,7 +63,7 @@ void Manager::ViewAllUsers() const
     }
     catch (const MyException& e)
     {
-        throw MyException("Помилка зчитування users.json: " + string(e.what()));
+        throw MyException("Помилка зчитування users.txt: " + string(e.what()));
     }
 };
 
@@ -98,7 +99,7 @@ void Manager::AddUser()
 
             ifstream userFileCheck("users.txt");
             if (!userFileCheck.is_open())
-                throw MyException("Не вдається відкрити users.txt файл.");
+                throw MyException(ERR::FILE_OPEN_FAIL);
 
             bool adminExists = false;
             string line;
@@ -118,7 +119,7 @@ void Manager::AddUser()
 
             ofstream userFile("users.txt", ios::app);
             if (!userFile.is_open())
-                throw MyException("Не вдається відкрити users.txt файл.");
+                throw MyException(ERR::FILE_OPEN_FAIL);
 
             GenerateID(newID);
 
@@ -153,7 +154,7 @@ void Manager::RemoveUser() {
 
         ifstream userFile("users.txt");
         if (!userFile.is_open())
-            throw MyException("Не вдається відкрити файл users.txt.");
+            throw MyException(ERR::FILE_OPEN_FAIL);
 
         string line;
         vector<string> lines;
@@ -168,7 +169,7 @@ void Manager::RemoveUser() {
         userFile.close();
 
         if (!found) {
-            throw MyException ("Користувача з таким ID не існує");
+            throw MyException (ERR::USER_NOT_FOUND);
         }
 
         ofstream outFile("users.txt");
@@ -199,7 +200,7 @@ void Manager::AuditoriumFilter(int auditoriumNumber) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::InventoryFilter(int inventoryNumber) const
@@ -213,7 +214,7 @@ void Manager::InventoryFilter(int inventoryNumber) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::SizeOfRomFilter(int sizeOfRom) const
@@ -225,7 +226,7 @@ void Manager::SizeOfRomFilter(int sizeOfRom) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::HasCdRomFilter(bool hasCdRom) const
@@ -239,7 +240,7 @@ void Manager::HasCdRomFilter(bool hasCdRom) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
@@ -253,7 +254,7 @@ void Manager::HasFloppyDiskFilter(bool hasFloppyDisk) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::KeyboardFilter(string keyboard) const
@@ -267,7 +268,7 @@ void Manager::KeyboardFilter(string keyboard) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::MonitorFilter(string monitor) const
@@ -281,7 +282,7 @@ void Manager::MonitorFilter(string monitor) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::GpuFilter(string gpu) const
@@ -295,7 +296,7 @@ void Manager::GpuFilter(string gpu) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 void Manager::CpuFilter(string cpu) const
@@ -308,7 +309,7 @@ void Manager::CpuFilter(string cpu) const
             found = true;
         };
     };
-    if (!found) throw MyException ("Не знайдено комп'ютерів, які б відповідали заданим критеріям.");
+    if (!found) throw MyException (ERR::FILTER_NOT_FOUND);
 };
 
 int Manager::GenerateID(int& id)
@@ -321,7 +322,7 @@ int Manager::GenerateID(int& id)
 void Manager::ViewAllComputer() const
 {
     if (computers.empty())
-        throw MyException("Список комп'ютерів пустий");
+        throw MyException(ERR::EMPTY_COMPUTER_LIST);
     for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         cout << (*it)->GetComputerFull() << endl;
@@ -342,7 +343,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Введіть 1 або 2.");
+        throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 2.");
     }
 
     shared_ptr<Computer> newComputer;
@@ -362,7 +363,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірний тип введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     newComputer->SetInventoryNumber(inventoryNumber);
 
@@ -372,7 +373,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірний тип введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     newComputer->SetAuditoriumNumber(auditoriumNumber);
 
@@ -382,7 +383,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірний тип введення. Очікувалось число.");
+        throw MyException(ERR::INVALID_TYPE);
     }
     newComputer->SetSizeOfRom(sizeOfRom);
 
@@ -392,7 +393,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Введіть 1 або 0.");
+        throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
     }
     newComputer->SetHasCdRom(hasCdRom);
 
@@ -402,7 +403,7 @@ void Manager::InitComputer()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Введіть 1 або 0.");
+        throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 0.");
     }
     newComputer->SetHasFloppyDisk(hasFloppyDisk);
 
@@ -437,7 +438,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірний тип введення. Очікувалось число.");
+                throw MyException(ERR::INVALID_TYPE);
             }
             workedComp->SetDays(daysWithoutRepair);
 
@@ -447,7 +448,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірний тип введення. Очікувалось число.");
+                throw MyException(ERR::INVALID_TYPE);
             }
             workedComp->SetCountUsers(countUsers);
 
@@ -457,7 +458,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірне введення. Введіть 1 або 2.");
+                throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 2.");
             }
 
             if (statusOfWork == 1) workedComp->TurnOn();
@@ -469,7 +470,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірний тип введення. Очікувалось число.");
+                throw MyException(ERR::INVALID_TYPE);
             }
             workedComp->ServiceCost(serviceCost);
         }
@@ -508,7 +509,7 @@ void Manager::InitComputer()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw MyException("Невірний тип введення. Очікувалось число.");
+                throw MyException(ERR::INVALID_TYPE);
             }
             repairComp->RepairCost(repairCost);
         }
@@ -529,7 +530,7 @@ void Manager::RemoveComputer(int inventoryNumber)
             return;
         }
     }
-    throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
+    throw MyException(ERR::COMPUTER_NOT_FOUND);
 };
 
 void Manager::ClearAll()
@@ -541,10 +542,10 @@ void Manager::ClearAll()
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        throw MyException("Невірне введення. Введіть 1 або 2.");
+        throw MyException(ERR::INVALID_INPUT + "Введіть 1 або 2.");
     }
     if (choice == 1) {
-        if (computers.empty()) throw MyException("список порожній, не можливо очистити");
+        if (computers.empty()) throw MyException(ERR::EMPTY_COMPUTER_LIST + "не можливо очистити");
         computers.clear();
     }
 
@@ -555,7 +556,7 @@ void Manager::ClearAll()
 
 void Manager::GetCount() const
 {
-    if (computers.empty()) throw MyException("масив порожній, не можливо порахувати");
+    if (computers.empty()) throw MyException(ERR::EMPTY_COMPUTER_LIST +"не можливо порахувати");
     cout << "Кількість всіх комп'ютерів " << computers.size();
 }
 
@@ -589,7 +590,7 @@ void Manager::CountWorkingComputers() const
 
 void Manager::SortByInventoryNumber()
 {
-    if (computers.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    if (computers.empty()) throw MyException(ERR::EMPTY_COMPUTER_LIST + "не можливо відсортувати");
     sort(computers.begin(), computers.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
@@ -600,7 +601,7 @@ void Manager::SortByInventoryNumber()
 
 void Manager::SortByAuditoriumNumber()
 {
-    if (computers.empty()) throw MyException("масив порожній, не можливо відсортувати");
+    if (computers.empty()) throw MyException(ERR::EMPTY_COMPUTER_LIST + "не можливо відсортувати");
     sort(computers.begin(), computers.end(),
          [](const shared_ptr<Computer>& first, const shared_ptr<Computer>& last)
          {
@@ -621,7 +622,7 @@ void Manager::SearchByInventoryNumber(int inventoryNumber) const
             break;
         }
     }
-    if (!found) throw MyException("Комп'ютер з таким інвентарним номером не знайдено");
+    if (!found) throw MyException(ERR::COMPUTER_NOT_FOUND);
 };
 
 void Manager::SearchByAuditoriumNumber(int auditoriumNumber) const
@@ -887,7 +888,7 @@ void Manager::SaveToJson(const string& filename) const
     ofstream outFile(filename);
     if (!outFile.is_open())
     {
-        throw MyException("Не вдалося відкрити файл для запису: " + filename);
+        throw MyException(ERR::JSON_WRITE_FAIL + filename);
     }
     outFile << setw(4) << j << endl;
     outFile.close();
@@ -898,7 +899,7 @@ void Manager::LoadFromJson(const string& filename)
     ifstream inFile(filename);
     if (!inFile.is_open())
     {
-        throw MyException("Не вдалося відкрити файл для читання: " + filename);
+        throw MyException(ERR::JSON_READ_FAIL + filename);
     }
 
     json j;
