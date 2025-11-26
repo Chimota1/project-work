@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
 
-namespace ERR{
+namespace ERR
+{
     inline const std::string FILE_OPEN_FAIL = "Не вдається відкрити файл users.txt.";
     inline const std::string INVALID_INPUT = "Невірне введення.";
     inline const std::string INVALID_TYPE = "Невірний тип введення. Очікувалось число.";
