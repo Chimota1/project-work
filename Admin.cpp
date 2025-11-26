@@ -83,6 +83,7 @@ void Admin::Login()
             role == "admin")
         {
             found = true;
+            this->id = id;
             status = "admin";
             break;
         }
