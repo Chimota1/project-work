@@ -326,6 +326,19 @@ void Manager::ViewAllComputer() const
     for (auto it = computers.begin(); it != computers.end(); ++it)
     {
         cout << (*it)->GetComputerFull() << endl;
+        if (dynamic_cast<WorkedComputer*>((*it).get()) != nullptr)
+        {
+            cout << "Комп'ютер справний" << endl;
+        }
+        else if (dynamic_cast<RepairComputer*>((*it).get()) != nullptr)
+        {
+            cout << "Комп'ютер у ремонті" << endl;
+        }
+        else
+        {
+            cout << "Стаус невизначений" << endl;
+        }
+        cout << endl;
     }
 };
 

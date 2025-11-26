@@ -254,7 +254,7 @@ void DefaultUser::FilterMenu(Manager& manager)
     cout << "Фільтрувати комп’ютери за: " << endl;
     cout << "1. Інвентарним номером" << endl;
     cout << "2. Номером аудиторії" << endl;
-    cout << "3. Обсягом ПЗП" << endl;
+    cout << "3. Обсягом ROM" << endl;
     cout << "4. Наявністю CD-ROM" << endl;
     cout << "5. Наявністю дисководу" << endl;
     cout << "6. Типом клавіатури" << endl;

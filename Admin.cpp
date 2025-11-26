@@ -328,7 +328,7 @@ void Admin::FilterMenu(Manager& manager)
     cout << "Фільтрувати комп'ютери за: " << endl;
     cout << "1. Інвентарний номер" << endl;
     cout << "2. Номер аудиторії" << endl;
-    cout << "3. Розмір ПЗП" << endl;
+    cout << "3. Розмір ROM" << endl;
     cout << "4. Наявність CD-ROM" << endl;
     cout << "5. Наявність дискети" << endl;
     cout << "6. Клавіатура" << endl;
