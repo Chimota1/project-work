@@ -119,7 +119,7 @@ string WorkedComputer::GetEmploymentStatus() const
 void WorkedComputer::ServiceCost(int serviceCost)
 {
     if (serviceCost < 0) throw MyException("Вартість обслуговування повинна бути невід’ємною");
-    serviceCostWorked = serviceCost;
+    this->serviceCostWorked = serviceCost;
 };
 
 void WorkedComputer::TurnOn()
